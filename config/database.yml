@@ -1,0 +1,18 @@
+common: &common
+  adapter: postgresql
+  username: twingl
+  password: twingl
+  host: localhost
+
+development:
+  <<: *common
+#  database: twingl-crm-dev
+  database: trailblazer-dev
+
+test:
+  <<: *common
+  database: trailblazer-test
+
+production:
+  <<: *common
+  database: trailblazer-production
