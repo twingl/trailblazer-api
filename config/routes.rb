@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'pages/dashboard'
+  get 'pages/sign_in', :as => "sign_in"
+
+  get 'sessions/create'
+
+  match '/auth/google_apps/callback', :to => 'sessions#create', :via => [:get, :post]
+  match '/auth/google_oauth2/callback', :to => 'sessions#create', :via => [:get, :post]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
