@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   get 'sessions/create'
 
-  match '/auth/google_apps/callback', :to => 'sessions#create', :via => [:get, :post]
   match '/auth/google_oauth2/callback', :to => 'sessions#create', :via => [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
