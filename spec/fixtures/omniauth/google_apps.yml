@@ -1,0 +1,29 @@
+provider: "google_apps"
+uid: "123456789"
+info:
+  name: "Jane Doe"
+  email: "jane@example.com"
+  first_name: "Jane"
+  last_name: "Doe"
+  image: "https://lh6.googleusercontent.com/123abc/photo.jpg?sz=50"
+  urls:
+    Google: "https://profiles.google.com/123456789"
+credentials:
+  token: "token"
+  expires_at: 1403082084
+  expires: true
+extra:
+  id_token: "id_token"
+  raw_info:
+    kind: "plus#personOpenIdConnect"
+    gender: "female"
+    sub: "123456789"
+    name: "Jane Doe"
+    given_name: "Jane"
+    family_name: "Doe"
+    profile: "https://profiles.google.com/123456789"
+    picture: "https://lh6.googleusercontent.com/123abc/photo.jpg?sz=50"
+    email: "jane@example.com"
+    email_verified: "true"
+    locale: "en"
+    hd: "example.com"

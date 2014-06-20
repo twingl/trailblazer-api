@@ -2,9 +2,13 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '4.1.1'
+gem 'pg'
+
+# Config, Utility
 gem 'figaro'
 
-gem 'pg'
+# DCI
+gem 'playhouse', '~> 0.1.1', :github => 'enspiral/playhouse'
 
 # Assets
 gem 'sass-rails',   '~> 4.0.3'
@@ -22,5 +26,8 @@ end
 gem 'spring',        group: :development
 
 # Auth
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
+gem 'omniauth',               '~> 1.2.1'
+gem 'omniauth-google-oauth2', '~> 0.2.4'
+
+# External APIs
+gem 'google-api-client', '~> 0.7.1', :require => 'google/api_client'
