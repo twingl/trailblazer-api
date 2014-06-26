@@ -1,12 +1,11 @@
 common: &common
   adapter: postgresql
-  username: twingl
-  password: twingl
+  username: username
+  password: password
   host: localhost
 
 development:
   <<: *common
-#  database: twingl-crm-dev
   database: trailblazer-dev
 
 test:
