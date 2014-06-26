@@ -37,3 +37,6 @@ gem 'omniauth-google-oauth2', '~> 0.2.4'
 
 # External APIs
 gem 'google-api-client', '~> 0.7.1', :require => 'google/api_client'
+
+# Worker model
+gem 'resque', '~> 1.25.2'
