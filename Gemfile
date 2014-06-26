@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.1'
 gem 'pg'
+gem 'foreman'
+gem 'puma'
 
 # Config, Utility
 gem 'figaro'
