@@ -4,6 +4,8 @@ class SessionsController < ApplicationController
   # Callback endpoint for authenticating using OmniAuth::GoogleOauth2
   # Calls GetOauthUser to retrieve a user, redirecting to +landing_url+ if none
   # was returned.
+  #
+  # GET/POST /auth/google_apps/callback
   def create_google
     if user = GetOauthUser.new(:service_hash => omniauth_hash).call
       establish_session user
@@ -14,6 +16,8 @@ class SessionsController < ApplicationController
   end
 
   # Signs out the current user and redirects to +landing_url+
+  #
+  # GET/DELETE /sign_out
   def destroy
     destroy_session
     redirect_to landing_url

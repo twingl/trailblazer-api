@@ -7,6 +7,11 @@ gem 'pg'
 # Config, Utility
 gem 'figaro'
 
+group :development, :test do
+  gem 'pry',     '~> 0.9.12'
+  gem 'pry-nav', '~> 0.2.3'
+end
+
 # DCI
 gem 'playhouse', '~> 0.1.1', :github => 'enspiral/playhouse'
 
@@ -20,6 +25,7 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.1'
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'shoulda-matchers', '~> 2.6.1'
 end
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

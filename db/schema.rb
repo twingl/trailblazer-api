@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140620025804) do
+ActiveRecord::Schema.define(version: 20140625042959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "domain_admin_roles", force: true do |t|
+    t.integer "user_id"
+    t.integer "domain_id"
+  end
+
+  add_index "domain_admin_roles", ["domain_id"], name: "index_domain_admin_roles_on_domain_id", using: :btree
+  add_index "domain_admin_roles", ["user_id"], name: "index_domain_admin_roles_on_user_id", using: :btree
+
+  create_table "domains", force: true do |t|
+    t.string   "domain"
+    t.datetime "imported"
+    t.boolean  "importing"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "domains", ["domain"], name: "index_domains_on_domain", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "uid",                            null: false

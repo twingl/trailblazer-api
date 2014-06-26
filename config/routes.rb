@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   match '/sign_out', :to => 'sessions#destroy', :via => [:get, :delete]
 
   # Org management
-  match '/configure', :to => "pages#configure", :via => [:get]
+  resources :domains, :param => :domain_name, :only => [], :constraints => { :domain_name => /[0-9A-Za-z\-\.]+/ } do
+    get :configure, :on => :member
+  end
 
   # Misc pages
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
