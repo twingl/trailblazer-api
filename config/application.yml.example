@@ -1,0 +1,13 @@
+# Worker queue names
+QUEUE: first_run,directory_import
+
+# Google API env vars
+GOOGLE_APPLICATION_NAME: "Trailblazer"
+GOOGLE_APPLICATION_VERSION: "0.0.0"
+
+GOOGLE_OAUTH2_CLIENT_ID: "client_id"
+GOOGLE_OAUTH2_CLIENT_SECRET: "client_secret"
+
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: "private key - see http://ar.zu.my/how-to-store-private-key-files-in-heroku/"
+GOOGLE_SERVICE_ACCOUNT_SECRET: "notasecret"
+GOOGLE_SERVICE_ACCOUNT_EMAIL: "service account email"
