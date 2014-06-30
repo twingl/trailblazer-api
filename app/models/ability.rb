@@ -6,6 +6,7 @@ class Ability
 
     if user.admin?
       can :assign_roles, User
+      can :configure, Domain
     end
 
     # Define abilities for the passed in user here. For example:
