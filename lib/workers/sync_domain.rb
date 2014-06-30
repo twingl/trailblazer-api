@@ -24,6 +24,8 @@ module Workers
 
       self.sync_orgunits(client, domain)
       self.sync_users(client, domain)
+
+      domain.update_attributes(:importing => false, :imported_at => DateTime.now)
     end
 
     # Reads users off the Google Apps domain, creating records for new users

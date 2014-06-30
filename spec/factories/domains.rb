@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :domain do
     domain "MyString"
-    imported "2014-06-24 21:31:53"
+    imported_at "2014-06-24 21:31:53"
     importing false
   end
 end
