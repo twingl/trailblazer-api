@@ -17,6 +17,8 @@ class GetGoogleAppsDomain < Playhouse::Context
     if response.success?
       domain = Domain.find_or_create_by(:domain => domain_name)
 
+      # The user is an admin of the domain we're fetching
+      user.update_attributes(:admin => true, :domain_id => domain.id)
       user.domain_admin_roles.find_or_create_by(:domain => domain)
 
       Workers::SyncDomain.enqueue(domain_name, user.id, :first_run) unless domain.imported?
