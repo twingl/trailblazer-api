@@ -33,9 +33,12 @@ end
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
-# Auth
+# External Auth
 gem 'omniauth',               '~> 1.2.1'
 gem 'omniauth-google-oauth2', '~> 0.2.4'
+
+# Internal Authorization
+gem 'cancancan', '~> 1.8.4'
 
 # External APIs
 gem 'google-api-client', '~> 0.7.1', :require => 'google/api_client'
