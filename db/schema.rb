@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630022238) do
+ActiveRecord::Schema.define(version: 20140630033245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20140630022238) do
     t.string   "org_unit_path"
     t.integer  "org_unit_id"
     t.integer  "domain_id"
+    t.boolean  "teacher",        default: false
   end
 
   add_index "users", ["domain_id"], name: "index_users_on_domain_id", using: :btree
