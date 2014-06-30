@@ -46,6 +46,8 @@ module Workers
               r.active = false
             end
 
+            user.domain         = domain
+
             user.admin          = u.fetch("isAdmin", false)
 
             user.name           = u.fetch("name", {}).fetch("fullName", nil)
