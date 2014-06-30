@@ -9,6 +9,8 @@ class DomainsController < ApplicationController
   def configure
     if user_signed_in?
       @domain = GetGoogleAppsDomain.new(:user => current_user, :domain_name => params[:domain_name]).call
+
+      render 'configure.importing' if @domain.importing?
     else
       store_location(request.url)
       redirect_to '/auth/google_apps'

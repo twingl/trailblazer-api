@@ -1,0 +1,13 @@
+<nav>
+  <ul>
+    <% if user_signed_in? %>
+      <li><%= link_to "Sign Out", sign_out_path %></li>
+    <% else %>
+      <li><%= link_to "Sign In", '/auth/google_apps' %></li>
+    <% end %>
+
+    <% if admin_signed_in? %>
+      <li><%= link_to "Configure Domain", configure_domain_path(current_user.domain) %></li>
+    <% end %>
+  </ul>
+</nav>

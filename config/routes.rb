@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     get :configure, :on => :member
   end
 
+  resources :users, :only => [] do
+    post :update_roles, :on => :collection
+  end
+
   # Misc pages
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
   match '/inactive', :to => "pages#inactive", :as => "inactive", :via => [:get]

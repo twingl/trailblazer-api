@@ -6,4 +6,15 @@ RSpec.describe User, :type => :model do
     expect(subject).to belong_to(:domain)
     expect(subject).to belong_to(:org_unit)
   end
+
+  describe "#student?" do
+    it "is true when an active user is not a teacher or admin" do
+      expect(User.new(:active => true).student?).to eq true
+    end
+
+    it "is false when a user is an admin or teacher" do
+      expect(User.new(:admin => true).student?).to eq false
+      expect(User.new(:teacher => true).student?).to eq false
+    end
+  end
 end

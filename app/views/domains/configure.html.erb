@@ -1,1 +1,39 @@
 <%= @domain.domain %>
+
+
+<%= form_tag(update_roles_users_path, :method => :post) do %>
+  <table border="1">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th colspan="3">Role</th>
+      <th>Active</th>
+    </tr>
+    <tr>
+      <th colspan="2"></th>
+      <th>Admin</th>
+      <th>Teacher</th>
+      <th>Student (meta field) <br /><span style="font-size:9px;">student == (active &amp;&amp; !teacher &amp;&amp; !admin)</span></th>
+      <th></th>
+    </tr>
+
+    <% @domain.users.each do |user| %>
+      <%= fields_for "users[]", user do |f| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= f.check_box :admin,    {}, "true", "false" %></td>
+          <td><%= f.check_box :teacher,  {}, "true", "false" %></td>
+          <td><%= f.check_box :student?, {}, "true", "false" %></td>
+          <td><%= f.check_box :active,   {}, "true", "false" %></td>
+        </tr>
+      <% end %>
+    <% end %>
+
+    <tr>
+      <td colspan="2"></td>
+      <td colspan="4"><input type="submit" name="submit" value="Save" /></td>
+    </tr>
+  </table>
+
+<% end %>

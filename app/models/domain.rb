@@ -7,4 +7,8 @@ class Domain < ActiveRecord::Base
   def imported?
     imported_at.present?
   end
+
+  def to_param
+    domain
+  end
 end
