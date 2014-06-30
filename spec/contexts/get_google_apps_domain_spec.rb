@@ -67,8 +67,8 @@ RSpec.describe GetGoogleAppsDomain do
         }.to_not change(Domain, :count)
       end
 
-      it "queues a worker to sync the domain" do
-        expect(Workers::SyncDomain).to receive(:enqueue).with("example.com", user.id)
+      it "does not queue a worker" do
+        expect(Workers::SyncDomain).to_not receive(:enqueue)
 
         GetGoogleAppsDomain.new(:user => user, :domain_name => "example.com").call
       end

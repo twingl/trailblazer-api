@@ -19,11 +19,7 @@ class GetGoogleAppsDomain < Playhouse::Context
 
       user.domain_admin_roles.find_or_create_by(:domain => domain)
 
-      if domain.imported?
-        Workers::SyncDomain.enqueue(domain_name, user.id)
-      else
-        Workers::SyncDomain.enqueue(domain_name, user.id, :first_run)
-      end
+      Workers::SyncDomain.enqueue(domain_name, user.id, :first_run) unless domain.imported?
 
       domain
     else
