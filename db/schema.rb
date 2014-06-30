@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630033245) do
+ActiveRecord::Schema.define(version: 20140630224520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "classrooms", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "classrooms_users", force: true do |t|
+    t.integer "user_id"
+    t.integer "classroom_id"
+  end
+
+  add_index "classrooms_users", ["classroom_id", "user_id"], name: "index_classrooms_users_on_classroom_id_and_user_id", unique: true, using: :btree
+  add_index "classrooms_users", ["user_id", "classroom_id"], name: "index_classrooms_users_on_user_id_and_classroom_id", unique: true, using: :btree
 
   create_table "domain_admin_roles", force: true do |t|
     t.integer "user_id"
