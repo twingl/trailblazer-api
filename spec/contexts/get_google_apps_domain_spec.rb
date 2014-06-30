@@ -49,6 +49,12 @@ RSpec.describe GetGoogleAppsDomain do
           expect(result.admins).to include(user)
         }.to change(DomainAdminRole, :count).by(1)
       end
+
+      it "queues a worker in the first_run queue to sync the domain" do
+        expect(Workers::SyncDomain).to receive(:enqueue).with("example.com", user.id, :first_run)
+
+        GetGoogleAppsDomain.new(:user => user, :domain_name => "example.com").call
+      end
     end
 
     context "with an existing domain" do
@@ -59,6 +65,12 @@ RSpec.describe GetGoogleAppsDomain do
           result = GetGoogleAppsDomain.new(:user => user, :domain_name => "example.com").call
           expect(result).to eq(domain)
         }.to_not change(Domain, :count)
+      end
+
+      it "queues a worker to sync the domain" do
+        expect(Workers::SyncDomain).to receive(:enqueue).with("example.com", user.id)
+
+        GetGoogleAppsDomain.new(:user => user, :domain_name => "example.com").call
       end
     end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140625042959) do
+ActiveRecord::Schema.define(version: 20140629235735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20140625042959) do
 
   add_index "domains", ["domain"], name: "index_domains_on_domain", using: :btree
 
+  create_table "org_units", force: true do |t|
+    t.integer  "domain_id"
+    t.string   "name"
+    t.string   "org_unit_path"
+    t.string   "parent_org_unit_path"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "uid",                            null: false
     t.string   "name"
@@ -49,6 +59,10 @@ ActiveRecord::Schema.define(version: 20140625042959) do
     t.string   "gender"
     t.text     "image"
     t.string   "google_profile"
+    t.string   "org_unit_path"
+    t.integer  "org_unit_id"
   end
+
+  add_index "users", ["org_unit_id"], name: "index_users_on_org_unit_id", using: :btree
 
 end

@@ -19,8 +19,11 @@ class GetGoogleAppsDomain < Playhouse::Context
 
       user.domain_admin_roles.find_or_create_by(:domain => domain)
 
-      # Creation of a domain spins up a worker which imports all of the people,
-      # setting a flag on the domain once it is imported.
+      if domain.imported?
+        Workers::SyncDomain.enqueue(domain_name, user.id)
+      else
+        Workers::SyncDomain.enqueue(domain_name, user.id, :first_run)
+      end
 
       domain
     else

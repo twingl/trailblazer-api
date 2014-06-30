@@ -15,7 +15,7 @@ module ApiWrappers
     end
 
     # Convenience proxy method for Admin SDK Domain API.
-    # Assembles the API call and returns the response to the caller.
+    # Assembles the directory.users.list call and returns the response to the caller.
     def directory_users_list(domain_name, params = {})
       parameters = { :domain => domain_name }.merge(params)
 
@@ -24,6 +24,18 @@ module ApiWrappers
 
       # Fetch a list of the users in this domain
       response = client.execute(:api_method => directory.users.list, :parameters => parameters)
+    end
+
+    # Convenience proxy method for Admin SDK Domain API.
+    # Assembles the directory.orgunits.list call and returns the response to the caller.
+    def directory_orgunits_list(domain_name, params = {})
+      parameters = { :customerId => "my_customer" }.merge(params)
+
+      # Discover the Admin SDK Directory API
+      directory = client.discovered_api('admin', 'directory_v1')
+
+      # Fetch a list of the users in this domain
+      response = client.execute(:api_method => directory.orgunits.list, :parameters => parameters)
     end
 
   private
@@ -36,7 +48,10 @@ module ApiWrappers
       authorization = Signet::OAuth2::Client.new(
         :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
         :audience             => 'https://accounts.google.com/o/oauth2/token',
-        :scope                => 'https://www.googleapis.com/auth/admin.directory.user.readonly',
+        :scope                => [
+          'https://www.googleapis.com/auth/admin.directory.user.readonly',
+          'https://www.googleapis.com/auth/admin.directory.orgunit.readonly'
+        ],
         :issuer               => ENV['GOOGLE_SERVICE_ACCOUNT_EMAIL'],
         :signing_key          => signing_key,
         :sub                  => impersonated_user.email)
