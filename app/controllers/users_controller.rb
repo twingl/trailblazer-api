@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+  # POST /users/update_roles
   def update_roles
     authorize! :assign_roles, current_user
 
