@@ -39,17 +39,13 @@ class ClassroomsController < ApplicationController
     end
   end
 
-  # PUT/PATCH /classrooms/1/enrol
+  # PUT/PATCH /classrooms/1/enroll
   def enroll
     users = current_user.domain.users.where(:id => enrollment_params.fetch(:users, {}).fetch(:id, []))
 
-    users.each do |u|
-      begin
-        @classroom.users << u
-      rescue ActiveRecord::RecordNotUnique => e
-        logger.warn("Duplicate enrollment skipped: User #{u.id}, Classroom #{@classroom.id}")
-      end
-    end
+    @classroom.users = @classroom.users.to_a.concat(users.to_a)
+    @classroom.reload
+
     render :json => { :users => @classroom.users }, :status => 200
   end
 
@@ -57,7 +53,7 @@ class ClassroomsController < ApplicationController
   def withdraw
     users = current_user.domain.users.where(:id => enrollment_params.fetch(:users, {}).fetch(:id, []))
 
-    users.each {|u| @classroom.users.delete(u) }
+    @classroom.users.delete(users)
 
     render :json => { :users => @classroom.users }, :status => 200
   end
