@@ -9,5 +9,9 @@
     <% if can? :configure, Domain %>
       <li><%= link_to "Configure Domain", configure_domain_path(current_user.domain) %></li>
     <% end %>
+
+    <% if can? :manage, Classroom %>
+      <li><%= link_to "Manage Classrooms", classrooms_path %></li>
+    <% end %>
   </ul>
 </nav>

@@ -12,6 +12,11 @@ Rails.application.routes.draw do
     post :update_roles, :on => :collection
   end
 
+  resources :classrooms do
+    match :enroll, :on => :member, :to => "classrooms#enroll", :via => [:put, :patch]
+    match :withdraw, :on => :member, :to => "classrooms#withdraw", :via => [:put, :patch]
+  end
+
   # Misc pages
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
   match '/inactive', :to => "pages#inactive", :as => "inactive", :via => [:get]

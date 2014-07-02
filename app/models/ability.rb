@@ -7,6 +7,11 @@ class Ability
     if user.admin?
       can :assign_roles, User
       can :configure, Domain
+      can :manage, Classroom
+    end
+
+    if user.teacher?
+      can :manage, Classroom if user.domain_id.present?
     end
 
     # Define abilities for the passed in user here. For example:
