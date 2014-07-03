@@ -19,8 +19,8 @@
       <tr>
         <td><%= classroom.name %></td>
         <td><%= classroom.description %></td>
-        <td><%= classroom.teachers.count %></td>
-        <td><%= classroom.students.count %></td>
+        <td><%= classroom.users.teacher.count %></td>
+        <td><%= classroom.users.student.count %></td>
         <% if can? :manage, Classroom %>
           <td><%= classroom.users.inactive.count %></td>
         <% end %>
