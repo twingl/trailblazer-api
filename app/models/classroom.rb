@@ -4,12 +4,4 @@ class Classroom < ActiveRecord::Base
   belongs_to :domain
 
   validates_presence_of :name
-
-  def students
-    users.where(:active => true, :teacher => false, :admin => false)
-  end
-
-  def teachers
-    users.where(:teacher => true)
-  end
 end

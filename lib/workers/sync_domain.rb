@@ -8,6 +8,8 @@ module Workers
     #
     # On first run, i.e. when a domain is first created, this worker can be
     # promoted to the :first_run queue for priority execution.
+    #
+    # TODO Break out into separate workers
 
     # Thin wrapper around job creation so we can set the queue dynamically
     def self.enqueue(domain_name, admin_id, queue = :sync_domain)
@@ -24,6 +26,7 @@ module Workers
 
       self.sync_orgunits(client, domain)
       self.sync_users(client, domain)
+      self.sync_groups(client, domain)
 
       domain.update_attributes(:importing => false, :imported_at => DateTime.now)
     end
@@ -36,7 +39,7 @@ module Workers
         :pageToken  => nil
       }
       begin
-        response = client.directory_users_list(domain.domain, params)
+        response = client.directory_users_list(params)
 
         users = JSON.load(response.body).fetch("users", [])
 
@@ -93,6 +96,53 @@ module Workers
           orgunit.save
         end
       end
+
+      nil
+    end
+
+    # Reads Google Groups from the Google apps domain, managing enrolment for
+    # classes that represent a Google group.
+    def self.sync_groups(client, domain)
+      group_params = { :maxResults => 500, :pageToken => nil }
+
+      begin
+        group_response = client.directory_groups_list(group_params)
+        groups = JSON.load(group_response.body).fetch("groups", [])
+
+        groups.each do |g|
+          ActiveRecord::Base.transaction do
+            group = Classroom.find_or_create_by(:group_key => g.fetch("id")) do |r|
+              r.name        = g.fetch("name",        nil)
+              r.description = g.fetch("description", nil)
+              r.domain      = domain
+            end
+
+            members_params = { :maxResults => 500, :pageToken => nil }
+
+            begin
+              members_response = client.directory_groups_members(g.fetch("id"), members_params)
+              members = JSON.load(members_response.body).fetch("members", [])
+
+              members.each do |m|
+                # Bug in Google's API docs or API - should just be "MEMBER" according to docs
+                if m.fetch("type") == "MEMBER" or m.fetch("type") == "USER"
+                  user = User.find_or_create_by(:uid => m.fetch("id")) do |r|
+                    r.active = false
+                    r.domain = domain
+                    r.email  = m.fetch("email")
+                  end
+
+                  group.users << user unless group.users.include? user
+                end
+              end
+
+              members_params[:pageToken] = members_response.next_page_token
+            end while members_params[:pageToken].present?
+          end
+        end
+
+        group_params[:pageToken] = group_response.next_page_token
+      end while group_params[:pageToken].present?
 
       nil
     end

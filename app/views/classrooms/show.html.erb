@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= @classroom.name %></h1>
+<p><%= @classroom.description %></p>
 
 <h2>Teachers</h2>
 
@@ -13,7 +14,7 @@
   </thead>
 
   <tbody>
-    <% @classroom.teachers.each do |teacher| %>
+    <% @classroom.users.teacher.each do |teacher| %>
       <tr>
         <td><%= teacher.name %></td>
         <td><%= teacher.email %></td>
@@ -33,7 +34,7 @@
   </thead>
 
   <tbody>
-    <% @classroom.students.each do |student| %>
+    <% @classroom.users.student.each do |student| %>
       <tr>
         <td><%= student.name %></td>
         <td><%= student.email %></td>
@@ -41,6 +42,48 @@
     <% end %>
   </tbody>
 </table>
+
+<% if can? :manage, Classroom %>
+  <h2>Inactive Members</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @classroom.users.inactive.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h2>Administrative Members</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @classroom.users.admin.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
 <%= link_to 'Edit', edit_classroom_path(@classroom) %> |
 <%= link_to 'Back', classrooms_path %>

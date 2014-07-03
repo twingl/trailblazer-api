@@ -14,10 +14,10 @@ module ApiWrappers
       self.client.authorization.fetch_access_token!
     end
 
-    # Convenience proxy method for Admin SDK Domain API.
-    # Assembles the directory.users.list call and returns the response to the caller.
-    def directory_users_list(domain_name, params = {})
-      parameters = { :domain => domain_name }.merge(params)
+    # Fetch a list of users registered to the domain
+    # https://developers.google.com/admin-sdk/directory/v1/reference/users/list
+    def directory_users_list(params = {})
+      parameters = { :customer => "my_customer" }.merge(params)
 
       # Discover the Admin SDK Directory API
       directory = client.discovered_api('admin', 'directory_v1')
@@ -26,16 +26,41 @@ module ApiWrappers
       response = client.execute(:api_method => directory.users.list, :parameters => parameters)
     end
 
-    # Convenience proxy method for Admin SDK Domain API.
-    # Assembles the directory.orgunits.list call and returns the response to the caller.
+    # Fetch a list of OrgUnits from the domain
+    # https://developers.google.com/admin-sdk/directory/v1/reference/orgunits/list
     def directory_orgunits_list(domain_name, params = {})
       parameters = { :customerId => "my_customer" }.merge(params)
 
       # Discover the Admin SDK Directory API
       directory = client.discovered_api('admin', 'directory_v1')
 
-      # Fetch a list of the users in this domain
+      # Fetch a list of the org units in this domain
       response = client.execute(:api_method => directory.orgunits.list, :parameters => parameters)
+    end
+
+    # Fetch a list of Groups from the domain
+    # https://developers.google.com/admin-sdk/directory/v1/reference/groups/list
+    def directory_groups_list(params = {})
+      parameters = { :customer => "my_customer" }.merge(params)
+
+      # Discover the Admin SDK Directory API
+      directory = client.discovered_api('admin', 'directory_v1')
+
+      # Fetch a list of the groups in this domain
+      response = client.execute(:api_method => directory.groups.list, :parameters => parameters)
+    end
+
+    # Fetch the members of a group specified by group_key
+    # This is the unique id of the group `groupKey`
+    # https://developers.google.com/admin-sdk/directory/v1/reference/members/list
+    def directory_groups_members(group_key, params = {})
+      parameters = { :groupKey => group_key }.merge(params)
+
+      # Discover the Admin SDK Directory API
+      directory = client.discovered_api('admin', 'directory_v1')
+
+      # Fetch a list of the groups' members
+      response = client.execute(:api_method => directory.members.list, :parameters => parameters)
     end
 
   private
@@ -50,7 +75,8 @@ module ApiWrappers
         :audience             => 'https://accounts.google.com/o/oauth2/token',
         :scope                => [
           'https://www.googleapis.com/auth/admin.directory.user.readonly',
-          'https://www.googleapis.com/auth/admin.directory.orgunit.readonly'
+          'https://www.googleapis.com/auth/admin.directory.orgunit.readonly',
+          'https://www.googleapis.com/auth/admin.directory.group.readonly'
         ],
         :issuer               => ENV['GOOGLE_SERVICE_ACCOUNT_EMAIL'],
         :signing_key          => signing_key,
