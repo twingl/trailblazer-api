@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :classrooms do
     match :enroll, :on => :member, :to => "classrooms#enroll", :via => [:put, :patch]
     match :withdraw, :on => :member, :to => "classrooms#withdraw", :via => [:put, :patch]
+
+    resources :projects
   end
 
   # Misc pages
