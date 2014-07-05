@@ -13,4 +13,10 @@ class PagesController < ApplicationController
   # GET /inactive
   def inactive
   end
+
+  # Container for angular requests
+  #
+  # GET /*path
+  def angular
+  end
 end

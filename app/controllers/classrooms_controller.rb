@@ -1,13 +1,23 @@
 class ClassroomsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_classroom, only: [:show, :edit, :update, :destroy, :enroll, :withdraw]
 
   # GET /classrooms
   def index
     @classrooms = current_user.domain.classrooms.all
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => { :classrooms => @classrooms } }
+    end
   end
 
   # GET /classrooms/1
   def show
+    respond_to do |format|
+      format.html
+      format.json { render :json => @classroom }
+    end
   end
 
   # GET /classrooms/new
@@ -23,25 +33,33 @@ class ClassroomsController < ApplicationController
   def create
     @classroom = current_user.domain.classrooms.build(classroom_params)
 
-    if @classroom.save
-      redirect_to @classroom, notice: 'Classroom was successfully created.'
-    else
-      render :new
+    respond_to do |format|
+      if @classroom.save
+        format.html { redirect_to @classroom, notice: 'Classroom was successfully created.' }
+        format.json { render :json => @classroom }
+      else
+        format.html { render :new }
+        format.json { render :json => { :errors => @classroom.errors.full_messages }, :status => 422 }
+      end
     end
   end
 
   # PATCH/PUT /classrooms/1
   def update
-    if @classroom.update(classroom_params)
-      redirect_to @classroom, notice: 'Classroom was successfully updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @classroom.save
+        format.html { redirect_to @classroom, notice: 'Classroom was successfully updates.' }
+        format.json { render :json => @classroom }
+      else
+        format.html { render :edit }
+        format.json { render :json => { :errors => @classroom.errors.full_messages }, :status => 422 }
+      end
     end
   end
 
   # PUT/PATCH /classrooms/1/enroll
   def enroll
-    users = current_user.domain.users.where(:id => enrollment_params.fetch(:users, {}).fetch(:id, []))
+    users = current_user.domain.users.where(:id => enrollment_params.fetch(:users, []))
 
     @classroom.users = @classroom.users.to_a.concat(users.to_a)
     @classroom.reload
@@ -51,7 +69,7 @@ class ClassroomsController < ApplicationController
 
   # PUT/PATCH /classrooms/1/withdraw
   def withdraw
-    users = current_user.domain.users.where(:id => enrollment_params.fetch(:users, {}).fetch(:id, []))
+    users = current_user.domain.users.where(:id => enrollment_params.fetch(:users, []))
 
     @classroom.users.delete(users)
 
@@ -61,7 +79,10 @@ class ClassroomsController < ApplicationController
   # DELETE /classrooms/1
   def destroy
     @classroom.destroy
-    redirect_to classrooms_url, notice: 'Classroom was successfully destroyed.'
+    respond_to do |format|
+      format.html { redirect_to classrooms_url, notice: 'Classroom was successfully destroyed.' }
+      format.json { head 200 }
+    end
   end
 
   private
@@ -76,6 +97,6 @@ class ClassroomsController < ApplicationController
     end
 
     def enrollment_params
-      params.permit(:users => { :id => [] })
+      params.permit(:users => [])
     end
 end

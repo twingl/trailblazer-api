@@ -1,4 +1,40 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_parent, :only => [:index, :students, :teachers, :search]
+
+  def index
+    @users = @parent.users
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => { :users => @users } }
+    end
+  end
+
+  def students
+    @users = @parent.users.student
+
+    respond_to do |format|
+      format.json { render :json => { :users => @users } }
+    end
+  end
+
+  def teachers
+    @users = @parent.users.teacher
+
+    respond_to do |format|
+      format.json { render :json => { :users => @users } }
+    end
+  end
+
+  def search
+    term = "%#{params[:q]}%"
+    @users = @parent.users.where("lower(name) LIKE lower(?) OR lower(email) LIKE lower(?)", term, term)
+
+    respond_to do |format|
+      format.json { render :json => { :users => @users } }
+    end
+  end
 
   # POST /users/update_roles
   def update_roles
@@ -14,6 +50,14 @@ class UsersController < ApplicationController
   end
 
 private
+
+  def set_parent
+    if params.has_key? :classroom_id
+      @parent = current_user.domain.classrooms.find(params[:classroom_id])
+    else
+      @parent = current_user.domain
+    end
+  end
 
   def user_params
     params.permit(:users => [ :admin, :teacher, :active ])
