@@ -1,5 +1,18 @@
 <% title "Classrooms" %>
 
+<core-ajax
+    class="classrooms"
+    auto
+    url="/classrooms"
+    params=''
+    handleAs="json"
+    headers='{"Accept": "application/json"}'></core-ajax>
+
+<template id="classrooms-list" repeat="{{response.classrooms}}">
+  <div>{{name}}</div>
+  <div>{{description}}</div>
+</template>
+
 <h1>Listing classrooms</h1>
 
 <table>

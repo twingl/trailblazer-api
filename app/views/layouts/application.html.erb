@@ -11,41 +11,43 @@
 
   <script src="/assets/components/platform/platform.js" type="text/javascript" charset="utf-8"></script>
   <link rel="import" href="/assets/components/font-roboto/roboto">
-  <link rel="import" href="/assets/components/core-header-panel/core-header-panel">
+  <link rel="import" href="/assets/components/core-ajax/core-ajax">
   <link rel="import" href="/assets/components/core-drawer-panel/core-drawer-panel">
-  <link rel="import" href="/assets/components/core-toolbar/core-toolbar">
+  <link rel="import" href="/assets/components/core-header-panel/core-header-panel">
   <link rel="import" href="/assets/components/core-icons/core-icons">
   <link rel="import" href="/assets/components/core-icons/iconsets/social-icons">
   <link rel="import" href="/assets/components/core-item/core-item">
+  <link rel="import" href="/assets/components/core-list/core-list">
+  <link rel="import" href="/assets/components/core-toolbar/core-toolbar">
   <link rel="import" href="/assets/components/core-tooltip/core-tooltip">
-  <link rel="import" href="/assets/components/paper-item/paper-item">
   <link rel="import" href="/assets/components/paper-icon-button/paper-icon-button">
+  <link rel="import" href="/assets/components/paper-item/paper-item">
   <link rel="import" href="/assets/components/paper-menu-button/paper-menu-button">
 </head>
 <body unresolved fullBleed>
 
-<core-header-panel>
-  <core-toolbar>
-    <paper-icon-button fill icon="menu"></paper-icon-button>
-    <span flex><%= yield :title %></span>
-    <paper-menu-button fill halign="right" icon="more-vert">
-      <paper-item label="sign out"></paper-item>
-      <paper-item label="sign out"></paper-item>
-      <paper-item label="sign out"></paper-item>
-    </paper-menu-button>
+  <core-header-panel>
+    <core-toolbar>
+      <paper-icon-button fill icon="menu"></paper-icon-button>
+      <span flex><%= yield :title %></span>
+      <paper-menu-button fill halign="right" icon="more-vert">
+        <paper-item label="sign out"></paper-item>
+        <paper-item label="sign out"></paper-item>
+        <paper-item label="sign out"></paper-item>
+      </paper-menu-button>
 
-    <paper-icon-button fill icon="exit-to-app"></paper-icon-button>
-  </core-toolbar>
+      <paper-icon-button fill icon="exit-to-app"></paper-icon-button>
+    </core-toolbar>
 
-  <core-drawer-panel>
-  <div drawer>
-    <%= render "shared/navigation" %>
-  </div>
-  <div main>
-    <%= yield %>
-  </div>
-  </core-drawer-panel>
-</core-header-panel>
+    <core-drawer-panel>
+    <div drawer>
+      <%= render "shared/navigation" %>
+    </div>
+    <div main>
+      <%= yield %>
+    </div>
+    </core-drawer-panel>
+  </core-header-panel>
 
 </body>
 </html>
