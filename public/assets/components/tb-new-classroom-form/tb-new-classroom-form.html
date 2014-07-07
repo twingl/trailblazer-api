@@ -1,0 +1,29 @@
+
+<polymer-element name="tb-new-classroom-form">
+  <script src="tb-new-classroom-form.js" type="text/javascript" charset="utf-8"></script>
+
+  <template>
+    <core-ajax
+      url="/classrooms"
+      handleAs="json"
+      method="POST"
+      body='{"name":"{{classroom.name}}", "description":"{{classroom.description}}"}'
+      on-core-response="{{showToast}}"
+      headers='{"Accept": "application/json","Content-Type": "application/json","X-CSRF-Token":"{{csrfToken}}"}'></core-ajax>
+
+    <paper-dialog heading="New Class" transition="paper-dialog-transition-bottom">
+
+      <p>
+        <paper-input value="{{classroom.name}}" label="Class Name" floatinglabel></paper-input><br />
+        <paper-input value="{{classroom.description}}" label="Description" floatinglabel></paper-input><br />
+      </p>
+
+      <paper-button id="create" label="Create" on-click="{{createClassroom}}" affirmative default></paper-button>
+      <paper-button id="cancel" label="Cancel" on-click="{{resetForm}}" dismissive></paper-button>
+
+    </paper-dialog>
+
+    <paper-toast text="Classroom created"></paper-toast>
+  </template>
+
+</polymer-element>

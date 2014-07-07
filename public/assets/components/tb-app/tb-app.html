@@ -1,0 +1,52 @@
+
+<polymer-element name="tb-app">
+  <script src="tb-app.js" type="text/javascript" charset="utf-8"></script>
+
+  <template>
+    <link rel="stylesheet" href="tb-app.css">
+
+    <core-ajax
+      auto
+      url="/me"
+      handleAs="json"
+      headers='{"Accept": "application/json"}'
+      on-core-response="{{userProfileLoaded}}"></core-ajax>
+
+    <core-header-panel>
+      <core-toolbar>
+        <paper-icon-button fill icon="menu" on-click="{{toggleDrawer}}"></paper-icon-button>
+        <span flex>{{title}}</span>
+      </core-toolbar>
+
+      <core-drawer-panel id="drawerPanel">
+        <div drawer>
+          <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
+            <paper-item id="home" icon="home" label="Home"></paper-item>
+
+            <template if="{{userProfile.teacher}}">
+              <paper-item id="classrooms" icon="social:school" label="Classes"></paper-item>
+            </template>
+
+            <template if="{{userProfile.admin}}">
+              <paper-item id="domain" icon="settings" label="Configure Domain"></paper-item>
+            </template>
+
+            <paper-item id="signout" icon="exit-to-app" label="Sign Out"></paper-item>
+          </core-menu>
+        </div>
+        <div main>
+          <core-animated-pages selected="{{mainPanel}}" transitions="cross-fade">
+            <tb-home user="{{userProfile}}"></tb-home>
+            <tb-classrooms></tb-classrooms>
+            <tb-domain></tb-domain>
+            <section>
+              <span cross-fade>sign out</span>
+            </section>
+          </core-animated-pages>
+        </div>
+      <core-drawer-panel>
+
+    </core-header-panel>
+  </template>
+
+</polymer-element>

@@ -1,0 +1,31 @@
+core-header-panel {
+  height: 100%;
+  overflow: auto;
+}
+
+div[drawer] {
+  background: white;
+}
+
+core-toolbar {
+  background: #ff5722;
+  color: white;
+}
+
+core-toolbar>paper-icon-button {
+  fill: white;
+}
+
+core-toolbar>paper-menu-button {
+  fill: white;
+}
+
+core-toolbar>paper-menu-button>paper-item {
+  fill: black;
+  color: black;
+  font-size: 15px;
+  font-weight: 300;
+}
+core-toolbar>paper-menu-button paper-item:hover {
+  background-color: rgba(0,0,0,0.1);
+}

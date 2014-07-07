@@ -1,0 +1,8 @@
+core-card {
+  display: block;
+  padding: 24px 12px;
+}
+
+core-card:hover {
+  background: rgba(0, 0, 0, 0.05);
+}

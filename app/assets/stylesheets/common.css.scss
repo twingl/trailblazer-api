@@ -2,38 +2,6 @@ body {
   font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
 }
 
-core-header-panel {
-  height: 100%;
-  overflow: auto;
-
-  core-toolbar {
-    background: #ff5722;
-    color: white;
-  }
-
-  core-toolbar>paper-icon-button {
-    fill: white;
-  }
-
-  core-toolbar>paper-menu-button {
-    fill: white;
-
-    paper-item {
-      &:hover {
-        background-color: rgba(0,0,0,0.1);
-      }
-      fill: black;
-      color: black;
-      font-size: 15px;
-      font-weight: 300;
-    }
-  }
-
-  div[drawer] {
-    background: white;
-  }
-}
-
 paper-button {
   margin: 1em;
   width: 10em;

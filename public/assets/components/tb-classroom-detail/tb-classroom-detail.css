@@ -1,0 +1,20 @@
+core-card {
+  padding: 24px 12px;
+}
+
+.primary {
+  background: #5677fc;
+  color: white;
+  fill: white;
+}
+
+.danger {
+  background: #e51c23;
+  color: white;
+  fill: white;
+}
+
+paper-button,
+paper-icon-button {
+  min-width: 100px;
+}

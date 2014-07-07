@@ -1,0 +1,40 @@
+
+<polymer-element name="tb-classrooms">
+  <script src="tb-classrooms.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+  <template>
+    <link href="tb-classrooms.css" rel="stylesheet">
+
+    <core-ajax
+      auto
+      url="/classrooms"
+      handleAs="json"
+      headers='{"Accept":"application/json"}'
+      on-core-response="{{classroomsLoaded}}"></core-ajax>
+
+    <div id="container" cross-fade layout vertical>
+      <core-animated-pages selected="{{page}}" transitions="">
+        <section>
+          <h1>Classes</h1>
+
+          <paper-icon-button raisedButton label="New Classroom" icon="add" on-click="{{toggleDialog}}"></paper-icon-button>
+
+          <h2>Members</h2>
+
+          <template repeat="{{classrooms as classroom}}">
+            <tb-classroom on-tap="{{transition}}" classroom="{{classroom}}"></tb-classroom>
+          </template>
+
+          <tb-new-classroom-form on-core-response="{{classroomCreated}}"></tb-new-classroom-form>
+        </section>
+
+        <section id="detail">
+          <tb-classroom-detail on-tb-dismiss="{{transition}}" classroom="{{selectedClassroom}}"></tb-classroom-detail>
+        </section>
+      </core-animated-pages>
+    </div>
+
+  </template>
+
+</polymer-element>

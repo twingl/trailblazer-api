@@ -14,4 +14,21 @@ class User < ActiveRecord::Base
   def student?
     !admin? && !teacher? && active?
   end
+
+  def as_json(options={})
+    {
+      :id => id,
+      :google_profile => google_profile,
+      :name => name,
+      :first_name => first_name,
+      :last_name => last_name,
+      :email => email,
+      :image => image,
+      :active => active,
+      :admin => admin,
+      :teacher => teacher,
+      :created_at => created_at,
+      :updated_at => updated_at
+    }
+  end
 end

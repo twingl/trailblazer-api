@@ -93,7 +93,7 @@ class ClassroomsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def classroom_params
-      params.require(:classroom).permit(:name)
+      params.require(:classroom).permit(:name, :description)
     end
 
     def enrollment_params

@@ -2,6 +2,35 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_parent, :only => [:index, :students, :teachers, :search]
 
+  def me
+    render :json => current_user
+  end
+
+  def students
+    @users = @parent.users.student
+
+    respond_to do |format|
+      format.json { render :json => { :users => @users } }
+    end
+  end
+
+  def teachers
+    @users = @parent.users.teacher
+
+    respond_to do |format|
+      format.json { render :json => { :users => @users } }
+    end
+  end
+
+  def search
+    term = "%#{params[:q]}%"
+    @users = @parent.users.where("lower(name) LIKE lower(?) OR lower(email) LIKE lower(?)", term, term)
+
+    respond_to do |format|
+      format.json { render :json => { :users => @users } }
+    end
+  end
+
   def index
     @users = @parent.users
 

@@ -1,0 +1,92 @@
+
+<polymer-element name="tb-classroom-detail" attributes="classroom">
+  <script src="tb-classroom-detail.js" type="text/javascript" charset="utf-8"></script>
+
+  <template>
+    <link rel="stylesheet" href="tb-classroom-detail.css">
+
+    <!-- Only fetch classrooms when we have an object supplying an ID -->
+    <core-ajax
+      auto="{{classroom}}"
+      url="/classrooms/{{classroom.id}}/users"
+      handleAs="json"
+      headers='{"Accept":"application/json"}'
+      on-core-response="{{membersLoaded}}"></core-ajax>
+
+    <div>
+      <core-card layout vertical start>
+        <h1>{{classroom.name}}</h1>
+        <p>{{classroom.description}}</p>
+
+        <div class="actions">
+          <paper-button raisedButton on-tap="{{dismiss}}" label="close"></paper-button>
+
+          <paper-button raisedButton on-tap="{{toggleAddPanel}}" label="add members"></paper-button>
+        </div>
+
+        <template if="{{addPanelVisible}}">
+          <div cross-fade id="addPanel" >
+            <h2>Add members</h2>
+
+            <core-ajax
+              id="search"
+              url="/users/search?q={{searchInput}}"
+              handleAs="json"
+              headers='{"Accept":"application/json"}'
+              on-core-response="{{handleSearchResult}}"></core-ajax>
+
+            <h3>Find new memebers</h3>
+            <p>Search for members and tap to add</p>
+            <paper-input floatingLabel on-change="{{queueSearch}}" value="{{searchInput}}" label="name or email address"></paper-input>
+            <paper-icon-button fill class="primary" icon="search" raisedButton on-tap="{{queueSearch}}"></paper-icon-button>
+            <div id="search-results">
+              <template repeat="{{results as user}}">
+                <tb-user-chip on-tap="{{stageUser}}" user="{{user}}"></tb-user-chip>
+              </template>
+            </div>
+
+            <template if="{{stagedUsers.length > 0}}">
+              <core-ajax
+                id="enroll-members"
+                url="/classrooms/{{classroom.id}}/enroll"
+                handleAs="json"
+                method="PUT"
+                body='{"users":[ {{ stagedUserIds }} ]}'
+                headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+                on-core-response="{{onCommitted}}"></core-ajax>
+
+              <h3>Ready to Add</h3>
+              <p>Tap save to add these people to the class</p>
+
+              <div>
+                <template repeat="{{stagedUsers as user}}">
+                  <tb-user-chip on-tap="{{unstageUser}}" user="{{user}}"></tb-user-chip>
+                </template>
+              </div>
+
+              <paper-button class="primary" on-tap="{{commitUsers}}" raisedButton label="save"></paper-button>
+            </template>
+          </div>
+        </template>
+
+        <core-ajax
+          id="withdraw-members"
+          url="/classrooms/{{classroom.id}}/withdraw"
+          handleAs="json"
+          method="PUT"
+          body='{"users":[ {{ withdrawnUserIds }} ]}'
+          headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+          on-core-response="{{onWithdrawn}}"></core-ajax>
+
+        <template repeat="{{members as member}}">
+          <tb-user user="{{member}}"></tb-user><paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>
+        </template>
+
+        <paper-toast class="enrolled" text="Classmembers added"></paper-toast>
+        <paper-toast class="withdrawn" text="Classmembers removed"></paper-toast>
+
+      </core-card>
+    <div>
+  </template>
+
+</polymer-element>

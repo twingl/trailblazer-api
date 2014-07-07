@@ -1,0 +1,23 @@
+
+<polymer-element name="tb-classroom" attributes="classroom">
+  <script src="tb-classroom.js" type="text/javascript" charset="utf-8"></script>
+
+  <template>
+    <link href="tb-classroom.css" rel="stylesheet">
+
+    <core-card>
+      <h2>{{classroom.name}}</h2>
+      <p>{{classroom.description}}</p>
+
+      <core-ajax
+        url="/classrooms/{{classroom.id}}"
+        method="DELETE"
+        on-core-response="{{showToast}}"
+        headers='{"Accept":"application/json","X-CSRF-Token":"{{csrfToken}}"}'></core-ajax>
+
+      <paper-button raisedButton on-click="{{deleteClassroom}}" label="delete"></paper-button>
+      <paper-shadow z="0"></paper-shadow>
+    </core-card>
+  </template>
+
+</polymer-element>
