@@ -30,6 +30,10 @@ Rails.application.routes.draw do
     resources :projects
   end
 
+  resources :projects, :only => [:show, :update, :destroy] do
+    match :assign, :on => :member, :to => "projects#assign", :via => [:put, :patch]
+  end
+
   # Misc pages
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
   match '/inactive', :to => "pages#inactive", :as => "inactive", :via => [:get]

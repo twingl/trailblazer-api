@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_classroom, only: [:index, :new, :create]
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :assign, :destroy]
 
   # GET /projects
   def index
@@ -57,6 +57,16 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # PATCH/PUT /projects/1/assign
+  def assign
+    users = current_user.domain.users.where(:id => assignment_params.fetch(:users, []))
+
+    @project.assignments = @project.assignments.to_a.concat(users.to_a)
+    @project.reload
+
+    render :json => { :assignments => @project.assignments }, :status => 200
+  end
+
   # DELETE /projects/1
   def destroy
     @project.destroy
@@ -74,6 +84,10 @@ class ProjectsController < ApplicationController
 
     def set_classroom
       @classroom = current_user.classrooms.find(params[:classroom_id])
+    end
+
+    def assignment_params
+      params.permit(:users => [])
     end
 
     # Only allow a trusted parameter "white list" through.
