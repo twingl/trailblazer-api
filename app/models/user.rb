@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def as_json(options={})
-    {
+    object = {
       :id => id,
       :google_profile => google_profile,
       :name => name,
@@ -33,5 +33,10 @@ class User < ActiveRecord::Base
       :created_at => created_at,
       :updated_at => updated_at
     }
+
+    object[:assignments] = assignments if options.fetch(:expand, []).include? :assignments
+    object[:classrooms] = classrooms if options.fetch(:expand, []).include? :classrooms
+
+    object
   end
 end

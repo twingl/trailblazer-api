@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_parent, :only => [:index, :students, :teachers, :search]
 
   def me
-    render :json => current_user
+    render :json => current_user.to_json(:expand => [:assignments, :classrooms])
   end
 
   def students
