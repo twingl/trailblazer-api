@@ -20,12 +20,50 @@
 
         <div class="actions">
           <paper-button raisedButton on-tap="{{dismiss}}" label="close"></paper-button>
-
-          <paper-button raisedButton on-tap="{{toggleAddPanel}}" label="add members"></paper-button>
         </div>
 
-        <template if="{{addPanelVisible}}">
-          <div cross-fade id="addPanel" >
+
+        <!-- Only fetch project details when we have an object supplying an ID -->
+        <core-ajax
+          auto="{{classroom}}"
+          url="/classrooms/{{classroom.id}}/projects"
+          handleAs="json"
+          headers='{"Accept":"application/json"}'
+          on-core-response="{{projectsLoaded}}"></core-ajax>
+
+        <h2>Projects</h2>
+
+        <div class="actions">
+          <paper-button raisedButton on-tap="{{toggleCreateProject}}" label="new project"></paper-button>
+        </div>
+
+        <core-ajax
+          id="create-project"
+          url="/classrooms/{{classroom.id}}/projects"
+          method="POST"
+          handleAs="json"
+          body="{{projectPayload}}"
+          headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+          on-core-response="{{onProjectCommitted}}"></core-ajax>
+
+        <template if="{{createProjectVisible}}">
+          <paper-input floatingLabel value="{{project.name}}" label="Project name"></paper-input>
+          <paper-input floatingLabel multiline rows="3" value="{{project.description}}" label="Project description"></paper-input>
+          <paper-button class="primary" raisedButton on-tap="{{createProject}}" label="create"></paper-button>
+        </template>
+
+        <template repeat="{{projects as project}}">
+          <tb-project on-tap="{{}}" project="{{project}}"></tb-project>
+        </template>
+
+        <h2>Members</h2>
+
+        <div class="actions">
+          <paper-button raisedButton on-tap="{{toggleAddMembers}}" label="add members"></paper-button>
+        </div>
+
+        <template if="{{addMembersVisible}}">
+          <div cross-fade id="addMembers" >
             <h2>Add members</h2>
 
             <core-ajax
@@ -53,7 +91,7 @@
                 method="PUT"
                 body='{"users":[ {{ stagedUserIds }} ]}'
                 headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
-                on-core-response="{{onCommitted}}"></core-ajax>
+                on-core-response="{{onUsersCommitted}}"></core-ajax>
 
               <h3>Ready to Add</h3>
               <p>Tap save to add these people to the class</p>
@@ -82,6 +120,7 @@
           <tb-user user="{{member}}"></tb-user><paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>
         </template>
 
+        <paper-toast class="project-created" text="Project created"></paper-toast>
         <paper-toast class="enrolled" text="Classmembers added"></paper-toast>
         <paper-toast class="withdrawn" text="Classmembers removed"></paper-toast>
 

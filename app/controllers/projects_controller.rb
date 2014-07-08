@@ -4,11 +4,20 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = Project.all
+    @projects = @classroom.projects
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => { :projects => @projects } }
+    end
   end
 
   # GET /projects/1
   def show
+    respond_to do |format|
+      format.html
+      format.json { render :json => @project }
+    end
   end
 
   # GET /projects/new
@@ -22,28 +31,39 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(project_params)
+    @project = @classroom.projects.build(project_params)
 
-    if @project.save
-      redirect_to @project, notice: 'Project was successfully created.'
-    else
-      render :new
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        format.json { render :json => @project }
+      else
+        format.html { render :new }
+        format.json { render :json => { :errors => @project.errors.full_messages }, :status => 422 }
+      end
     end
   end
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params)
-      redirect_to @project, notice: 'Project was successfully updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to @project, notice: 'Project was successfully updates.' }
+        format.json { render :json => @project }
+      else
+        format.html { render :edit }
+        format.json { render :json => { :errors => @project.errors.full_messages }, :status => 422 }
+      end
     end
   end
 
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_url, notice: 'Project was successfully destroyed.'
+    respond_to do |format|
+      format.html { redirect_to projects, notice: 'Project was successfully destroyed.' }
+      format.json { head 200 }
+    end
   end
 
   private

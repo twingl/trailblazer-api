@@ -20,8 +20,6 @@
 
           <paper-icon-button raisedButton label="New Classroom" icon="add" on-click="{{toggleDialog}}"></paper-icon-button>
 
-          <h2>Members</h2>
-
           <template repeat="{{classrooms as classroom}}">
             <tb-classroom on-tap="{{transition}}" classroom="{{classroom}}"></tb-classroom>
           </template>

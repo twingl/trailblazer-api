@@ -1,10 +1,17 @@
 Polymer('tb-classroom-detail', {
   searchInput: "",
   members: [],
+  projects: [],
+  project: {
+    name: "",
+    description: ""
+  },
+  projectPayload: "",
   results: [],
   stagedUsers: [],
   stagedUserIds: [],
-  addPanelVisible: false,
+  createProjectVisible: false,
+  addMembersVisible: false,
 
   ready: function() {
     this.csrfToken = document.querySelector('[name=csrf-token]').content
@@ -14,19 +21,49 @@ Polymer('tb-classroom-detail', {
     this.members = e.detail.response.users;
   },
 
+  projectsLoaded: function(e) {
+    this.projects = e.detail.response.projects
+  },
+
   dismiss: function(e) {
     this.searchInput = '';
     this.results = [];
     this.members = [];
     this.stagedUsers = [];
     this.stagedUserIds = [];
-    this.addPanelVisible = false;
+    this.addMembersVisible = false;
+    this.createProjectVisible = false;
     this.fire('tb-dismiss', e);
   },
 
-  toggleAddPanel: function() {
-    this.addPanelVisible = !this.addPanelVisible;
+  toggleCreateProject: function() {
+    this.createProjectVisible = !this.createProjectVisible;
   },
+
+  createProject: function(e) {
+    this.projectPayload = JSON.stringify(this.project);
+    this.shadowRoot.querySelector('core-ajax#create-project').go();
+  },
+
+  onProjectCommitted: function(e) {
+    this.project = {
+      name: "",
+      description: ""
+    };
+    this.projectPayload = "";
+    this.stagedUsers = [];
+    this.stagedUserIds = [];
+
+    this.createProjectVisible = false;
+    this.projects.push(e.detail.response);
+
+    this.shadowRoot.querySelector('paper-toast.project-created').show();
+  },
+
+  toggleAddMembers: function() {
+    this.addMembersVisible = !this.addMembersVisible;
+  },
+
   handleSearchResult: function(e) {
     this.results = e.detail.response.users;
   },
@@ -55,20 +92,18 @@ Polymer('tb-classroom-detail', {
     this.shadowRoot.querySelector('core-ajax#enroll-members').go();
   },
 
-  onCommitted: function(e) {
+  onUsersCommitted: function(e) {
     this.results = [];
     this.stagedUsers = [];
     this.stagedUserIds = [];
 
-    this.addPanelVisible = false;
+    this.addMembersVisible = false;
     this.members = e.detail.response.users;
-
-    console.log(e);
 
     this.shadowRoot.querySelector('paper-toast.enrolled').show();
   },
 
-  onWithdrawn: function(e) {
+  onMembersWithdrawn: function(e) {
     this.members = e.detail.response.users;
 
     this.shadowRoot.querySelector('paper-toast.withdrawn').show();
