@@ -1,4 +1,5 @@
 Polymer('tb-classroom-detail', {
+  searchInput: "",
   members: [],
   results: [],
   stagedUsers: [],
@@ -12,10 +13,17 @@ Polymer('tb-classroom-detail', {
   membersLoaded: function(e) {
     this.members = e.detail.response.users;
   },
+
   dismiss: function(e) {
-    this.fire('tb-dismiss', e);
+    this.searchInput = '';
+    this.results = [];
     this.members = [];
+    this.stagedUsers = [];
+    this.stagedUserIds = [];
+    this.addPanelVisible = false;
+    this.fire('tb-dismiss', e);
   },
+
   toggleAddPanel: function() {
     this.addPanelVisible = !this.addPanelVisible;
   },
