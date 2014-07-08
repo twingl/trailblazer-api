@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703114937) do
+ActiveRecord::Schema.define(version: 20140708034844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.string   "title"
+    t.datetime "completed_at"
+    t.datetime "started_at"
+  end
+
+  add_index "assignments", ["project_id", "user_id"], name: "index_assignments_on_project_id_and_user_id", unique: true, using: :btree
+  add_index "assignments", ["user_id", "project_id"], name: "index_assignments_on_user_id_and_project_id", unique: true, using: :btree
 
   create_table "classrooms", force: true do |t|
     t.string   "name"
@@ -74,14 +85,6 @@ ActiveRecord::Schema.define(version: 20140703114937) do
   end
 
   add_index "projects", ["classroom_id"], name: "index_projects_on_classroom_id", using: :btree
-
-  create_table "projects_users", force: true do |t|
-    t.integer "user_id"
-    t.integer "project_id"
-  end
-
-  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id", unique: true, using: :btree
-  add_index "projects_users", ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "uid",                            null: false

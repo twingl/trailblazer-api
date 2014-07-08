@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   belongs_to :domain
   belongs_to :org_unit
 
+  has_many :assignments, -> { uniq }
+
   scope :admin,    -> { where(:admin    => true ) }
   scope :teacher,  -> { where(:teacher  => true ) }
   scope :student,  -> { where(:active   => true, :teacher => false, :admin => false) }
@@ -10,6 +12,7 @@ class User < ActiveRecord::Base
 
   # Be wary: http://blog.spoolz.com/2014/05/20/rails-habtm-with-unique-scope-and-select-columns/
   has_and_belongs_to_many :classrooms, -> { uniq }
+  has_many :projects, :through => :classrooms
 
   def student?
     !admin? && !teacher? && active?
