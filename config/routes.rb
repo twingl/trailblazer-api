@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   resources :projects, :only => [:show, :update, :destroy] do
     match :assign, :on => :member, :to => "projects#assign", :via => [:put, :patch]
+
+    resources :assignments
   end
 
   # Misc pages
