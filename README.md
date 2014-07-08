@@ -7,7 +7,10 @@ Update RVM to the latest stable version and install Ruby 2.1.2
     $ rvm get stable
     $ rvm install 2.1.2
 
-You will also need PostgreSQL set up and running on your local machine.
+You will also need PostgreSQL and Redis set up and running on your local
+machine, as well as access to a Google Apps domain with
+administrative privileges.
+
 PostgreSQL provide
 [guides](http://wiki.postgresql.org/wiki/Detailed_installation_guides) to help
 you get started.
@@ -29,15 +32,4 @@ Install the required gems:
 
 And start the development server
 
-    $ rails s
-
-## Contributing
-
-Contributing specific features to this repository should be done through a
-feature branch to allow features to be reviewed before being merged.
-
-**Ensure that all features are sufficiently tested, well structured and contain
-no superfluous code.**
-
-Be mindful that before being merged, the branch will be squashed to keep the
-change history simple.
+    $ foreman start
