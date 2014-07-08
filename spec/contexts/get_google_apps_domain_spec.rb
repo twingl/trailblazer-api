@@ -25,7 +25,7 @@ RSpec.describe GetGoogleAppsDomain do
   end
 
   it "calls the directory api" do
-    expect(api_client_instance).to receive(:directory_users_list).with("example.com")
+    expect(api_client_instance).to receive(:directory_users_list)
 
     GetGoogleAppsDomain.new(:user => user, :domain_name => "example.com").call
   end
