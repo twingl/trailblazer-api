@@ -80,20 +80,20 @@ RSpec.describe ClassroomsController, :type => :controller do
 
       it "updates the requested classroom" do
         classroom = Classroom.create! valid_attributes
-        put :update, {:id => classroom.to_param, :classroom => new_attributes}
+        put :update, :id => classroom.to_param, :classroom => new_attributes
         classroom.reload
         expect(classroom.name).to eq new_attributes[:name]
       end
 
       it "assigns the requested classroom as @classroom" do
         classroom = Classroom.create! valid_attributes
-        put :update, {:id => classroom.to_param, :classroom => valid_attributes}
+        put :update, :id => classroom.to_param, :classroom => valid_attributes
         expect(assigns(:classroom)).to eq(classroom)
       end
 
       it "redirects to the classroom" do
         classroom = Classroom.create! valid_attributes
-        put :update, {:id => classroom.to_param, :classroom => valid_attributes}
+        put :update, :id => classroom.to_param, :classroom => valid_attributes
         expect(response).to redirect_to(classroom)
       end
     end
@@ -101,13 +101,13 @@ RSpec.describe ClassroomsController, :type => :controller do
     describe "with invalid params" do
       it "assigns the classroom as @classroom" do
         classroom = Classroom.create! valid_attributes
-        put :update, {:id => classroom.to_param, :classroom => invalid_attributes}
+        put :update, :id => classroom.to_param, :classroom => invalid_attributes
         expect(assigns(:classroom)).to eq(classroom)
       end
 
       it "re-renders the 'edit' template" do
         classroom = Classroom.create! valid_attributes
-        put :update, {:id => classroom.to_param, :classroom => invalid_attributes}
+        put :update, :id => classroom.to_param, :classroom => invalid_attributes
         expect(response).to render_template("edit")
       end
     end
@@ -119,29 +119,24 @@ RSpec.describe ClassroomsController, :type => :controller do
 
     it "adds a student specified by id to the classroom" do
       new_student = FactoryGirl.create :user, :active => true, :domain => domain
-      put :enroll, :id => classroom.to_param, :users => {
-        :id => [ new_student.id ]
-      }
+      put :enroll, :id => classroom.to_param, :users => [ new_student.id ]
 
-      expect(classroom.students).to include(new_student)
+      expect(classroom.users.student).to include(new_student)
       expect(response).to be_success
     end
 
     it "responds with a class list" do
       new_student = FactoryGirl.create :user, :active => true, :domain => domain
-      put :enroll, :id => classroom.to_param, :users => {
-        :id => [ new_student.id ]
-      }
+      put :enroll, :id => classroom.to_param, :users => [ new_student.id ]
+
       classroom.reload
       expect(response.body).to eq({ :users => classroom.users }.to_json)
     end
 
     it "ignores students that are already enrolled" do
       expect(lambda do
-        put :enroll, :id => classroom.to_param, :users => {
-          :id => [ student.id ]
-        }
-      end).to_not change(classroom, :students)
+        put :enroll, :id => classroom.to_param, :users => [ student.id ]
+      end).to_not change(classroom, :users)
     end
   end
 
@@ -150,18 +145,14 @@ RSpec.describe ClassroomsController, :type => :controller do
     let(:classroom) { FactoryGirl.create :classroom, :domain => domain, :users => [teacher, student] }
 
     it "withdraws a student specified by id to the classroom" do
-      put :withdraw, :id => classroom.to_param, :users => {
-        :id => [ student.id ]
-      }
+      put :withdraw, :id => classroom.to_param, :users => [ student.id ]
 
-      expect(classroom.students).to_not include(student)
+      expect(classroom.users.student).to_not include(student)
       expect(response).to be_success
     end
 
     it "responds with a class list" do
-      put :withdraw, :id => classroom.to_param, :users => {
-        :id => [ student.id ]
-      }
+      put :withdraw, :id => classroom.to_param, :users => [ student.id ]
       classroom.reload
       expect(response.body).to eq({ :users => classroom.users }.to_json)
     end
@@ -169,10 +160,8 @@ RSpec.describe ClassroomsController, :type => :controller do
     it "ignores students that are not enrolled" do
       new_student = FactoryGirl.create :user, :active => true, :domain => domain
       expect(lambda do
-        put :withdraw, :id => classroom.to_param, :users => {
-          :id => [ new_student.id ]
-        }
-      end).to_not change(classroom, :students)
+        put :withdraw, :id => classroom.to_param, :users => [ new_student.id ]
+      end).to_not change(classroom, :users)
     end
   end
 

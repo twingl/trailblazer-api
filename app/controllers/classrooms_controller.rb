@@ -47,7 +47,7 @@ class ClassroomsController < ApplicationController
   # PATCH/PUT /classrooms/1
   def update
     respond_to do |format|
-      if @classroom.save
+      if @classroom.update_attributes(classroom_params)
         format.html { redirect_to @classroom, notice: 'Classroom was successfully updates.' }
         format.json { render :json => @classroom }
       else
