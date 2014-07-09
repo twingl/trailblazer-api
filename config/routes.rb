@@ -38,6 +38,13 @@ Rails.application.routes.draw do
     resources :assignments
   end
 
+  # API resource routes
+  scope :api, :module => 'api' do
+    scope :v1, :module => :v1 do
+      match '/me', :to => "users#me", :via => [:get]
+    end
+  end
+
   # Misc pages
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
   match '/inactive', :to => "pages#inactive", :as => "inactive", :via => [:get]

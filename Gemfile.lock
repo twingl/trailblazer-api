@@ -242,7 +242,7 @@ DEPENDENCIES
   pry (~> 0.9.12)
   pry-nav (~> 0.2.3)
   puma
-  rack-cors
+  rack-cors (~> 0.2.9)
   rails (~> 4.1.1)
   resque (~> 1.25.2)
   rspec-rails (~> 3.0.1)
