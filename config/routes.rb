@@ -42,6 +42,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       match '/me', :to => "users#me", :via => [:get]
+
+      resources :assignments, :only => [:index]
+
+      resources :projects, :only => [:index]
     end
   end
 
