@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  use_doorkeeper
+
   # Authentication
   match '/auth/google_apps/callback', :to => 'sessions#create_google', :via => [:get, :post]
   match '/sign_out', :to => 'sessions#destroy', :via => [:get, :delete]
