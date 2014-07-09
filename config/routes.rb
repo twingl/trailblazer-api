@@ -39,8 +39,8 @@ Rails.application.routes.draw do
   end
 
   # API resource routes
-  scope :api, :module => 'api' do
-    scope :v1, :module => :v1 do
+  namespace :api do
+    namespace :v1 do
       match '/me', :to => "users#me", :via => [:get]
     end
   end
