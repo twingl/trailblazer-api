@@ -33,3 +33,23 @@ Install the required gems:
 And start the development server
 
     $ foreman start
+
+## Polymer Notes
+
+If you plan to work on any of the Polymer components in the application, you'll
+need to use [vulcanize](https://github.com/polymer/vulcanize).
+
+This is because of a [shortcoming](https://github.com/ahuth/emcee/issues/11)
+with a support library [emcee](https://github.com/ahuth/emcee) intended to
+integrate Polymer nicely with the Rails asset pipeline, and will hopefully be
+resolved in the near future.
+
+Make sure you have NPM installed and run `npm install` and it will install
+vulcanize.
+
+There is a rake task `rake vulcanize` which will run vulcanize over `tb-app`
+and output `public/vulcanized.html`.
+
+There's also a Guardfile set up to act as a live reload server, and vulcanize
+the assets as well. Run `guard livereload` as you're working on the app and it
+will automatically vulcanize `tb-app`.

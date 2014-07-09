@@ -1,3 +1,12 @@
+<link rel="import" href="../core-ajax/core-ajax.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+
+<link rel="import" href="../tb-project/tb-project.html">
+<link rel="import" href="../tb-user-chip/tb-user-chip.html">
+<link rel="import" href="../tb-user/tb-user.html">
 
 <polymer-element name="tb-classroom-detail" attributes="classroom">
   <script src="tb-classroom-detail.js" type="text/javascript" charset="utf-8"></script>
@@ -14,7 +23,7 @@
       on-core-response="{{membersLoaded}}"></core-ajax>
 
     <div>
-      <core-card layout vertical start>
+      <div layout vertical start>
         <h1>{{classroom.name}}</h1>
         <p>{{classroom.description}}</p>
 
@@ -124,7 +133,7 @@
         <paper-toast class="enrolled" text="Classmembers added"></paper-toast>
         <paper-toast class="withdrawn" text="Classmembers removed"></paper-toast>
 
-      </core-card>
+      </div>
     <div>
   </template>
 

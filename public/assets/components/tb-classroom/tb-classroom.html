@@ -1,3 +1,7 @@
+<link rel="import" href="../core-ajax/core-ajax.html">
+
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
 
 <polymer-element name="tb-classroom" attributes="classroom">
   <script src="tb-classroom.js" type="text/javascript" charset="utf-8"></script>
@@ -5,7 +9,7 @@
   <template>
     <link href="tb-classroom.css" rel="stylesheet">
 
-    <core-card>
+    <div>
       <h2>{{classroom.name}}</h2>
       <p>{{classroom.description}}</p>
 
@@ -17,7 +21,7 @@
 
       <paper-button raisedButton on-click="{{deleteClassroom}}" label="delete"></paper-button>
       <paper-shadow z="0"></paper-shadow>
-    </core-card>
+    </div>
   </template>
 
 </polymer-element>
