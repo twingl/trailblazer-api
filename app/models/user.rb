@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :org_unit
 
   has_many :assignments, -> { uniq }
+  has_many :nodes
 
   scope :admin,    -> { where(:admin    => true ) }
   scope :teacher,  -> { where(:teacher  => true ) }

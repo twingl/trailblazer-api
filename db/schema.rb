@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709022354) do
+ActiveRecord::Schema.define(version: 20140709125112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,23 @@ ActiveRecord::Schema.define(version: 20140709022354) do
   end
 
   add_index "domains", ["domain"], name: "index_domains_on_domain", using: :btree
+
+  create_table "nodes", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.integer  "parent_id"
+    t.string   "url",                           null: false
+    t.string   "title"
+    t.datetime "arrived_at"
+    t.datetime "departed_at"
+    t.boolean  "idle",          default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "nodes", ["assignment_id"], name: "index_nodes_on_assignment_id", using: :btree
+  add_index "nodes", ["parent_id"], name: "index_nodes_on_parent_id", using: :btree
+  add_index "nodes", ["user_id"], name: "index_nodes_on_user_id", using: :btree
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false
