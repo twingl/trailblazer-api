@@ -5945,7 +5945,7 @@ div:hover {
   background: rgba(0, 0, 0, 0.05);
 }
 </style>
-
+    
     <div>
       <h2>{{classroom.name}}</h2>
       <p>{{classroom.description}}</p>
@@ -8483,7 +8483,8 @@ polymer-next-selector { content: ':host > *'; }
         <span flex="">{{title}}</span>
       </core-toolbar>
 
-      <core-drawer-panel id="drawerPanel">
+      <section>
+        <core-drawer-panel id="drawerPanel">
         <div drawer="">
           <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
             <paper-item id="home" icon="home" label="Home"></paper-item>
@@ -8509,9 +8510,11 @@ polymer-next-selector { content: ':host > *'; }
             </section>
           </core-animated-pages>
         </div>
-      <core-drawer-panel>
+      </core-drawer-panel>
+      </section>
 
-    </core-drawer-panel></core-drawer-panel></core-header-panel>
+
+    </core-header-panel>
   </template>
 
 </polymer-element>
