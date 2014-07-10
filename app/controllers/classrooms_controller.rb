@@ -35,6 +35,7 @@ class ClassroomsController < ApplicationController
 
     respond_to do |format|
       if @classroom.save
+        current_user.classrooms << @classroom
         format.html { redirect_to @classroom, notice: 'Classroom was successfully created.' }
         format.json { render :json => @classroom }
       else
