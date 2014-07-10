@@ -27,12 +27,12 @@
       headers='{"Accept": "application/json"}'
       on-core-response="{{userProfileLoaded}}"></core-ajax>
 
-    <core-header-panel>
+    <core-header-panel mode="waterfall-tall">
       <core-toolbar>
         <paper-icon-button fill icon="menu" on-click="{{toggleDrawer}}"></paper-icon-button>
         <span flex>{{title}}</span>
       </core-toolbar>
-
+     
       <core-drawer-panel id="drawerPanel">
         <div drawer>
           <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
@@ -59,7 +59,7 @@
             </section>
           </core-animated-pages>
         </div>
-      <core-drawer-panel>
+      </core-drawer-panel>
 
     </core-header-panel>
   </template>
