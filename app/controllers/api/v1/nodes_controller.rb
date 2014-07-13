@@ -19,7 +19,7 @@ module Api::V1
       if @node.save
         render :json => @node
       else
-        render :json => { :errors => @node.errors.full_messages }, :status => 422 }
+        render :json => { :errors => @node.errors.full_messages }, :status => 422
       end
     end
 
@@ -27,7 +27,7 @@ module Api::V1
       if @node.update_attributes(node_params)
         render :json => @node
       else
-        render :json => { :errors => @node.errors.full_messages }, :status => 422 }
+        render :json => { :errors => @node.errors.full_messages }, :status => 422
       end
     end
 
