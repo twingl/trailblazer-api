@@ -70,7 +70,7 @@ Doorkeeper.configure do
   #
   # If not specified, Doorkeeper enables all the four grant flows.
   #
-  grant_flows %w(authorization_code)
+  grant_flows %w(implicit)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
