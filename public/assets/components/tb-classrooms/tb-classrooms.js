@@ -8,8 +8,9 @@ Polymer('tb-classrooms', {
 
   transition: function(e) {
     if (this.page === 0) {
-      this.selectedClassroom = e.target.templateInstance.model.classroom;
+      this.selectedClassroom = e.detail.data;
       this.page = 1;
+      console.log(this.selectedClassroom)
     } else {
       delete this.selectedClassroom;
       this.page = 0;

@@ -1,4 +1,5 @@
 <link rel="import" href="../core-ajax/core-ajax.html">
+<link rel="import" href="../core-list/core-list.html">
 <link rel="import" href="../core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 
@@ -19,26 +20,32 @@
       headers='{"Accept":"application/json"}'
       on-core-response="{{classroomsLoaded}}"></core-ajax>
 
-    <div id="container" cross-fade layout vertical>
-      <core-animated-pages selected="{{page}}" transitions="">
-        <section>
-          <h1>Classes</h1>
+      <tb-new-classroom-form on-core-response="{{classroomCreated}}"></tb-new-classroom-form>
 
-          <paper-icon-button raisedButton label="New Classroom" icon="add" on-click="{{toggleDialog}}"></paper-icon-button>
+      <div id="container" cross-fade layout vertical>
+        <core-animated-pages selected="{{page}}" transitions="">
+          <section>
+            <h1>Classes</h1>
+            <paper-icon-button raisedButton label="Add a class" icon="add" on-click="{{toggleDialog}}"></paper-icon-button>
+            <core-list data="{{classrooms}}" height="80" on-core-activate="{{transition}}">
+              <table>
+                <thead>
+                  <tr><th>Class</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  <template>
+                    <tr><td>{{name}}</td><td>{{description}}</td></tr>
+                  </template>
+                </tbody>
+              </table>
+            </core-list>
+          </section>
 
-          <template repeat="{{classrooms as classroom}}">
-            <tb-classroom on-tap="{{transition}}" classroom="{{classroom}}"></tb-classroom>
-          </template>
-
-          <tb-new-classroom-form on-core-response="{{classroomCreated}}"></tb-new-classroom-form>
-        </section>
-
-        <section id="detail">
-          <tb-classroom-detail on-tb-dismiss="{{transition}}" classroom="{{selectedClassroom}}"></tb-classroom-detail>
-        </section>
-      </core-animated-pages>
-    </div>
-
+          <section id="detail">
+            <tb-classroom-detail on-tb-dismiss="{{transition}}" classroom="{{selectedClassroom}}"></tb-classroom-detail>
+          </section>
+        </core-animated-pages>
+      </div>
   </template>
 
 </polymer-element>
