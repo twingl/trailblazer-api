@@ -8579,9 +8579,15 @@ paper-icon-button {
     <!-- Only fetch classrooms when we have an object supplying an ID -->
     <core-ajax auto="{{classroom}}" url="/classrooms/{{classroom.id}}/users" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{membersLoaded}}"></core-ajax>
 
+    <!-- TODO: Ask for confirmation.
+               Redirect to classroom index, show a toast and remove item from the list. 
+               ideal: make this easily undoable. destructiveness = bad! -->
+
+    <core-ajax id="delete-classroom" url="/classrooms/{{classroom.id}}" method="DELETE" on-core-response="{{showToast}}" headers="{&quot;Accept&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}"></core-ajax>  
+
     <div>
       <div layout="" vertical="" start="">
-        <h1>{{classroom.name}}</h1>
+        <h1>{{classroom.name}}</h1><paper-button raisedbutton="" on-click="{{deleteClassroom}}" label="delete"></paper-button>
         <p>{{classroom.description}}</p>
 
         <div class="actions">
