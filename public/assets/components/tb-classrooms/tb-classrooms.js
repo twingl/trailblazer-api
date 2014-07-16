@@ -10,7 +10,6 @@ Polymer('tb-classrooms', {
     if (this.page === 0) {
       this.selectedClassroom = e.detail.data;
       this.page = 1;
-      console.log(this.selectedClassroom)
     } else {
       delete this.selectedClassroom;
       this.page = 0;
@@ -36,6 +35,15 @@ Polymer('tb-classrooms', {
    */
   classroomCreated: function(e) {
     this.classrooms.push(e.detail.response);
+  },
+
+  removeDeletedClassroom: function(e, classroom) {
+    this.deletedClassroom = classroom.name;
+    this.classrooms = this.classrooms.filter(function(obj) {
+      return obj.id !== classroom.id;
+    });
+    this.shadowRoot.querySelector('paper-toast.classroom-deleted').show();
+    
   }
 });
 

@@ -39,10 +39,11 @@
                 </tbody>
               </table>
             </core-list>
+            <paper-toast class="classroom-deleted" text="Classroom “{{deletedClassroom}}” deleted. "></paper-toast>
           </section>
 
           <section id="detail">
-            <tb-classroom-detail on-tb-dismiss="{{transition}}" classroom="{{selectedClassroom}}"></tb-classroom-detail>
+            <tb-classroom-detail on-tb-dismiss="{{transition}}" classroom="{{selectedClassroom}}" on-tb-delete-classroom="{{removeDeletedClassroom}}"></tb-classroom-detail>
           </section>
         </core-animated-pages>
       </div>

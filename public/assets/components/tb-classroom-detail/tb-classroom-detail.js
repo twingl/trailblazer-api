@@ -33,18 +33,14 @@ Polymer('tb-classroom-detail', {
     this.stagedUserIds = [];
     this.addMembersVisible = false;
     this.createProjectVisible = false;
-    console.log(e);
     this.fire('tb-dismiss', e);
   },
 
   deleteClassroom: function(e) {
-    console.log(e, this);
-    // this.shadowRoot.querySelector('core-ajax#delete-classroom').go();
+    this.shadowRoot.querySelector('core-ajax#delete-classroom').go();
+    var deletedClassroom = this.classroom;
+    this.fire('tb-delete-classroom', deletedClassroom);
     this.dismiss(e);
-    // Basically, what I want to do is fire dismiss, which triggers a transition. 
-    // I want to then have an event fire on the transition back, to remove the item from the list
-    // and display the toast.
-    // I suspect this will be a boolean or some object I pass.
   },
 
   toggleCreateProject: function() {

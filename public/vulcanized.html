@@ -6368,7 +6368,7 @@ div:hover {
   background: rgba(0, 0, 0, 0.05);
 }
 </style>
-    
+
     <div>
       <h2>{{classroom.name}}</h2>
       <p>{{classroom.description}}</p>
@@ -8579,9 +8579,7 @@ paper-icon-button {
     <!-- Only fetch classrooms when we have an object supplying an ID -->
     <core-ajax auto="{{classroom}}" url="/classrooms/{{classroom.id}}/users" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{membersLoaded}}"></core-ajax>
 
-    <!-- TODO: Ask for confirmation.
-               Redirect to classroom index, show a toast and remove item from the list. 
-               ideal: make this easily undoable. destructiveness = bad! -->
+    <!-- TODO: Ask for confirmation. -->
 
     <core-ajax id="delete-classroom" url="/classrooms/{{classroom.id}}" method="DELETE" on-core-response="{{showToast}}" headers="{&quot;Accept&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}"></core-ajax>  
 
@@ -8870,10 +8868,11 @@ polymer-next-selector { content: ':host > *'; }
                 </tbody>
               </table>
             </core-list>
+            <paper-toast class="classroom-deleted" text="Classroom &#x201C;{{deletedClassroom}}&#x201D; deleted. "></paper-toast>
           </section>
 
           <section id="detail">
-            <tb-classroom-detail on-tb-dismiss="{{transition}}" classroom="{{selectedClassroom}}"></tb-classroom-detail>
+            <tb-classroom-detail on-tb-dismiss="{{transition}}" classroom="{{selectedClassroom}}" on-tb-delete-classroom="{{removeDeletedClassroom}}"></tb-classroom-detail>
           </section>
         </core-animated-pages>
       </div>
