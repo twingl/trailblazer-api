@@ -8585,7 +8585,13 @@ paper-icon-button {
 
     <div>
       <div layout="" vertical="" start="">
-        <h1>{{classroom.name}}</h1><paper-button raisedbutton="" on-click="{{deleteClassroom}}" label="delete"></paper-button>
+        <h1>{{classroom.name}}</h1>
+        <paper-button raisedbutton="" on-click="{{confirmDeletion}}" label="delete"></paper-button>
+        <paper-dialog id="really-delete" heading="You are now entering the danger zone" transition="paper-dialog-transition-bottom">
+          <p>You cannot undo this! So here's an annoying dialog to make sure you didn't hit the button by accident. Because that would suck.</p>
+          <paper-button label="Cancel" dismissive=""></paper-button>
+          <paper-button label="OK" affirmative="" on-tap="{{deleteClassroom}}" default=""></paper-button>
+        </paper-dialog>
         <p>{{classroom.description}}</p>
 
         <div class="actions">

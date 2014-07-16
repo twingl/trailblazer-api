@@ -35,6 +35,7 @@ Polymer('tb-classrooms', {
    */
   classroomCreated: function(e) {
     this.classrooms.push(e.detail.response);
+    // TODO: Fix the bug where it's appended at the bottom then shifts to the top after a refresh. 
   },
 
   removeDeletedClassroom: function(e, classroom) {
