@@ -83,7 +83,11 @@ class ProjectsController < ApplicationController
     end
 
     def set_classroom
-      @classroom = current_user.classrooms.find(params[:classroom_id])
+      if current_user.admin?
+        @classroom = current_user.domain.classrooms.find(params[:classroom_id])
+      else
+        @classroom = current_user.classrooms.find(params[:classroom_id])
+      end
     end
 
     def assignment_params
