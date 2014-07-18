@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709125112) do
+ActiveRecord::Schema.define(version: 20140714044419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,10 @@ ActiveRecord::Schema.define(version: 20140709125112) do
     t.string   "title"
     t.datetime "completed_at"
     t.datetime "started_at"
+    t.integer  "current_node_id"
   end
 
+  add_index "assignments", ["current_node_id"], name: "index_assignments_on_current_node_id", using: :btree
   add_index "assignments", ["project_id", "user_id"], name: "index_assignments_on_project_id_and_user_id", unique: true, using: :btree
   add_index "assignments", ["user_id", "project_id"], name: "index_assignments_on_user_id_and_project_id", unique: true, using: :btree
 
