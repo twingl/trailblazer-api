@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  use_doorkeeper
+
   # Authentication
   match '/auth/google_apps/callback', :to => 'sessions#create_google', :via => [:get, :post]
   match '/sign_out', :to => 'sessions#destroy', :via => [:get, :delete]
@@ -34,6 +36,20 @@ Rails.application.routes.draw do
     match :assign, :on => :member, :to => "projects#assign", :via => [:put, :patch]
 
     resources :assignments
+  end
+
+  # API resource routes
+  namespace :api do
+    namespace :v1 do
+      match '/me', :to => "users#me", :via => [:get]
+
+      resources :assignments, :only => [:index, :update] do
+        resources :nodes, :on => :member, :only => [:index, :create]
+      end
+      resources :nodes, :only => [:show, :update, :destroy]
+
+      resources :projects, :only => [:index]
+    end
   end
 
   # Misc pages

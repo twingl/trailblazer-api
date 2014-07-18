@@ -4,7 +4,11 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms
   def index
-    @classrooms = current_user.domain.classrooms.all
+    if current_user.admin?
+      @classrooms = current_user.domain.classrooms.all
+    else
+      @classrooms = current_user.classrooms.all
+    end
 
     respond_to do |format|
       format.html
@@ -35,7 +39,7 @@ class ClassroomsController < ApplicationController
 
     respond_to do |format|
       if @classroom.save
-        current_user.classrooms << @classroom
+        @classroom.users << current_user
         format.html { redirect_to @classroom, notice: 'Classroom was successfully created.' }
         format.json { render :json => @classroom }
       else
@@ -89,7 +93,11 @@ class ClassroomsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_classroom
-      @classroom = current_user.domain.classrooms.find(params[:id])
+      if current_user.admin?
+        @classroom = current_user.domain.classrooms.find(params[:id])
+      else
+        @classroom = current_user.classrooms.find(params[:id])
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

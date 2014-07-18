@@ -82,8 +82,12 @@ class ProjectsController < ApplicationController
       @project = @classroom.projects.find(params[:id])
     end
 
-    def set_classroom #TODO is the access restriction here is appropriate?
-      @classroom = current_user.classrooms.find(params[:classroom_id])
+    def set_classroom
+      if current_user.admin?
+        @classroom = current_user.domain.classrooms.find(params[:classroom_id])
+      else
+        @classroom = current_user.classrooms.find(params[:classroom_id])
+      end
     end
 
     def assignment_params

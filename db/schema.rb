@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708034844) do
+ActiveRecord::Schema.define(version: 20140716121252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,10 @@ ActiveRecord::Schema.define(version: 20140708034844) do
     t.string   "title"
     t.datetime "completed_at"
     t.datetime "started_at"
+    t.integer  "current_node_id"
   end
 
+  add_index "assignments", ["current_node_id"], name: "index_assignments_on_current_node_id", using: :btree
   add_index "assignments", ["project_id", "user_id"], name: "index_assignments_on_project_id_and_user_id", unique: true, using: :btree
   add_index "assignments", ["user_id", "project_id"], name: "index_assignments_on_user_id_and_project_id", unique: true, using: :btree
 
@@ -63,6 +65,62 @@ ActiveRecord::Schema.define(version: 20140708034844) do
   end
 
   add_index "domains", ["domain"], name: "index_domains_on_domain", using: :btree
+
+  create_table "nodes", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.integer  "parent_id"
+    t.text     "url",                           null: false
+    t.text     "title"
+    t.datetime "arrived_at"
+    t.datetime "departed_at"
+    t.boolean  "idle",          default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "nodes", ["assignment_id"], name: "index_nodes_on_assignment_id", using: :btree
+  add_index "nodes", ["parent_id"], name: "index_nodes_on_parent_id", using: :btree
+  add_index "nodes", ["user_id"], name: "index_nodes_on_user_id", using: :btree
+
+  create_table "oauth_access_grants", force: true do |t|
+    t.integer  "resource_owner_id", null: false
+    t.integer  "application_id",    null: false
+    t.string   "token",             null: false
+    t.integer  "expires_in",        null: false
+    t.text     "redirect_uri",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
+
+  create_table "oauth_access_tokens", force: true do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
+    t.string   "token",             null: false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",        null: false
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "oauth_applications", force: true do |t|
+    t.string   "name",         null: false
+    t.string   "uid",          null: false
+    t.string   "secret",       null: false
+    t.text     "redirect_uri", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "org_units", force: true do |t|
     t.integer  "domain_id"
