@@ -3,7 +3,7 @@ module Api::V1
     doorkeeper_for :all
 
     before_action :set_assignment, :only => [:index, :create]
-    before_action :set_assignment
+    before_action :set_node, :except => [:index, :create]
 
     def index
       render :json => { :nodes => @assignment.nodes }
@@ -14,7 +14,7 @@ module Api::V1
     end
 
     def create #TODO ? - scope of the API
-      @node = @assignment.nodes.build(node_params)
+      @node = @assignment.nodes.build(node_params.merge(:user => current_resource_owner))
 
       if @node.save
         render :json => @node
@@ -37,13 +37,13 @@ module Api::V1
     end
 
   private
-    
+
     def set_assignment
       @assignment = current_resource_owner.assignments.find(params[:assignment_id])
     end
 
     def set_node
-      @node = current_resource_owner.nodes.find(node_params)
+      @node = current_resource_owner.nodes.find(params[:id])
     end
 
     def node_params
