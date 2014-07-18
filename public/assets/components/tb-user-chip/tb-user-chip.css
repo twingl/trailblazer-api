@@ -3,14 +3,14 @@
   cursor: pointer;
 }
 
-core-card {
+div {
   display: inline-block;
   min-width: 128px;
   min-height: 24px;
   padding: 6px;
 }
 
-core-card:hover {
+div:hover {
   background: rgba(0,0,0,0.05);
 }
 

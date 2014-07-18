@@ -9,6 +9,8 @@ gem 'puma'
 
 # Config, Utility
 gem 'figaro'
+gem 'guard'
+gem 'guard-livereload'
 
 group :development, :test do
   gem 'pry',     '~> 0.9.12'
