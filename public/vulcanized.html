@@ -6412,15 +6412,7 @@ For performance reasons, not every item in the list is rendered at once.
   <script src="assets/components/tb-classroom/tb-classroom.js" type="text/javascript" charset="utf-8"></script>
 
   <template>
-    <style>div {
-  display: block;
-  padding: 24px 12px;
-}
-
-div:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-</style>
+    <style></style>
 
     <div>
       <h2>{{classroom.name}}</h2>
@@ -8676,29 +8668,41 @@ paper-icon-button {
         </template>
 
         <h2>Students</h2>
-
+<!-- 
         <div class="actions">
-          <paper-button raisedbutton="" on-tap="{{toggleAddMembers}}" label="add students"></paper-button>
-        </div>
+          <paper-button raisedButton on-tap="{{toggleAddMembers}}" label="add students"></paper-button>
+        </div> -->
 
-        <template if="{{addMembersVisible}}">
-          <div cross-fade="" id="addMembers">
+<!--         <template if="{{addMembersVisible}}">
+          <div cross-fade id="addMembers" >
             <h2>Add members</h2>
 
-            <core-ajax id="search" url="/users/search?q={{searchInput}}" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{handleSearchResult}}"></core-ajax>
+            <core-ajax
+              id="search"
+              url="/users/search?q={{searchInput}}"
+              handleAs="json"
+              headers='{"Accept":"application/json"}'
+              on-core-response="{{handleSearchResult}}"></core-ajax>
 
             <h3>Find new members</h3>
             <p>Search for members and tap to add</p>
-            <paper-input floatinglabel="" on-change="{{queueSearch}}" value="{{searchInput}}" label="name or email address"></paper-input>
-            <paper-icon-button fill="" class="primary" icon="search" raisedbutton="" on-tap="{{queueSearch}}"></paper-icon-button>
+            <paper-input floatingLabel on-change="{{queueSearch}}" value="{{searchInput}}" label="name or email address"></paper-input>
+            <paper-icon-button fill class="primary" icon="search" raisedButton on-tap="{{queueSearch}}"></paper-icon-button>
             <div id="search-results">
               <template repeat="{{results as user}}">
                 <tb-user-chip on-tap="{{stageUser}}" user="{{user}}"></tb-user-chip>
               </template>
             </div>
 
-            <template if="{{stagedUsers.length &gt; 0}}">
-              <core-ajax id="enroll-members" url="/classrooms/{{classroom.id}}/enroll" handleas="json" method="PUT" body="{&quot;users&quot;:[ {{ stagedUserIds }} ]}" headers="{&quot;Accept&quot;:&quot;application/json&quot;,&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{onUsersCommitted}}"></core-ajax>
+            <template if="{{stagedUsers.length > 0}}">
+              <core-ajax
+                id="enroll-members"
+                url="/classrooms/{{classroom.id}}/enroll"
+                handleAs="json"
+                method="PUT"
+                body='{"users":[ {{ stagedUserIds }} ]}'
+                headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+                on-core-response="{{onUsersCommitted}}"></core-ajax>
 
               <h3>Ready to Add</h3>
               <p>Tap save to add these people to the class</p>
@@ -8709,13 +8713,37 @@ paper-icon-button {
                 </template>
               </div>
 
-              <paper-button class="primary" on-tap="{{commitUsers}}" raisedbutton="" label="save"></paper-button>
+              <paper-button class="primary" on-tap="{{commitUsers}}" raisedButton label="save"></paper-button>
             </template>
           </div>
-        </template>
+        </template> -->
 
-        <core-ajax id="withdraw-members" url="/classrooms/{{classroom.id}}/withdraw" handleas="json" method="PUT" body="{&quot;users&quot;:[ {{ withdrawnUserIds }} ]}" headers="{&quot;Accept&quot;:&quot;application/json&quot;,&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{onWithdrawn}}"></core-ajax>
+<!--         <core-ajax
+          id="withdraw-members"
+          url="/classrooms/{{classroom.id}}/withdraw"
+          handleAs="json"
+          method="PUT"
+          body='{"users":[ {{ withdrawnUserIds }} ]}'
+          headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+          on-core-response="{{onWithdrawn}}"></core-ajax> -->
 
+        <core-list data="{{members}}" height="80" on-core-activate="{{transition}}">
+          <table>
+            <thead>
+              <tr><th>Student</th><th>Projects</th></tr>
+            </thead>
+            <tbody>
+              <template>
+                <tr>
+                  <td><a href="mailto:{{email}}">{{name}}</a></td>
+                    <core-ajax auto="" url="/users/{{id}}/assignments" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{studentAssignmentLoaded}}">
+                    </core-ajax>
+                  <td></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </core-list>
         <template repeat="{{members as member}}">
           <tb-user user="{{member}}"></tb-user><!--<paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>-->
         </template>
@@ -8916,7 +8944,7 @@ polymer-next-selector { content: ':host > *'; }
       <core-animated-pages selected="{{page}}" transitions="">
         <section>
           <h1>Classes</h1>
-          <paper-icon-button raisedbutton="" label="Add a class" icon="add" on-click="{{toggleDialog}}"></paper-icon-button>
+          <!-- <paper-icon-button raisedButton label="Add a class" icon="add" on-click="{{toggleDialog}}"></paper-icon-button> -->
           <core-list data="{{classrooms}}" height="80" on-core-activate="{{transition}}">
             <table>
               <thead>
@@ -8981,7 +9009,7 @@ polymer-next-selector { content: ':host > *'; }
       <section>
         <core-drawer-panel id="drawerPanel">
         <div drawer="">
-          <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
+          <core-menu theme="core-light-theme" selected="0" on-core-select="{{menuSelected}}">
             <!-- <paper-item id="home" icon="home" label="Home"></paper-item> -->
 
             <template if="{{userProfile.admin || userProfile.teacher}}">
