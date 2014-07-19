@@ -40,31 +40,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def students
-    @users = @parent.users.student
-
-    respond_to do |format|
-      format.json { render :json => { :users => @users } }
-    end
-  end
-
-  def teachers
-    @users = @parent.users.teacher
-
-    respond_to do |format|
-      format.json { render :json => { :users => @users } }
-    end
-  end
-
-  def search
-    term = "%#{params[:q]}%"
-    @users = @parent.users.where("lower(name) LIKE lower(?) OR lower(email) LIKE lower(?)", term, term)
-
-    respond_to do |format|
-      format.json { render :json => { :users => @users } }
-    end
-  end
-
   # POST /users/update_roles
   def update_roles
     authorize! :assign_roles, current_user
