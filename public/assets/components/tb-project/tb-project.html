@@ -6,10 +6,11 @@
     <link href="tb-project.css" rel="stylesheet">
 
     <div>
-      <p>
+      <p style="float:left">
         <strong>{{project.name}}</strong><br />
         {{project.description}}
       </p>
+      <paper-button class="danger" raisedButton on-tap="{{deleteProject}}" label="delete"></paper-button>
     </div>
     <core-ajax
       id="delete-project"
@@ -18,7 +19,7 @@
       on-core-response="{{showToast}}"
       headers='{"Accept":"application/json","X-CSRF-Token":"{{csrfToken}}"}'></core-ajax>  
 
-    <paper-button class="danger" raisedButton on-tap="{{deleteProject}}" label="delete"></paper-button>
+    
 
 
   </template>

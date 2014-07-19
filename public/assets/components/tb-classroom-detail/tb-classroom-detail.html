@@ -33,12 +33,14 @@
 
     <div>
       <div layout vertical start>
+        <div class="actions">
+          <paper-button raisedButton on-tap="{{dismiss}}" label="Back"></paper-button><!-- <paper-button raisedButton on-click="{{confirmDeletion}}" label="delete" class="danger"></paper-button> -->
+        </div>
+        
         <h1>{{classroom.name}}</h1>
         <p>{{classroom.description}}</p>
-        <div class="actions">
-          <paper-button raisedButton on-tap="{{dismiss}}" label="close"></paper-button>
-        </div>
-        <paper-button raisedButton on-click="{{confirmDeletion}}" label="delete"></paper-button>
+
+        
         <paper-dialog id="really-delete" heading="You are now entering the danger zone" transition="paper-dialog-transition-bottom">
           <p>You cannot undo this! So here's an annoying dialog to make sure you didn't hit the button by accident. Because that would suck.</p>
           <paper-button label="Cancel" dismissive></paper-button>
@@ -56,6 +58,8 @@
           handleAs="json"
           headers='{"Accept":"application/json"}'
           on-core-response="{{projectsLoaded}}"></core-ajax>
+
+        <div class="projects">
 
         <h2>Projects</h2>
 
@@ -76,12 +80,14 @@
           <paper-input floatingLabel value="{{project.name}}" label="Project name"></paper-input>
           <paper-input floatingLabel multiline rows="3" value="{{project.description}}" label="Project description"></paper-input>
           <paper-button class="primary" raisedButton on-tap="{{createProject}}" label="create"></paper-button>
+          <paper-button  raisedButton on-tap="{{cancelCreateProject}}" label="cancel"></paper-button>
         </template>
 
         <template repeat="{{projects as project}}">
           <tb-project on-tap="{{}}" project="{{project}}"></tb-project>
         </template>
-
+        </div>
+        <div class="students">
         <h2>Students</h2>
 <!-- 
         <div class="actions">
@@ -159,16 +165,14 @@
                       headers='{"Accept":"application/json"}'
                       on-core-response="{{studentAssignmentLoaded}}">
                     </core-ajax>
-                    {{assignment}}
+                    <p>{{assignment}}</p>
                   </td>
                 </tr>
               </template>
             </tbody>
           </table>
         </core-list>
-        <template repeat="{{members as member}}">
-          <tb-user user="{{member}}"></tb-user><!--<paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>-->
-        </template>
+        </div>
 
         <paper-toast class="project-created" text="Project created"></paper-toast>
         <paper-toast class="enrolled" text="Classmembers added"></paper-toast>

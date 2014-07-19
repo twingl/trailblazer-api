@@ -56,6 +56,10 @@ Polymer('tb-classroom-detail', {
     this.shadowRoot.querySelector('core-ajax#create-project').go();
   },
 
+  cancelCreateProject: function(e) {
+    this.createProjectVisible = false;
+  },
+
   onProjectCommitted: function(e) {
     this.project = {
       name: "",

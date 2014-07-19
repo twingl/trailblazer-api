@@ -8532,18 +8532,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="assets/components/tb-project/tb-project.js" type="text/javascript" charset="utf-8"></script>
 
   <template>
-    <style>
+    <style>.danger {
+    float: right;
+}
 </style>
 
     <div>
-      <p>
+      <p style="float:left">
         <strong>{{project.name}}</strong><br>
         {{project.description}}
       </p>
+      <paper-button class="danger" raisedbutton="" on-tap="{{deleteProject}}" label="delete"></paper-button>
     </div>
     <core-ajax id="delete-project" url="/projects/{{project.id}}" method="DELETE" on-core-response="{{showToast}}" headers="{&quot;Accept&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}"></core-ajax>  
 
-    <paper-button class="danger" raisedbutton="" on-tap="{{deleteProject}}" label="delete"></paper-button>
+    
 
 
   </template>
@@ -8618,6 +8621,7 @@ p {
   background: #e51c23;
   color: white;
   fill: white;
+
 }
 
 paper-button,
@@ -8635,12 +8639,14 @@ paper-icon-button {
 
     <div>
       <div layout="" vertical="" start="">
+        <div class="actions">
+          <paper-button raisedbutton="" on-tap="{{dismiss}}" label="Back"></paper-button><!-- <paper-button raisedButton on-click="{{confirmDeletion}}" label="delete" class="danger"></paper-button> -->
+        </div>
+        
         <h1>{{classroom.name}}</h1>
         <p>{{classroom.description}}</p>
-        <div class="actions">
-          <paper-button raisedbutton="" on-tap="{{dismiss}}" label="close"></paper-button>
-        </div>
-        <paper-button raisedbutton="" on-click="{{confirmDeletion}}" label="delete"></paper-button>
+
+        
         <paper-dialog id="really-delete" heading="You are now entering the danger zone" transition="paper-dialog-transition-bottom">
           <p>You cannot undo this! So here's an annoying dialog to make sure you didn't hit the button by accident. Because that would suck.</p>
           <paper-button label="Cancel" dismissive=""></paper-button>
@@ -8654,6 +8660,8 @@ paper-icon-button {
         <!-- Only fetch project details when we have an object supplying an ID -->
         <core-ajax auto="{{classroom}}" url="/classrooms/{{classroom.id}}/projects" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{projectsLoaded}}"></core-ajax>
 
+        <div class="projects">
+
         <h2>Projects</h2>
 
         <div class="actions">
@@ -8666,12 +8674,14 @@ paper-icon-button {
           <paper-input floatinglabel="" value="{{project.name}}" label="Project name"></paper-input>
           <paper-input floatinglabel="" multiline="" rows="3" value="{{project.description}}" label="Project description"></paper-input>
           <paper-button class="primary" raisedbutton="" on-tap="{{createProject}}" label="create"></paper-button>
+          <paper-button raisedbutton="" on-tap="{{cancelCreateProject}}" label="cancel"></paper-button>
         </template>
 
         <template repeat="{{projects as project}}">
           <tb-project on-tap="{{}}" project="{{project}}"></tb-project>
         </template>
-
+        </div>
+        <div class="students">
         <h2>Students</h2>
 <!-- 
         <div class="actions">
@@ -8744,16 +8754,14 @@ paper-icon-button {
                   <td>
                     <core-ajax auto="" url="/users/{{id}}/assignments" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{studentAssignmentLoaded}}">
                     </core-ajax>
-                    {{assignment}}
+                    <p>{{assignment}}</p>
                   </td>
                 </tr>
               </template>
             </tbody>
           </table>
         </core-list>
-        <template repeat="{{members as member}}">
-          <tb-user user="{{member}}"></tb-user><!--<paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>-->
-        </template>
+        </div>
 
         <paper-toast class="project-created" text="Project created"></paper-toast>
         <paper-toast class="enrolled" text="Classmembers added"></paper-toast>
@@ -8940,6 +8948,28 @@ polymer-next-selector { content: ':host > *'; }
     <style>div#container {
   padding-left : 12px;
   padding-right: 12px;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: left;
+    padding: 0;
+}
+
+td {
+    text-align: left;
+}
+
+core-list tbody tr {
+    cursor: pointer;
+}
+
+core-list tr:hover {
+    background-color: #ccc;
+}
+
+td {
+     padding: 12px 0;
 }
 </style>
 

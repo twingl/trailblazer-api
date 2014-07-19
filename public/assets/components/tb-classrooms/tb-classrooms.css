@@ -2,3 +2,25 @@ div#container {
   padding-left : 12px;
   padding-right: 12px;
 }
+
+table {
+    border-collapse: collapse;
+    text-align: left;
+    padding: 0;
+}
+
+td {
+    text-align: left;
+}
+
+core-list tbody tr {
+    cursor: pointer;
+}
+
+core-list tr:hover {
+    background-color: #ccc;
+}
+
+td {
+     padding: 12px 0;
+}
