@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :users, :only => [] do
     post :update_roles, :on => :collection
 
+    match :assignments, :on => :member, :to => "assignments#user_index", :via => [:get]
+
     get :search,   :on => :collection
     get :students, :on => :collection
     get :teachers, :on => :collection

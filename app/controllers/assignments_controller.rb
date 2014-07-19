@@ -1,10 +1,23 @@
 class AssignmentsController < ApplicationController
-  before_action :set_project
+  before_action :set_project, except: [:user_index]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
   def index
     @assignments = @project.assignments
+
+    respond_to do |format|
+      #format.html
+      format.json { render :json => { :assignments => @assignments } }
+    end
+  end
+
+  # GET /users/:id/assignments
+  # FIXME does not currently conform to the data visibility structure - a
+  # teacher may now view all assignments for a given user, regardless of
+  # whether they're a part of that classroom
+  def user_index
+    @assignments = current_user.domain.users.find(params[:id])
 
     respond_to do |format|
       #format.html
