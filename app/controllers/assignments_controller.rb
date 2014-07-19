@@ -17,7 +17,7 @@ class AssignmentsController < ApplicationController
   # teacher may now view all assignments for a given user, regardless of
   # whether they're a part of that classroom
   def user_index
-    @assignments = current_user.domain.users.find(params[:id])
+    @assignments = current_user.domain.users.find(params[:id]).assignments
 
     respond_to do |format|
       #format.html
