@@ -5,9 +5,8 @@
 <link rel="import" href="../core-menu/core-menu.html">
 <link rel="import" href="../core-toolbar/core-toolbar.html">
 <link rel="import" href="../core-icons/core-icons.html">
-<link rel="import" href="../core-icons/notification-icons.html">
 <link rel="import" href="../core-icons/iconsets/social-icons.html">
-
+<link rel="import" href="../core-icons/iconsets/notification-icons.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
@@ -45,7 +44,7 @@
             </template>
 
             <template if="{{userProfile.admin}}">
-              <paper-item id="domain" icon="sync" label="Sync from GAFE"></paper-item>
+              <paper-item id="domain" icon="notification:sync" label="Sync with Google Apps"></paper-item>
             </template>
 
             <paper-item id="signout" icon="exit-to-app" label="Sign Out"></paper-item>
@@ -63,7 +62,6 @@
         </div>
         </core-drawer-panel>
       </section>
-
 
     </core-header-panel>
   </template>
