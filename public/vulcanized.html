@@ -8541,6 +8541,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         {{project.description}}
       </p>
     </div>
+    <core-ajax id="delete-project" url="/projects/{{project.id}}" method="DELETE" on-core-response="{{showToast}}" headers="{&quot;Accept&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}"></core-ajax>  
+
+    <paper-button class="danger" raisedbutton="" on-tap="{{deleteProject}}" label="delete"></paper-button>
+
+
   </template>
 </polymer-element>
 

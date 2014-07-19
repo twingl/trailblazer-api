@@ -11,6 +11,16 @@
         {{project.description}}
       </p>
     </div>
+    <core-ajax
+      id="delete-project"
+      url="/projects/{{project.id}}"
+      method="DELETE"
+      on-core-response="{{showToast}}"
+      headers='{"Accept":"application/json","X-CSRF-Token":"{{csrfToken}}"}'></core-ajax>  
+
+    <paper-button class="danger" raisedButton on-tap="{{deleteProject}}" label="delete"></paper-button>
+
+
   </template>
 </polymer-element>
 
