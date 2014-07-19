@@ -8945,7 +8945,12 @@ polymer-next-selector { content: ':host > *'; }
   <script src="assets/components/tb-classrooms/tb-classrooms.js" type="text/javascript" charset="utf-8"></script>
 
   <template>
-    <style>div#container {
+    <style>h1 {
+    margin-left: 12px;
+    font-size: 2.5em;
+}
+
+div#container {
   padding-left : 12px;
   padding-right: 12px;
 }
@@ -8953,23 +8958,35 @@ polymer-next-selector { content: ':host > *'; }
 table {
     border-collapse: collapse;
     text-align: left;
-    padding: 0;
 }
 
 td {
     text-align: left;
 }
 
-core-list tbody tr {
+thead tr {
+    border-bottom: 1px solid #ccc;
+}
+
+thead th {
+    padding-bottom: 8px;
+    padding-left: 12px;
+}
+
+tbody tr {
     cursor: pointer;
 }
 
-core-list tr:hover {
-    background-color: #ccc;
+tbody tr:hover {
+    background-color: #eee;
 }
 
 td {
-     padding: 12px 0;
+     padding: 18px 12px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eee;
 }
 </style>
 
@@ -9039,8 +9056,8 @@ td {
 
     <core-header-panel>
       <core-toolbar>
-        <paper-icon-button fill="" icon="menu" on-click="{{toggleDrawer}}"></paper-icon-button>
-        <span flex="">{{title}}</span>
+        <paper-icon-button fill="" icon="menu" on-click="{{toggleDrawer}}" id="hamburger"></paper-icon-button>
+        <span flex="">Trailblazer</span>
       </core-toolbar>
 
       <section>

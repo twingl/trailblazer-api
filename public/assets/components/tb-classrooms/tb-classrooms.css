@@ -1,3 +1,8 @@
+h1 {
+    margin-left: 12px;
+    font-size: 2.5em;
+}
+
 div#container {
   padding-left : 12px;
   padding-right: 12px;
@@ -6,21 +11,33 @@ div#container {
 table {
     border-collapse: collapse;
     text-align: left;
-    padding: 0;
 }
 
 td {
     text-align: left;
 }
 
-core-list tbody tr {
+thead tr {
+    border-bottom: 1px solid #ccc;
+}
+
+thead th {
+    padding-bottom: 8px;
+    padding-left: 12px;
+}
+
+tbody tr {
     cursor: pointer;
 }
 
-core-list tr:hover {
-    background-color: #ccc;
+tbody tr:hover {
+    background-color: #eee;
 }
 
 td {
-     padding: 12px 0;
+     padding: 18px 12px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eee;
 }
