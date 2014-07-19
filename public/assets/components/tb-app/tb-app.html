@@ -38,7 +38,7 @@
           <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
             <paper-item id="home" icon="home" label="Home"></paper-item>
 
-            <template if="{{userProfile.teacher}}">
+            <template if="{{userProfile.admin || userProfile.teacher}}">
               <paper-item id="classrooms" icon="social:school" label="Classes"></paper-item>
             </template>
 
