@@ -34,17 +34,19 @@
     <div>
       <div layout vertical start>
         <h1>{{classroom.name}}</h1>
+        <p>{{classroom.description}}</p>
+        <div class="actions">
+          <paper-button raisedButton on-tap="{{dismiss}}" label="close"></paper-button>
+        </div>
         <paper-button raisedButton on-click="{{confirmDeletion}}" label="delete"></paper-button>
         <paper-dialog id="really-delete" heading="You are now entering the danger zone" transition="paper-dialog-transition-bottom">
           <p>You cannot undo this! So here's an annoying dialog to make sure you didn't hit the button by accident. Because that would suck.</p>
           <paper-button label="Cancel" dismissive></paper-button>
           <paper-button label="OK" affirmative on-tap="{{deleteClassroom}}" default></paper-button>
         </paper-dialog>
-        <p>{{classroom.description}}</p>
+        
 
-        <div class="actions">
-          <paper-button raisedButton on-tap="{{dismiss}}" label="close"></paper-button>
-        </div>
+        
 
 
         <!-- Only fetch project details when we have an object supplying an ID -->
@@ -80,10 +82,10 @@
           <tb-project on-tap="{{}}" project="{{project}}"></tb-project>
         </template>
 
-        <h2>Members</h2>
+        <h2>Students</h2>
 
         <div class="actions">
-          <paper-button raisedButton on-tap="{{toggleAddMembers}}" label="add members"></paper-button>
+          <paper-button raisedButton on-tap="{{toggleAddMembers}}" label="add students"></paper-button>
         </div>
 
         <template if="{{addMembersVisible}}">
@@ -141,7 +143,7 @@
           on-core-response="{{onWithdrawn}}"></core-ajax>
 
         <template repeat="{{members as member}}">
-          <tb-user user="{{member}}"></tb-user><paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>
+          <tb-user user="{{member}}"></tb-user><!--<paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>-->
         </template>
 
         <paper-toast class="project-created" text="Project created"></paper-toast>
