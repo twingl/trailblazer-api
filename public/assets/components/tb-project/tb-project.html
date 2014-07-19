@@ -5,12 +5,12 @@
   <template>
     <link href="tb-project.css" rel="stylesheet">
 
-    <div>
+    <div layout horizontal class="projects">
       <p style="float:left">
         <strong>{{project.name}}</strong><br />
         {{project.description}}
       </p>
-      <paper-button class="danger" raisedButton on-tap="{{deleteProject}}" label="delete"></paper-button>
+      <paper-button class="danger  delete" raisedButton on-tap="{{deleteProject}}" label="delete"></paper-button>
     </div>
     <core-ajax
       id="delete-project"

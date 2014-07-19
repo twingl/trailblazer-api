@@ -1,3 +1,11 @@
 .danger {
-    float: right;
+
+}
+
+.delete {
+    display:none;
+}
+
+.projects:hover .delete {
+    display: block;
 }
