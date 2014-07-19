@@ -5,6 +5,7 @@
 <link rel="import" href="../core-menu/core-menu.html">
 <link rel="import" href="../core-toolbar/core-toolbar.html">
 <link rel="import" href="../core-icons/core-icons.html">
+<link rel="import" href="../core-icons/notification-icons.html">
 <link rel="import" href="../core-icons/iconsets/social-icons.html">
 
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -37,14 +38,14 @@
         <core-drawer-panel id="drawerPanel">
         <div drawer>
           <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
-            <paper-item id="home" icon="home" label="Home"></paper-item>
+            <!-- <paper-item id="home" icon="home" label="Home"></paper-item> -->
 
             <template if="{{userProfile.admin || userProfile.teacher}}">
               <paper-item id="classrooms" icon="social:school" label="Classes"></paper-item>
             </template>
 
             <template if="{{userProfile.admin}}">
-              <paper-item id="domain" icon="settings" label="Configure Domain"></paper-item>
+              <paper-item id="domain" icon="sync" label="Sync from GAFE"></paper-item>
             </template>
 
             <paper-item id="signout" icon="exit-to-app" label="Sign Out"></paper-item>
