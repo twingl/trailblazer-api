@@ -8736,9 +8736,11 @@ paper-icon-button {
               <template>
                 <tr>
                   <td><a href="mailto:{{email}}">{{name}}</a></td>
+                  <td>
                     <core-ajax auto="" url="/users/{{id}}/assignments" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{studentAssignmentLoaded}}">
                     </core-ajax>
-                  <td></td>
+                    {{assignment}}
+                  </td>
                 </tr>
               </template>
             </tbody>
