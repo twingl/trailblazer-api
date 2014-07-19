@@ -36,6 +36,17 @@ Polymer('tb-classroom-detail', {
     this.fire('tb-dismiss', e);
   },
 
+  confirmDeletion: function(e) {
+    this.shadowRoot.querySelector('#really-delete').toggle();
+  },
+
+  deleteClassroom: function(e) {
+    this.shadowRoot.querySelector('core-ajax#delete-classroom').go();
+    var deletedClassroom = this.classroom;
+    this.fire('tb-delete-classroom', deletedClassroom);
+    this.dismiss(e);
+  },
+
   toggleCreateProject: function() {
     this.createProjectVisible = !this.createProjectVisible;
   },

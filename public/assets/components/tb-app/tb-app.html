@@ -33,7 +33,8 @@
         <span flex>{{title}}</span>
       </core-toolbar>
 
-      <core-drawer-panel id="drawerPanel">
+      <section>
+        <core-drawer-panel id="drawerPanel">
         <div drawer>
           <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
             <paper-item id="home" icon="home" label="Home"></paper-item>
@@ -59,7 +60,9 @@
             </section>
           </core-animated-pages>
         </div>
-      <core-drawer-panel>
+        </core-drawer-panel>
+      </section>
+
 
     </core-header-panel>
   </template>

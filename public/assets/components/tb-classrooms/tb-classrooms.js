@@ -8,7 +8,7 @@ Polymer('tb-classrooms', {
 
   transition: function(e) {
     if (this.page === 0) {
-      this.selectedClassroom = e.target.templateInstance.model.classroom;
+      this.selectedClassroom = e.detail.data;
       this.page = 1;
     } else {
       delete this.selectedClassroom;
@@ -35,6 +35,16 @@ Polymer('tb-classrooms', {
    */
   classroomCreated: function(e) {
     this.classrooms.push(e.detail.response);
+    // TODO: Fix the bug where it's appended at the bottom then shifts to the top after a refresh. 
+  },
+
+  removeDeletedClassroom: function(e, classroom) {
+    this.deletedClassroom = classroom.name;
+    this.classrooms = this.classrooms.filter(function(obj) {
+      return obj.id !== classroom.id;
+    });
+    this.shadowRoot.querySelector('paper-toast.classroom-deleted').show();
+    
   }
 });
 
