@@ -11,6 +11,7 @@ gem 'puma'
 gem 'figaro'
 gem 'guard'
 gem 'guard-livereload'
+gem 'rails_12factor', :group => :production
 
 group :development, :test do
   gem 'pry',     '~> 0.9.12'
