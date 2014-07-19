@@ -83,12 +83,12 @@
         </template>
 
         <h2>Students</h2>
-
+<!-- 
         <div class="actions">
           <paper-button raisedButton on-tap="{{toggleAddMembers}}" label="add students"></paper-button>
-        </div>
+        </div> -->
 
-        <template if="{{addMembersVisible}}">
+<!--         <template if="{{addMembersVisible}}">
           <div cross-fade id="addMembers" >
             <h2>Add members</h2>
 
@@ -131,17 +131,39 @@
               <paper-button class="primary" on-tap="{{commitUsers}}" raisedButton label="save"></paper-button>
             </template>
           </div>
-        </template>
+        </template> -->
 
-        <core-ajax
+<!--         <core-ajax
           id="withdraw-members"
           url="/classrooms/{{classroom.id}}/withdraw"
           handleAs="json"
           method="PUT"
           body='{"users":[ {{ withdrawnUserIds }} ]}'
           headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
-          on-core-response="{{onWithdrawn}}"></core-ajax>
+          on-core-response="{{onWithdrawn}}"></core-ajax> -->
 
+        <core-list data="{{members}}" height="80" on-core-activate="{{transition}}">
+          <table>
+            <thead>
+              <tr><th>Student</th><th>Projects</th></tr>
+            </thead>
+            <tbody>
+              <template>
+                <tr>
+                  <td><a href="mailto:{{email}}">{{name}}</a></td>
+                    <core-ajax  
+                      auto
+                      url="/users/{{id}}/assignments"
+                      handleAs="json"
+                      headers='{"Accept":"application/json"}'
+                      on-core-response="{{studentAssignmentLoaded}}">
+                    </core-ajax>
+                  <td></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </core-list>
         <template repeat="{{members as member}}">
           <tb-user user="{{member}}"></tb-user><!--<paper-button label="remove" class="danger" on-tap="{{withdrawMember}}"></paper-button>-->
         </template>

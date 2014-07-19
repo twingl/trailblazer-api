@@ -123,6 +123,10 @@ Polymer('tb-classroom-detail', {
   withdrawMember: function(e) {
     this.withdrawnUserIds = [ e.target.templateInstance.model.member.id ];
     this.shadowRoot.querySelector('core-ajax#withdraw-members').go();
+  },
+
+  studentAssignmentLoaded: function(e){
+    console.log("Assignment loaded", this);
   }
 
 });
