@@ -126,7 +126,9 @@ Polymer('tb-classroom-detail', {
   },
 
   studentAssignmentLoaded: function(e){
-    console.log("Assignment loaded", this);
+    console.log("Assignment loaded", this, e);
+    this.assignment = e.detail.response.assignments;
+    console.log(this.assignment);
   }
 
 });
