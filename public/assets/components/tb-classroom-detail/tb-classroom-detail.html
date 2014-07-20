@@ -128,7 +128,7 @@
                 </thead>
                 <tbody>
                   <template>
-                    <tr>
+                    <tr id="student-{{id}}">
                       <td><a href="mailto:{{email}}">{{name}}</a></td>
                       <td>
                         <core-ajax  
@@ -138,7 +138,20 @@
                           headers='{"Accept":"application/json"}'
                           on-core-response="{{studentAssignmentLoaded}}">
                         </core-ajax>
-                        <p>{{assignment}}</p>
+                        <ul>
+                        <template repeat="{{assignments as assignment}}">
+                          <core-ajax  
+                            auto
+                            url="/projects/{{assignment.project_id}}"
+                            handleAs="json"
+                            headers='{"Accept":"application/json"}'
+                            on-core-response="{{getProjectName}}">
+                          </core-ajax>
+                          <template repeat="{{projects as project}}">
+                            <li><a href="#">{{project.name}}</a></li>
+                          </template>
+                        </template>
+                        </ul>
                       </td>
                     </tr>
                   </template>
