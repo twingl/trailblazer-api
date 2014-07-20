@@ -133,12 +133,13 @@ Polymer('tb-classroom-detail', {
   studentAssignmentLoaded: function(e){
     e.target.templateInstance.model.assignments = e.detail.response.assignments; 
     for (var i = e.target.templateInstance.model.assignments.length - 1; i >= 0; i--) {
-      console.log(e.target.templateInstance.model.assignments[i])
+      // console.log(e.target.templateInstance.model.assignments[i])
     };
   },
 
-  getProjectName: function(e) {
-    e.target.templateInstance.model.projects = e.detail.response.projects;
+  onProjectLoaded: function(e) {
+    console.log(e.detail.response);
+    e.target.templateInstance.model.project = e.detail.response;
   }
 
 });

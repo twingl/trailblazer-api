@@ -8752,11 +8752,11 @@ paper-icon-button {
                         </core-ajax>
                         <ul>
                         <template repeat="{{assignments as assignment}}">
-                          <core-ajax auto="" url="/projects/{{assignment.project_id}}" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{getProjectName}}">
+                          <core-ajax auto="" url="/projects/{{assignment.project_id}}" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{onProjectLoaded}}">
                           </core-ajax>
-                          <template repeat="{{projects as project}}">
+                          
                             <li><a href="assets/components/tb-classroom-detail/#">{{project.name}}</a></li>
-                          </template>
+                       
                         </template>
                         </ul>
                       </td>

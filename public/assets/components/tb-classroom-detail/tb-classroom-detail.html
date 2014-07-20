@@ -145,11 +145,11 @@
                             url="/projects/{{assignment.project_id}}"
                             handleAs="json"
                             headers='{"Accept":"application/json"}'
-                            on-core-response="{{getProjectName}}">
+                            on-core-response="{{onProjectLoaded}}">
                           </core-ajax>
-                          <template repeat="{{projects as project}}">
+                          
                             <li><a href="#">{{project.name}}</a></li>
-                          </template>
+                       
                         </template>
                         </ul>
                       </td>
