@@ -8,7 +8,7 @@
 <link rel="import" href="../tb-user-chip/tb-user-chip.html">
 <link rel="import" href="../tb-user/tb-user.html">
 
-<polymer-element name="tb-classroom-detail" attributes="classroom">
+<polymer-element name="tb-classroom-detail" attributes="classroom" on-tb-refresh-assignments="{{refreshStudentAssignments}}">
   <script src="tb-classroom-detail.js" type="text/javascript" charset="utf-8"></script>
 
   <template>
@@ -121,7 +121,7 @@
               headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
               on-core-response="{{onWithdrawn}}"></core-ajax> -->
 
-            <core-list data="{{members}}" height="80" on-core-activate="{{transition}}">
+            <core-list data="{{members}}" height="80" id="student-project-list">
               <table>
                 <thead>
                   <tr><th>Student</th><th>Projects</th></tr>
@@ -133,6 +133,7 @@
                       <td>
                         <core-ajax  
                           auto
+                          class="assignment-refresh"
                           url="/users/{{id}}/assignments"
                           handleAs="json"
                           headers='{"Accept":"application/json"}'

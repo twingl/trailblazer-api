@@ -8615,7 +8615,7 @@ p {
 
 
 
-<polymer-element name="tb-classroom-detail" attributes="classroom" assetpath="assets/components/tb-classroom-detail/">
+<polymer-element name="tb-classroom-detail" attributes="classroom" on-tb-refresh-assignments="{{refreshStudentAssignments}}" assetpath="assets/components/tb-classroom-detail/">
   <script src="assets/components/tb-classroom-detail/tb-classroom-detail.js" type="text/javascript" charset="utf-8"></script>
 
   <template>
@@ -8738,7 +8738,7 @@ paper-icon-button {
               headers='{"Accept":"application/json","Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
               on-core-response="{{onWithdrawn}}"></core-ajax> -->
 
-            <core-list data="{{members}}" height="80" on-core-activate="{{transition}}">
+            <core-list data="{{members}}" height="80" id="student-project-list">
               <table>
                 <thead>
                   <tr><th>Student</th><th>Projects</th></tr>
@@ -8748,7 +8748,7 @@ paper-icon-button {
                     <tr id="student-{{id}}">
                       <td><a href="mailto:{{email}}">{{name}}</a></td>
                       <td>
-                        <core-ajax auto="" url="/users/{{id}}/assignments" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{studentAssignmentLoaded}}">
+                        <core-ajax auto="" class="assignment-refresh" url="/users/{{id}}/assignments" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{studentAssignmentLoaded}}">
                         </core-ajax>
                         <ul>
                         <template repeat="{{assignments as assignment}}">

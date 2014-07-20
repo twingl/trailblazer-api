@@ -74,6 +74,9 @@ Polymer('tb-classroom-detail', {
     this.projects.push(e.detail.response);
 
     this.shadowRoot.querySelector('paper-toast.project-created').show();
+
+    this.fire('tb-refresh-assignments', e);
+
   },
 
   toggleAddMembers: function() {
@@ -132,8 +135,13 @@ Polymer('tb-classroom-detail', {
 
   studentAssignmentLoaded: function(e){
     e.target.templateInstance.model.assignments = e.detail.response.assignments; 
-    for (var i = e.target.templateInstance.model.assignments.length - 1; i >= 0; i--) {
-      // console.log(e.target.templateInstance.model.assignments[i])
+  },
+
+  refreshStudentAssignments: function(e) {
+    console.log("Attempting refresh.")
+    var toUpdate = this.shadowRoot.querySelectorAll('#student-project-list core-ajax.assignment-refresh');
+    for (var i = toUpdate.length - 1; i >= 0; i--) {
+      toUpdate[i].go();
     };
   },
 
