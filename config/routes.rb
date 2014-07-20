@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     match :enroll, :on => :member, :to => "classrooms#enroll", :via => [:put, :patch]
     match :withdraw, :on => :member, :to => "classrooms#withdraw", :via => [:put, :patch]
 
+    match :activate, :on => :member, :to => "classrooms#activate", :via => [:post]
+
     resources :users, :only => [:index] do
       get :students, :on => :collection
       get :teachers, :on => :collection

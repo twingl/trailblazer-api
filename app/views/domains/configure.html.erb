@@ -1,6 +1,46 @@
-<%= @domain.domain %>
+<h1><%= @domain.domain %></h1>
 
+<h2>Classrooms</h2>
+<p>
+  Here are the classrooms currently associated with your domain.
+</p>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready( function() {
+    $('.activate-class').submit( function(evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      $.post( $(this).attr("action"), function(response) {
+        window.location.reload(true);
+      });
+    });
+  });
+</script>
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Members</th>
+    <th>From Google Group?</th>
+    <th></th>
+  </tr>
 
+  <% @domain.classrooms.each do |classroom| %>
+    <tr>
+      <td><%= classroom.name %></td>
+      <td><%= classroom.users.count %></td>
+      <td><%= classroom.group_key.present? ? "Yes" : "No" %></td>
+      <td>
+        <%= form_tag(activate_classroom_path(classroom), :method => :post, :class => "activate-class") do %>
+          <button type="submit">Activate Classmembers</button>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>Users</h2>
+<p>
+  Here are the users currently associated with your domain
+</p>
 <%= form_tag(update_roles_users_path, :method => :post) do %>
   <table border="1">
     <tr>
@@ -35,5 +75,4 @@
       <td colspan="4"><input type="submit" name="submit" value="Save" /></td>
     </tr>
   </table>
-
 <% end %>

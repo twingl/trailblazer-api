@@ -1,6 +1,6 @@
 class ClassroomsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_classroom, only: [:show, :edit, :update, :destroy, :enroll, :withdraw]
+  before_action :set_classroom, only: [:show, :edit, :update, :destroy, :enroll, :withdraw, :activate]
 
   # GET /classrooms
   def index
@@ -79,6 +79,16 @@ class ClassroomsController < ApplicationController
     @classroom.users.delete(users)
 
     render :json => { :users => @classroom.users }, :status => 200
+  end
+
+  # Activates all members of the specified classroom
+  # POST /classrooms/1/activate
+  def activate
+    ActiveRecord::Base.transaction do
+      @classroom.users.each { |u| u.update_attribute(:active, true) }
+    end
+
+    head 200
   end
 
   # DELETE /classrooms/1
