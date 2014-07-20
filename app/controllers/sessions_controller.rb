@@ -24,4 +24,12 @@ class SessionsController < ApplicationController
     destroy_session
     redirect_to landing_url
   end
+
+  # Sign out and redirect to the sign in path
+  # GET/DELETE /change_user
+  def change_user
+    store_location(params[:return_to]) if params[:return_to]
+    destroy_session
+    redirect_to "/auth/google_apps"
+  end
 end

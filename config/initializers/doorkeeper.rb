@@ -5,7 +5,12 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    User.find_by_id(session[:user_id]) || redirect_to("/auth/google_apps")
+    if user = User.find_by_id(session[:user_id])
+      user
+    else
+      session["user_return_to"] = request.url
+      redirect_to("/auth/google_apps")
+    end
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.

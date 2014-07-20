@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Authentication
   match '/auth/google_apps/callback', :to => 'sessions#create_google', :via => [:get, :post]
   match '/sign_out', :to => 'sessions#destroy', :via => [:get, :delete]
+  match '/change_user', :to => 'sessions#change_user', :via => [:get, :delete], :as => :change_user
 
   match '/me', :to => "users#me", :via => [:get]
 

@@ -26,8 +26,10 @@ protected
 
   # Destroy the current session.
   def destroy_session
+    return_to = session["user_return_to"]
     @current_user = nil
     session.clear
+    session["user_return_to"] = return_to
   end
 
   # Returns whether there is a valid session.
@@ -41,7 +43,8 @@ protected
   end
 
   # Check if there is a valid session and redirect to +landing_url+ if not.
-  def authenticate_user!(location = request.url)
+  def authenticate_user!(location)
+    location ||= request.url
     unless user_signed_in?
       store_location(location)
       redirect_to landing_url
