@@ -56,6 +56,10 @@ Polymer('tb-classroom-detail', {
     this.shadowRoot.querySelector('core-ajax#create-project').go();
   },
 
+  cancelCreateProject: function(e) {
+    this.createProjectVisible = false;
+  },
+
   onProjectCommitted: function(e) {
     this.project = {
       name: "",
@@ -69,6 +73,9 @@ Polymer('tb-classroom-detail', {
     this.projects.push(e.detail.response);
 
     this.shadowRoot.querySelector('paper-toast.project-created').show();
+
+    this.refreshStudentAssignments();
+
   },
 
   toggleAddMembers: function() {
@@ -123,6 +130,21 @@ Polymer('tb-classroom-detail', {
   withdrawMember: function(e) {
     this.withdrawnUserIds = [ e.target.templateInstance.model.member.id ];
     this.shadowRoot.querySelector('core-ajax#withdraw-members').go();
+  },
+
+  studentAssignmentLoaded: function(e){
+    e.target.templateInstance.model.assignments = e.detail.response.assignments; 
+  },
+
+  refreshStudentAssignments: function(e) {
+    var toUpdate = this.shadowRoot.querySelectorAll('#student-project-list core-ajax.assignment-refresh');
+    for (var i = toUpdate.length - 1; i >= 0; i--) {
+      toUpdate[i].go();
+    };
+  },
+
+  onProjectLoaded: function(e) {
+    e.target.templateInstance.model.project = e.detail.response;
   }
 
 });

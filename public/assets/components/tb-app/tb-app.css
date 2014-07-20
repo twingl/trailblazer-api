@@ -13,7 +13,7 @@ core-header-panel {
 }
 
 div[drawer] {
-  background: white;
+  background: #fafafa;
 }
 
 core-toolbar {
@@ -37,4 +37,18 @@ core-toolbar>paper-menu-button>paper-item {
 }
 core-toolbar>paper-menu-button paper-item:hover {
   background-color: rgba(0,0,0,0.1);
+}
+
+#hamburger {
+    display: none;
+  }
+
+@media only screen and (max-width: 640px){
+  #hamburger {
+    display: inline-block;
+  }  
+}
+
+.core-selected {
+  background-color: #ccc;
 }

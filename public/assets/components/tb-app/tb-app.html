@@ -6,7 +6,7 @@
 <link rel="import" href="../core-toolbar/core-toolbar.html">
 <link rel="import" href="../core-icons/core-icons.html">
 <link rel="import" href="../core-icons/iconsets/social-icons.html">
-
+<link rel="import" href="../core-icons/iconsets/notification-icons.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
@@ -29,22 +29,22 @@
 
     <core-header-panel>
       <core-toolbar>
-        <paper-icon-button fill icon="menu" on-click="{{toggleDrawer}}"></paper-icon-button>
-        <span flex>{{title}}</span>
+        <paper-icon-button fill icon="menu" on-click="{{toggleDrawer}}" id="hamburger"></paper-icon-button>
+        <span flex>Trailblazer</span>
       </core-toolbar>
 
       <section>
         <core-drawer-panel id="drawerPanel">
         <div drawer>
-          <core-menu theme="core-light-theme" selected="1" on-core-select="{{menuSelected}}">
-            <paper-item id="home" icon="home" label="Home"></paper-item>
+          <core-menu theme="core-light-theme" selected="0" on-core-select="{{menuSelected}}">
+            <!-- <paper-item id="home" icon="home" label="Home"></paper-item> -->
 
             <template if="{{userProfile.admin || userProfile.teacher}}">
               <paper-item id="classrooms" icon="social:school" label="Classes"></paper-item>
             </template>
 
             <template if="{{userProfile.admin}}">
-              <paper-item id="domain" icon="settings" label="Configure Domain"></paper-item>
+              <paper-item id="domain" icon="notification:sync" label="Sync with Google Apps"></paper-item>
             </template>
 
             <paper-item id="signout" icon="exit-to-app" label="Sign Out"></paper-item>
@@ -62,7 +62,6 @@
         </div>
         </core-drawer-panel>
       </section>
-
 
     </core-header-panel>
   </template>

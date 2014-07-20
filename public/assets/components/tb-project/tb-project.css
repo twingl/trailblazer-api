@@ -1,1 +1,11 @@
+.danger {
 
+}
+
+.delete {
+    display:none;
+}
+
+.projects:hover .delete {
+    display: block;
+}
