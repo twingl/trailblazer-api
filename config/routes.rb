@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   end
 
   # Misc pages
+  match '/app', :to => "pages#app", :as => "app", :via => [:get]
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
   match '/inactive', :to => "pages#inactive", :as => "inactive", :via => [:get]
 

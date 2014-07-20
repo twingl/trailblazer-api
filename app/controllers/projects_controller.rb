@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = @classroom.projects.build(project_params)
+    @project = @classroom.projects.build(project_params.merge(:auto_assign => true))
 
     respond_to do |format|
       if @project.save

@@ -74,7 +74,7 @@ protected
   # Returns the location that was stored by +store_location+ and clears it from
   # the session.
   def return_location
-    return_url = session["user_return_to"] || landing_url
+    return_url = session["user_return_to"] || app_url
     session.delete("user_return_to")
     return_url
   end
