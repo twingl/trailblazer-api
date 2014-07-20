@@ -36,6 +36,7 @@ module Trailblazer
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
+        resource '/oauth/revoke', :headers => :any, :methods => [:post, :delete, :options]
         resource '/api/*', :headers => :any, :methods => [:get, :post, :put, :patch, :delete, :options]
       end
     end
