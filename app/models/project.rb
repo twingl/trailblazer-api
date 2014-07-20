@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
 
   attr_accessor :auto_assign
 
-  has_many :assignments
+  has_many :assignments, :dependent => :destroy
   has_many :users, :through => :assignments
 
   after_create :assign, :if => Proc.new {|u| u.auto_assign and u.classroom_id.present? }
