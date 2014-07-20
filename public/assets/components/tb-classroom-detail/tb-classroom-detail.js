@@ -23,7 +23,6 @@ Polymer('tb-classroom-detail', {
 
   projectsLoaded: function(e) {
     this.projects = e.detail.response.projects
-    console.log(this.projects);
   },
 
   dismiss: function(e) {
@@ -138,7 +137,6 @@ Polymer('tb-classroom-detail', {
   },
 
   refreshStudentAssignments: function(e) {
-    console.log("Attempting refresh.")
     var toUpdate = this.shadowRoot.querySelectorAll('#student-project-list core-ajax.assignment-refresh');
     for (var i = toUpdate.length - 1; i >= 0; i--) {
       toUpdate[i].go();
@@ -146,7 +144,6 @@ Polymer('tb-classroom-detail', {
   },
 
   onProjectLoaded: function(e) {
-    console.log(e.detail.response);
     e.target.templateInstance.model.project = e.detail.response;
   }
 
