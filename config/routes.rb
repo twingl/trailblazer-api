@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  use_doorkeeper
+  use_doorkeeper do
+    controllers :authorizations => 'authorizations'
+  end
 
   # Authentication
   match '/auth/google_apps/callback', :to => 'sessions#create_google', :via => [:get, :post]
