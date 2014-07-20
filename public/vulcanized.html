@@ -8785,7 +8785,7 @@ paper-icon-button {
             </template>
 
             <template repeat="{{projects as project}}">
-              <tb-project on-tap="{{}}" project="{{project}}"></tb-project>
+              <tb-project on-tap="{{}}" on-tb-project-deleted="{{refreshStudentAssignments}}" project="{{project}}"></tb-project>
             </template>
           </div>
          

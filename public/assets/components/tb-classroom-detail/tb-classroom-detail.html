@@ -8,7 +8,7 @@
 <link rel="import" href="../tb-user-chip/tb-user-chip.html">
 <link rel="import" href="../tb-user/tb-user.html">
 
-<polymer-element name="tb-classroom-detail" attributes="classroom">
+<polymer-element name="tb-classroom-detail" attributes="classroom" >
   <script src="tb-classroom-detail.js" type="text/javascript" charset="utf-8"></script>
 
   <template>
@@ -186,7 +186,7 @@
             </template>
 
             <template repeat="{{projects as project}}">
-              <tb-project on-tap="{{}}" project="{{project}}"></tb-project>
+              <tb-project on-tap="{{}}" on-tb-project-deleted="{{refreshStudentAssignments}}" project="{{project}}"></tb-project>
             </template>
           </div>
          
