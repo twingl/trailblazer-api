@@ -39,7 +39,15 @@
 
 <h2>Users</h2>
 <p>
-  Here are the users currently associated with your domain
+  Here are the users currently associated with your domain.
+</p>
+<p>
+  An activated user that is neither an admin nor a teacher is considered a
+  student.
+</p>
+<p>
+  You can activate an entire classroom at once above (recommended) or on an
+  individual basis below.
 </p>
 <%= form_tag(update_roles_users_path, :method => :post) do %>
   <table border="1">
@@ -64,7 +72,7 @@
           <td><%= user.email %></td>
           <td><%= f.check_box :admin,    {}, "true", "false" %></td>
           <td><%= f.check_box :teacher,  {}, "true", "false" %></td>
-          <td><%= f.check_box :student?, {}, "true", "false" %></td>
+          <td><%= f.check_box :student?, { :disabled => true }, "true", "false" %></td>
           <td><%= f.check_box :active,   {}, "true", "false" %></td>
         </tr>
       <% end %>
