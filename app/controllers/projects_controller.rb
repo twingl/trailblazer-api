@@ -79,7 +79,11 @@ class ProjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = @classroom.projects.find(params[:id])
+      if current_user.admin?
+        @project = current_user.domain.projects.find(params[:id])
+      else
+        @project = current_user.projects.find(params[:id])
+      end
     end
 
     def set_classroom
