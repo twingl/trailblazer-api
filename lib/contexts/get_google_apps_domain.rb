@@ -12,7 +12,7 @@ class GetGoogleAppsDomain < Playhouse::Context
     client.fetch_access_token!
 
     # Fetch a list of the users in this domain
-    response = client.directory_users_list
+    response = client.directory_users_list(:domain => domain_name)
 
     if response.success?
       domain = Domain.find_or_create_by(:domain => domain_name) do |d|
