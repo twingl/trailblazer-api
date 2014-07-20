@@ -74,7 +74,7 @@ Polymer('tb-classroom-detail', {
 
     this.shadowRoot.querySelector('paper-toast.project-created').show();
 
-    this.fire('tb-refresh-assignments', e);
+    this.refreshStudentAssignments();
 
   },
 
