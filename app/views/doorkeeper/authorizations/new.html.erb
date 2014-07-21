@@ -3,19 +3,35 @@
 </header>
 
 <main role="main">
-  <p class="h4">
-    You&apos;ll be signing in to <strong class="text-info"><%= @pre_auth.client.name %></strong> as <%= current_user.name %>
-  </p>
+  <% if current_user.domain_id.present? %>
+    <p class="h4">
+      You&apos;ll be signing in to <strong class="text-info"><%= @pre_auth.client.name %></strong> as <%= current_user.name %> (<%= current_user.email %>)
+    </p>
+    <p>
+      If you&apos;re signed into multiple Google accounts, you can <strong class="text-info">Change User</strong> below.
+    </p>
+  <% else %>
+    <p class="h4">
+    We can't sign you into <strong class="text-info"><%= @pre_auth.client.name %></strong> as <%= current_user.name %> (<%= current_user.email %>) just yet.
+    </p>
+    <p class="h4">
+    We'll email you to let you know when Trailblazer is available for individuals!
+    </p>
+  <% end %>
 
   <div class="actions">
     <p>
-    <%= form_tag oauth_authorization_path, method: :post do %>
-      <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-      <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-      <%= hidden_field_tag :state, @pre_auth.state %>
-      <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-      <%= hidden_field_tag :scope, @pre_auth.scope %>
-      <%= submit_tag "Sign in!", class: "btn btn-success btn-lg btn-block" %>
+    <% if current_user.domain_id.present? %>
+      <%= form_tag oauth_authorization_path, method: :post do %>
+        <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+        <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+        <%= hidden_field_tag :state, @pre_auth.state %>
+        <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+        <%= hidden_field_tag :scope, @pre_auth.scope %>
+        <%= submit_tag "Sign in!", class: "btn btn-success btn-lg btn-block" %>
+      <% end %>
+    <% else %>
+      <p class="btn btn-default btn-lg btn-block">Trailblazer is not available for individuals yet</p>
     <% end %>
     </p>
 

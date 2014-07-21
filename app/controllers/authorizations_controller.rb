@@ -14,6 +14,14 @@ class AuthorizationsController < ::Doorkeeper::AuthorizationsController
     end
   end
 
+  def create
+    if current_user.domain_id.present?
+      super
+    else
+      redirect_to coming_soon_url
+    end
+  end
+
 protected
 
   # Returns the currently authenticated user

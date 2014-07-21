@@ -2,6 +2,7 @@ require 'contexts/get_oauth_user'
 
 class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => :create
+  skip_before_action :authenticate_valid_account!, :only => [:create, :destroy, :change_user]
 
   # Callback endpoint for authenticating using OmniAuth::GoogleOauth2
   # Calls GetOauthUser to retrieve a user, redirecting to +landing_url+ if none
