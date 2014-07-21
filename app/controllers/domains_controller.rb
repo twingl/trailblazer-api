@@ -2,6 +2,7 @@ require 'contexts/get_oauth_user'
 require 'contexts/get_google_apps_domain'
 
 class DomainsController < ApplicationController
+  skip_before_action :authenticate_valid_account!, :only => [:configure]
 
   # Endpoint for configuring a domain.
   #
