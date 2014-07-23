@@ -46,8 +46,7 @@ protected
   end
 
   # Check if there is a valid session and redirect to +landing_url+ if not.
-  def authenticate_user!(location)
-    location ||= request.url
+  def authenticate_user!(location = request.url)
     unless user_signed_in?
       store_location(location)
       redirect_to landing_url
