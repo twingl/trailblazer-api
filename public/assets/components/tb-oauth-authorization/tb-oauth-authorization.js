@@ -21,8 +21,10 @@ Polymer('tb-oauth-authorization', {
   },
   userImageLoaded: function(evt) {
     response = JSON.parse(evt.detail.response);
-    url = response.image.url; 
-    this.userImage = url.replace("sz=50", "sz=256");
+    if (response.image) {
+      url = response.image.url;
+      this.userImage = url.replace("sz=50", "sz=64");
+    }
 
     if (response.cover) {
       this.$.cover.style.backgroundImage = "url(" + response.cover.coverPhoto.url + ")"

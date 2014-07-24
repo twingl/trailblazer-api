@@ -40,11 +40,16 @@
 
     .card .cover .user-image {
       margin-right: 24px;
+      border-radius: 33px;
+      width: 66px;
+      height: 66px;
+      background: rgba(255, 255, 255, 0.36);
     }
     .card .cover .user-image img {
       border-radius: 32px;
       width: 64px;
       height: 64px;
+      margin: 1px;
     }
 
     .card .cover .user-details .name {

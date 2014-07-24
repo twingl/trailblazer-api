@@ -9419,8 +9419,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   },
   userImageLoaded: function(evt) {
     response = JSON.parse(evt.detail.response);
-    url = response.image.url; 
-    this.userImage = url.replace("sz=50", "sz=256");
+    if (response.image) {
+      url = response.image.url;
+      this.userImage = url.replace("sz=50", "sz=64");
+    }
 
     if (response.cover) {
       this.$.cover.style.backgroundImage = "url(" + response.cover.coverPhoto.url + ")"
@@ -9472,11 +9474,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     .card .cover .user-image {
       margin-right: 24px;
+      border-radius: 33px;
+      width: 66px;
+      height: 66px;
+      background: rgba(255, 255, 255, 0.36);
     }
     .card .cover .user-image img {
       border-radius: 32px;
       width: 64px;
       height: 64px;
+      margin: 1px;
     }
 
     .card .cover .user-details .name {
