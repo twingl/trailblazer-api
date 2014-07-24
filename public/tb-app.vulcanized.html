@@ -9382,6 +9382,230 @@ tbody tr {
 </polymer-element>
 </div>
 
+<div hidden><!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link href="//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet" type="text/css">
+
+
+
+
+<polymer-element name="tb-oauth-authorization" attributes="googleApiKey userName userEmail userUid canSignIn formTarget clientName clientId redirectURI state responseType scope changeURL" assetpath="assets/components/tb-oauth-authorization/">
+  <script>Polymer('tb-oauth-authorization', {
+  ready: function() {
+    this.csrfToken = document.querySelector('[name=csrf-token]').content;
+    this.formData = JSON.stringify({
+      client_id:     this.clientId,
+      redirect_uri:  this.redirectURI,
+      state:         this.state,
+      response_type: this.responseType,
+      scope:         this.scope
+    });
+    console.log(this.canSignIn);
+  },
+  approve: function(evt) {
+    this.$.approve.go();
+  },
+  deny: function(evt) {
+    this.$.deny.go();
+  },
+  changeUser: function(evt) {
+    window.location.href = this.changeURL;
+  },
+  userImageLoaded: function(evt) {
+    response = JSON.parse(evt.detail.response);
+    url = response.image.url; 
+    this.userImage = url.replace("sz=50", "sz=256");
+
+    if (response.cover) {
+      this.$.cover.style.backgroundImage = "url(" + response.cover.coverPhoto.url + ")"
+    }
+  }
+});
+</script>
+
+  <template>
+    <style type="text/css">.container {
+  width: 100%;
+  height: 100%;
+  background: #eeeeee;
+}
+
+.card {
+  width: 448px;
+  border-radius: 2px;
+  background: #ffffff;
+  font-family: "RobotoDraft";
+}
+
+  .card .cover {
+    background: #424242;
+    color: #fff;
+    padding: 24px;
+    padding-bottom: 0px;
+    position: relative;
+    z-index: 1;
+    width: 400px;
+    height: 152px;
+    background-size: cover;
+    background-position: center;
+  }
+
+    .card .cover #background-protection {
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.36);
+    }
+
+    .card .cover div[layout] {
+      margin: 24px 0;
+    }
+
+    .card .cover .user-image {
+      margin-right: 24px;
+    }
+    .card .cover .user-image img {
+      border-radius: 32px;
+      width: 64px;
+      height: 64px;
+    }
+
+    .card .cover .user-details .name {
+      font-weight: 500;
+      font-size: 32px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.96);
+    }
+    .card .cover .user-details .email {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .card .secondary {
+      margin: 12px 0;
+      text-align: left;
+    }
+    .card .cover .change {
+      font-size: 12px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.72);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .card .cover .change:hover {
+      color: rgba(255, 255, 255, 0.96);
+      text-decoration: underline;
+    }
+
+  .card .content {
+    padding: 16px;
+    position: relative;
+    z-index: 1;
+    color: rgba(0, 0, 0, 0.72);
+  }
+
+    .card .content p {
+      font-size: 18px;
+      line-height: 1.5em;
+      font-weight: 300;
+    }
+
+    em.application {
+      font-style: normal;
+      font-weight: 500;
+      color: #5c6bc0;
+    }
+
+    .card .content .actions {
+      text-align: right;
+    }
+
+    .card .content .primary.actions {
+      margin-top: 32px;
+    }
+
+    .card .content paper-button.deny {
+      width: 9em;
+    }
+
+    .card .content paper-button.approve {
+      background: #2baf2b;
+      color: #fff;
+      width: 9em;
+    }
+</style>
+
+    <core-ajax id="approve" url="{{formTarget}}" body="{{formData}}" headers="{&quot;Content-Type&quot;: &quot;application/json&quot;}" method="post"></core-ajax>
+
+    <core-ajax id="deny" url="{{formTarget}}" body="{{formData}}" headers="{&quot;Content-Type&quot;: &quot;application/json&quot;}" method="delete"></core-ajax>
+
+    <core-ajax auto="" url="https://www.googleapis.com/plus/v1/people/{{userUid}}?fields=image,cover&amp;key={{googleApiKey}}" on-core-response="{{userImageLoaded}}"></core-ajax>
+
+    <div class="container" horizontal="" center-justified="" center="" layout="">
+      <div class="card">
+        <div class="cover" id="cover" layout="" vertical="">
+          <div layout="" horizontal="" center="">
+            <div class="user-image">
+              <img src="{{userImage}}" alt="">
+            </div>
+            <div flex="" class="user-details">
+              <div class="name">{{userName}}</div>
+              <div class="email">{{userEmail}}</div>
+            </div>
+          </div>
+
+          <div class="secondary">
+            <button class="change" on-tap="{{changeUser}}">Use a different account</button>
+          </div>
+
+          <div id="background-protection"></div>
+        </div>
+
+        <div class="content">
+          <template if="{{canSignIn == &apos;true&apos;}}">
+            <h1>Sign In</h1>
+
+            <p>Sign in to <em class="application">{{clientName}}</em> and allow it to access your Trailblazer profile and data?</p>
+
+            <div class="primary actions">
+              <paper-button label="Cancel" class="deny" on-tap="{{deny}}"></paper-button>
+              <paper-button label="Sign in" class="approve" on-tap="{{approve}}"></paper-button>
+            </div>
+          </template>
+
+          <template if="{{canSignIn == &apos;false&apos;}}">
+            <h1>Coming Soon</h1>
+
+            <p>
+              {{clientName}} isn&apos;t <em>quite</em> ready for individuals, so
+              we can&apos;t sign you in just yet. If you have another account
+              that you usually use to sign in, tap the button below.
+            </p>
+
+            <div class="primary actions">
+              <paper-button label="Use a different account" class="change" on-tap="{{changeUser}}"></paper-button>
+            </div>
+          </template>
+        </div>
+
+        <paper-shadow z="1"></paper-shadow>
+      </div>
+    </div>
+  </template>
+</polymer-element>
+</div>
+
 <polymer-element name="tb-app" assetpath="assets/components/tb-app/">
   <script>Polymer('tb-app', {
   pages: {

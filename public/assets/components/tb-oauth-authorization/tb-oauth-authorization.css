@@ -1,0 +1,114 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: #eeeeee;
+}
+
+.card {
+  width: 448px;
+  border-radius: 2px;
+  background: #ffffff;
+  font-family: "RobotoDraft";
+}
+
+  .card .cover {
+    background: #424242;
+    color: #fff;
+    padding: 24px;
+    padding-bottom: 0px;
+    position: relative;
+    z-index: 1;
+    width: 400px;
+    height: 152px;
+    background-size: cover;
+    background-position: center;
+  }
+
+    .card .cover #background-protection {
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.36);
+    }
+
+    .card .cover div[layout] {
+      margin: 24px 0;
+    }
+
+    .card .cover .user-image {
+      margin-right: 24px;
+    }
+    .card .cover .user-image img {
+      border-radius: 32px;
+      width: 64px;
+      height: 64px;
+    }
+
+    .card .cover .user-details .name {
+      font-weight: 500;
+      font-size: 32px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.96);
+    }
+    .card .cover .user-details .email {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .card .secondary {
+      margin: 12px 0;
+      text-align: left;
+    }
+    .card .cover .change {
+      font-size: 12px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.72);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .card .cover .change:hover {
+      color: rgba(255, 255, 255, 0.96);
+      text-decoration: underline;
+    }
+
+  .card .content {
+    padding: 16px;
+    position: relative;
+    z-index: 1;
+    color: rgba(0, 0, 0, 0.72);
+  }
+
+    .card .content p {
+      font-size: 18px;
+      line-height: 1.5em;
+      font-weight: 300;
+    }
+
+    em.application {
+      font-style: normal;
+      font-weight: 500;
+      color: #5c6bc0;
+    }
+
+    .card .content .actions {
+      text-align: right;
+    }
+
+    .card .content .primary.actions {
+      margin-top: 32px;
+    }
+
+    .card .content paper-button.deny {
+      width: 9em;
+    }
+
+    .card .content paper-button.approve {
+      background: #2baf2b;
+      color: #fff;
+      width: 9em;
+    }

@@ -7,10 +7,10 @@ class AuthorizationsController < ::Doorkeeper::AuthorizationsController
         auth = authorization.authorize
         redirect_to auth.redirect_uri
       else
-        render 'doorkeeper/authorizations/new'
+        render 'doorkeeper/authorizations/new', :layout => "application"
       end
     else
-      render 'doorkeeper/authorizations/error'
+      render 'doorkeeper/authorizations/error', :layout => "application"
     end
   end
 

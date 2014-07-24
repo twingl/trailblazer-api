@@ -11,3 +11,5 @@ GOOGLE_OAUTH2_CLIENT_SECRET: "client_secret"
 GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: "private key - see http://ar.zu.my/how-to-store-private-key-files-in-heroku/"
 GOOGLE_SERVICE_ACCOUNT_SECRET: "notasecret"
 GOOGLE_SERVICE_ACCOUNT_EMAIL: "service account email"
+
+GOOGLE_BROWSER_API_KEY: "browser API key"
