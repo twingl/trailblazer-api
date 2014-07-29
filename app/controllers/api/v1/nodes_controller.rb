@@ -2,8 +2,8 @@ module Api::V1
   class NodesController < ApiController
     doorkeeper_for :all
 
-    before_action :set_assignment, :only => [:index, :create]
-    before_action :set_node, :except => [:index, :create]
+    before_action :set_assignment, :only => [:index, :create, :update_coords]
+    before_action :set_node, :except => [:index, :create, :update_coords]
 
     def index
       render :json => { :nodes => @assignment.nodes }
@@ -31,6 +31,15 @@ module Api::V1
       end
     end
 
+    def update_coords #TODO
+      ActiveRecord::Base.transaction do
+        @assignment.nodes.find(coord_params.keys).each do |n|
+          n.update_attributes(coord_params[n.id.to_s].slice(:x, :y))
+        end
+      end
+      head 200
+    end
+
     def destroy #TODO ? - scope of the API
       @node.destroy
       head 200
@@ -48,6 +57,10 @@ module Api::V1
 
     def node_params
       params.require(:node).permit(:url, :title, :arrived_at, :departed_at, :idle, :parent_id)
+    end
+
+    def coord_params
+      params.require(:nodes).permit!
     end
   end
 end

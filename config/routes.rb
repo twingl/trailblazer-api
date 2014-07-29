@@ -52,7 +52,9 @@ Rails.application.routes.draw do
       match '/me', :to => "users#me", :via => [:get]
 
       resources :assignments, :only => [:index, :update] do
-        resources :nodes, :on => :member, :only => [:index, :create]
+        resources :nodes, :on => :member, :only => [:index, :create] do
+          match :coords, :on => :collection, :to => "nodes#update_coords", :via => [:put, :patch]
+        end
       end
       resources :nodes, :only => [:show, :update, :destroy]
 
