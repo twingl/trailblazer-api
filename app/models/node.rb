@@ -3,7 +3,7 @@ class Node < ActiveRecord::Base
   belongs_to :user
   belongs_to :parent, :class_name => "Node"
 
-  before_save :get_title
+  before_create :get_title
 
 private
 
