@@ -33,8 +33,9 @@ module Api::V1
 
     def update_coords #TODO
       ActiveRecord::Base.transaction do
-        @assignment.nodes.find(coord_params.keys).each do |n|
-          n.update_attributes(coord_params[n.id.to_s].slice(:x, :y))
+        coords = coord_params
+        @assignment.nodes.find(coords.keys).each do |n|
+          n.update_attributes(coords[n.id.to_s].slice(:x, :y))
         end
       end
       head 200
