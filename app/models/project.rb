@@ -8,7 +8,7 @@ class Project < ActiveRecord::Base
 
   after_create :assign, :if => Proc.new {|u| u.auto_assign and u.classroom_id.present? }
 
-  def assign(assignees = classroom.users.student)
+  def assign(assignees = classroom.users)
     ActiveRecord::Base.transaction do
       assignees.each do |u|
         assignments.create(:user => u)
