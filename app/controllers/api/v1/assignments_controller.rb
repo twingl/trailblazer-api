@@ -11,6 +11,14 @@ module Api::V1
     end
 
     def create #TODO
+      project = Project.create(project_params)
+      @assignment = project.assign_to(current_resource_owner)
+
+      if @assignment.errors.empty?
+        render :json => @assignment
+      else
+        render :json => { :errors => @assignment.errors.full_messages }, :status => 422
+      end
     end
 
     def update #TODO
@@ -32,6 +40,10 @@ module Api::V1
 
     def assignment_params
       params.require(:assignment).permit(:current_node_id)
+    end
+
+    def project_params
+      params.require(:assignment).permit(:name, :description)
     end
   end
 end

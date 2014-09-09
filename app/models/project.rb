@@ -15,4 +15,8 @@ class Project < ActiveRecord::Base
       end
     end
   end
+
+  def assign_to(assignee)
+    assignments.create(:user => assignee)
+  end
 end
