@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       match '/me', :to => "users#me", :via => [:get]
 
-      resources :assignments, :only => [:index, :update] do
+      resources :assignments, :only => [:index, :create, :update] do
         resources :nodes, :on => :member, :only => [:index, :create] do
           match :coords, :on => :collection, :to => "nodes#update_coords", :via => [:put, :patch]
         end
