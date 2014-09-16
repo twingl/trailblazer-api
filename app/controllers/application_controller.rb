@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
                 :establish_session,
                 :destroy_session
 
+  if ENV["STAGING_USERNAME"] && ENV["STAGING_PASSWORD"]
+    http_basic_authenticate_with name:     ENV["STAGING_USERNAME"],
+                                 password: ENV["STAGING_PASSWORD"]
+  end
+
+
 protected
 
   # Returns the currently authenticated user

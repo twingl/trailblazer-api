@@ -13,3 +13,7 @@ GOOGLE_SERVICE_ACCOUNT_SECRET: "notasecret"
 GOOGLE_SERVICE_ACCOUNT_EMAIL: "service account email"
 
 GOOGLE_BROWSER_API_KEY: "browser API key"
+
+# Staging authentication
+#STAGING_USERNAME: "user"
+#STAGING_PASSWORD: "pass"
