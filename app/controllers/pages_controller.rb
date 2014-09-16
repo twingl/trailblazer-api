@@ -2,7 +2,6 @@ require 'contexts/get_oauth_user'
 require 'contexts/get_google_apps_domain'
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_valid_account!, :only => [:inactive, :coming_soon]
 
   # GET /landing
   # GET /
@@ -20,11 +19,5 @@ class PagesController < ApplicationController
   #
   # GET /coming_soon
   def coming_soon
-  end
-
-  # Container for angular requests
-  #
-  # GET /*path
-  def angular
   end
 end

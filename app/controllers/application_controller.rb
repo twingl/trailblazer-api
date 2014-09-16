@@ -12,8 +12,6 @@ class ApplicationController < ActionController::Base
                 :establish_session,
                 :destroy_session
 
-  before_action :authenticate_valid_account!
-
 protected
 
   # Returns the currently authenticated user
