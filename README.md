@@ -1,5 +1,24 @@
 # Trailblazer Web
 
+## Links
+
+- [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1140072)
+- [Heroku Staging](https://dashboard.heroku.com/apps/trailblazer-web-staging)
+- [Heroku Production](https://dashboard.heroku.com/apps/trailblazer-web)
+
+## Process
+
+Stories are taken from [Pivotal
+Tracker](https://www.pivotaltracker.com/n/projects/1140072).
+A story is considered finished when the changes exist in a feature branch on
+GitHub. These changes should then be reviewed, merged into master and pushed to
+the [staging app](http://staging.trailblazer.io/) at which point they are
+considered delivered and ready for acceptance testing. Depending on whether
+they are accepted or not, they can then be marked as such in Pivotal and
+deployed to [production](https://app.trailblazer.io/).
+
+## Setup
+
 RVM users:
 
 Update RVM to the latest stable version and install Ruby 2.1.2
