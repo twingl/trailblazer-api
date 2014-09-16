@@ -18,3 +18,6 @@ GOOGLE_BROWSER_API_KEY: "browser API key"
 #STAGING_USERNAME: "user"
 #STAGING_PASSWORD: "pass"
 #STAGING_SSL: "false"
+
+# Staging session configuration
+#SESSION_KEY: "_trailblazer_staging_session"
