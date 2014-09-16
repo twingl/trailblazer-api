@@ -17,3 +17,4 @@ GOOGLE_BROWSER_API_KEY: "browser API key"
 # Staging authentication
 #STAGING_USERNAME: "user"
 #STAGING_PASSWORD: "pass"
+#STAGING_SSL: "false"
