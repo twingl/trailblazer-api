@@ -43,7 +43,7 @@ module Api::V1
     end
 
     def project_params
-      params.require(:assignment).permit(:name, :description)
+      params.require(:assignment).permit(:title, :description)
     end
   end
 end

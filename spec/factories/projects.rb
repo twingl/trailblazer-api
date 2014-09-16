@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :project do
-    name "MyString"
+    title "MyString"
     description "MyText"
     due_at DateTime.now
     visible false

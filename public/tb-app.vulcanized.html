@@ -8591,7 +8591,7 @@ Polymer('tb-project', {
 
     <div layout="" horizontal="" class="projects">
       <p style="float:left">
-        <strong>{{project.name}}</strong><br>
+        <strong>{{project.title}}</strong><br>
         {{project.description}}
       </p>
       <paper-button class="danger  delete" raisedbutton="" on-tap="{{deleteProject}}" label="delete"></paper-button>
@@ -8682,7 +8682,7 @@ p {
   members: [],
   projects: [],
   project: {
-    name: "",
+    title: "",
     description: ""
   },
   projectPayload: "",
@@ -8741,7 +8741,7 @@ p {
 
   onProjectCommitted: function(e) {
     this.project = {
-      name: "",
+      title: "",
       description: ""
     };
     this.projectPayload = "";
@@ -8966,7 +8966,7 @@ paper-icon-button {
                           <core-ajax auto="" url="/projects/{{assignment.project_id}}" handleas="json" headers="{&quot;Accept&quot;:&quot;application/json&quot;}" on-core-response="{{onProjectLoaded}}">
                           </core-ajax>
                           
-                            <li><a href="assets/components/tb-classroom-detail/#">{{project.name}}</a></li>
+                            <li><a href="assets/components/tb-classroom-detail/#">{{project.title}}</a></li>
                        
                         </template>
                         </ul>
@@ -8989,7 +8989,7 @@ paper-icon-button {
             <core-ajax id="create-project" url="/classrooms/{{classroom.id}}/projects" method="POST" handleas="json" body="{{projectPayload}}" headers="{&quot;Accept&quot;:&quot;application/json&quot;,&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{onProjectCommitted}}"></core-ajax>
 
             <template if="{{createProjectVisible}}">
-              <paper-input floatinglabel="" value="{{project.name}}" label="Project name"></paper-input>
+              <paper-input floatinglabel="" value="{{project.title}}" label="Project title"></paper-input>
               <paper-input floatinglabel="" multiline="" rows="3" value="{{project.description}}" label="Project description"></paper-input>
               <paper-button class="primary" raisedbutton="" on-tap="{{createProject}}" label="create"></paper-button>
               <paper-button raisedbutton="" on-tap="{{cancelCreateProject}}" label="cancel"></paper-button>

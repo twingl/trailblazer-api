@@ -149,7 +149,7 @@
                             on-core-response="{{onProjectLoaded}}">
                           </core-ajax>
                           
-                            <li><a href="#">{{project.name}}</a></li>
+                            <li><a href="#">{{project.title}}</a></li>
                        
                         </template>
                         </ul>
@@ -179,7 +179,7 @@
               on-core-response="{{onProjectCommitted}}"></core-ajax>
 
             <template if="{{createProjectVisible}}">
-              <paper-input floatingLabel value="{{project.name}}" label="Project name"></paper-input>
+              <paper-input floatingLabel value="{{project.title}}" label="Project title"></paper-input>
               <paper-input floatingLabel multiline rows="3" value="{{project.description}}" label="Project description"></paper-input>
               <paper-button class="primary" raisedButton on-tap="{{createProject}}" label="create"></paper-button>
               <paper-button  raisedButton on-tap="{{cancelCreateProject}}" label="cancel"></paper-button>

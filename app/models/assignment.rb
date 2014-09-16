@@ -13,7 +13,7 @@ class Assignment < ActiveRecord::Base
   private
 
   def set_title_and_description
-    self.title       = project.name
+    self.title       = project.title
     self.description = project.description
   end
 end

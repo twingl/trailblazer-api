@@ -3,7 +3,7 @@ Polymer('tb-classroom-detail', {
   members: [],
   projects: [],
   project: {
-    name: "",
+    title: "",
     description: ""
   },
   projectPayload: "",
@@ -62,7 +62,7 @@ Polymer('tb-classroom-detail', {
 
   onProjectCommitted: function(e) {
     this.project = {
-      name: "",
+      title: "",
       description: ""
     };
     this.projectPayload = "";
