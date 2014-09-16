@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
                 :admin_signed_in?,
                 :authenticate_user!,
                 :authenticate_active_user!,
-                :authenticate_valid_account!,
                 :establish_session,
                 :destroy_session
 
@@ -54,13 +53,6 @@ protected
     unless user_signed_in?
       store_location(location)
       redirect_to landing_url
-    end
-  end
-
-  # Check if the user belongs to a domain and redirect to +coming_soon+ if not.
-  def authenticate_valid_account!(location = request.url)
-    if user_signed_in?
-      redirect_to coming_soon_url unless current_user.domain_id.present?
     end
   end
 

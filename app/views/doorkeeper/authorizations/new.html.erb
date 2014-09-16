@@ -3,7 +3,7 @@
   userName="<%= current_user.name %>"
   userEmail="<%= current_user.email %>"
   userUid="<%= current_user.uid %>"
-  canSignIn="<%= current_user.domain_id.present? ? true : false %>"
+  canSignIn="<%= current_user ? true : false %>"
   formTarget="<%= oauth_authorization_url %>"
   clientId="<%= @pre_auth.client.uid %>"
   clientName="<%= @pre_auth.client.name %>"
