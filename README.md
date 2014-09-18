@@ -6,6 +6,11 @@
 - [Heroku Staging](https://dashboard.heroku.com/apps/trailblazer-web-staging)
 - [Heroku Production](https://dashboard.heroku.com/apps/trailblazer-web)
 
+## Documentation
+
+- [Authentication](http://docs.trailblazerauthentication.apiary.io/)
+- [API v1](http://docs.trailblazerapiv1.apiary.io/)
+
 ## Process
 
 Stories are taken from [Pivotal
