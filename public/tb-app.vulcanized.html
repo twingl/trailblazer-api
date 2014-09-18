@@ -664,7 +664,7 @@ var d=b,e=m(this,"value",d);return q(this,d.open(r(this))),t(this,a,e)},HTMLSele
       try {
         return JSON.parse(r);
       } catch (x) {
-        console.warn('core-ajax caught an exception trying to parse reponse as JSON:');
+        console.warn('core-ajax caught an exception trying to parse response as JSON:');
         console.warn('url:', this.url);
         console.warn(x);
         return r;
@@ -729,8 +729,11 @@ var d=b,e=m(this,"value",d);return q(this,d.open(r(this))),t(this,a,e)},HTMLSele
       if (args.headers && typeof(args.headers) == 'string') {
         args.headers = JSON.parse(args.headers);
       }
-      if (this.contentType) {
-        args.headers['content-type'] = this.contentType;
+      var hasContentType = Object.keys(args.headers).some(function (header) {
+        return header.toLowerCase() === 'content-type';
+      });
+      if (!hasContentType && this.contentType) {
+        args.headers['Content-Type'] = this.contentType;
       }
       if (this.handleAs === 'arraybuffer' || this.handleAs === 'blob' ||
           this.handleAs === 'document') {
@@ -749,6 +752,15 @@ var d=b,e=m(this,"value",d);return q(this,d.open(r(this))),t(this,a,e)},HTMLSele
 </polymer-element>
 </div>
 <div hidden><!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!--
 Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -2332,7 +2344,7 @@ You can configure the duration of the hero transition with the global variable
 
         h.h1.style[TRANSITION_NAME] = wt.join(', ');
         h.h1.style.borderRadius = h.r1;
-        h.h1.style[TRANSFORM_NAME] = 'none';
+        h.h1.style[TRANSFORM_NAME] = '';
       });
 
       this.super(arguments);
@@ -2442,8 +2454,8 @@ You can configure the duration of the hero transition with the global variable
       this.super(arguments);
       if (scope._heroes) {
         scope._heroes.forEach(function(h) {
-          h.h1.style[TRANSITION_NAME] = null;
-          h.h1.style[TRANSFORM_NAME] = null;
+          h.h1.style[TRANSITION_NAME] = '';
+          h.h1.style[TRANSFORM_NAME] = '';
         });
         scope._heroes = [];
       }
@@ -2872,7 +2884,17 @@ Fired when a page transition completes.
 
 <template>
 
-  <style>:host {
+  <style>/*
+ * @license
+ * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+
+:host {
   display: block;
   position: relative;
 }
@@ -6628,12 +6650,19 @@ For performance reasons, not every item in the list is rendered at once.
 <polymer-element name="core-list" on-tap="{{tapHandler}}" assetpath="assets/components/core-list/">
 <template>
   <core-selection id="selection" multi="{{multi}}" on-core-select="{{selectedHandler}}"></core-selection>
-  <style>:host {
+  <style>/*
+ * @license
+ * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+
+:host {
   display: block;
   overflow: auto;
-  /*-webkit-overflow-scrolling: touch;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);*/
 }
 
 .core-list-viewport > * {
@@ -6647,7 +6676,15 @@ For performance reasons, not every item in the list is rendered at once.
 
 .core-list-viewport.horizontal > * {
   display: inline-block;
-}</style>
+}
+
+/* Setting will-change: transform on the #viewport makes the viewport a
+   stacking context, which causes all the composited layers inside the
+   viewport to actually be stacked underneath the viewport. */
+#viewport {
+  will-change: transform;
+}
+</style>
   <div id="viewport" class="core-list-viewport"><content></content></div>
 </template>
 <script>
@@ -6999,12 +7036,12 @@ For performance reasons, not every item in the list is rendered at once.
 
   // determine proper transform mechanizm
   if (document.documentElement.style.transform !== undefined) {
-    function setTransform(element, string, value) {
+    var setTransform = function(element, string, value) {
       element.style.transform = string;
       element._transformValue = value;
     }
   } else {
-    function setTransform(element, string, value) {
+    var setTransform = function(element, string, value) {
       element.style.webkitTransform = string;
       element._transformValue = value;
     }
