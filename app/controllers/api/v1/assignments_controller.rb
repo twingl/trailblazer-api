@@ -30,6 +30,8 @@ module Api::V1
     end
 
     def destroy #TODO
+      @assignment.destroy
+      head 200
     end
 
   private
