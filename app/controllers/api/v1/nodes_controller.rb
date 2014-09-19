@@ -38,12 +38,12 @@ module Api::V1
           n.update_attributes(coords[n.id.to_s].slice(:x, :y))
         end
       end
-      head 200
+      head 204
     end
 
     def destroy #TODO ? - scope of the API
       @node.destroy
-      head 200
+      head 204
     end
 
   private
