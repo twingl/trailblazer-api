@@ -57,7 +57,7 @@ module Workers
             user.first_name     = u.fetch("name", {}).fetch("givenName", nil)
             user.last_name      = u.fetch("name", {}).fetch("familyName",  nil)
 
-            user.email          = u.fetch("primaryEmail",      nil)
+            user.email          = u.fetch("primaryEmail",      "").downcase
             user.image          = u.fetch("thumbnailPhotoUrl", nil)
 
             user.org_unit_path  = u.fetch("orgUnitPath", nil)
@@ -129,7 +129,7 @@ module Workers
                   user = User.find_or_create_by(:uid => m.fetch("id")) do |r|
                     r.active = false
                     r.domain = domain
-                    r.email  = m.fetch("email")
+                    r.email  = m.fetch("email").downcase
                   end
 
                   group.users << user unless group.users.include? user

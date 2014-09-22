@@ -14,7 +14,7 @@ class GetOauthUser < Playhouse::Context
       u.admin  = false
 
       u.name           = service_hash.fetch("info", {}).fetch("name",       nil)
-      u.email          = service_hash.fetch("info", {}).fetch("email",      nil)
+      u.email          = service_hash.fetch("info", {}).fetch("email",      "").downcase
       u.first_name     = service_hash.fetch("info", {}).fetch("first_name", nil)
       u.last_name      = service_hash.fetch("info", {}).fetch("last_name",  nil)
       u.image          = service_hash.fetch("info", {}).fetch("image",      nil)
