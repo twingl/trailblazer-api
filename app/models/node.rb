@@ -5,6 +5,11 @@ class Node < ActiveRecord::Base
 
   before_create :get_title
 
+  validates :rank, :numericality => {
+    :less_than_or_equal_to    => 1,
+    :greater_than_or_equal_to => -1
+  }
+
 private
 
   def get_title # Grab the title from another node if present
