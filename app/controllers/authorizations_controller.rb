@@ -1,6 +1,8 @@
 class AuthorizationsController < ::Doorkeeper::AuthorizationsController
   helper_method :current_user
 
+  skip_before_action :authenticate_staging
+
   def new
     if pre_auth.authorizable?
       if skip_authorization?
