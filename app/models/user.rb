@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
   belongs_to :domain
   belongs_to :org_unit
 
-  has_many :assignments, -> { uniq }
+  has_many :assignments, -> { uniq }, :dependent => :destroy
   has_many :projects, :through => :assignments
-  has_many :nodes
+  has_many :nodes, :dependent => :destroy
 
   scope :admin,    -> { where(:admin    => true ) }
   scope :teacher,  -> { where(:teacher  => true ) }

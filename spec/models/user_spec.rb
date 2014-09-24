@@ -5,9 +5,10 @@ RSpec.describe User, :type => :model do
     expect(subject).to have_many(:domain_admin_roles)
     expect(subject).to belong_to(:domain)
     expect(subject).to belong_to(:org_unit)
-    expect(subject).to have_many(:assignments)
+    expect(subject).to have_many(:assignments).dependent(:destroy)
     expect(subject).to have_and_belong_to_many(:classrooms)
     expect(subject).to have_many(:projects).through(:assignments)
+    expect(subject).to have_many(:nodes).dependent(:destroy)
   end
 
   describe "#student?" do
