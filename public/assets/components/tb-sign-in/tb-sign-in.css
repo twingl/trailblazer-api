@@ -1,0 +1,81 @@
+:host {
+  padding: 10px 50px 50px 50px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+}
+
+#tb-sign-in,
+#social-sign-in {
+  width: 360px;
+  height: 260px;
+}
+
+#tb-sign-in {
+  background: white;
+}
+
+/*
+ * Validated input fields change height depending on their state - wrap them in
+ * a fixed height div
+ */
+div.validated-input {
+  height: 60px;
+}
+div.validated-input.last {
+  margin-bottom: 1em;
+}
+
+#flash {
+  height: 40px;
+  margin-bottom: 0.5em;
+}
+
+#primary-form-actions { }
+#secondary-form-actions {
+  margin-top: 1em;
+  margin: 0.5em;
+}
+
+#btnSignIn,
+#btnSignUp {
+  width: 150px;
+  font-size: 13px;
+  line-height: 2.2em;
+  margin: 0 0.5em;
+  background: white;
+  border: 1px solid #ec3c4b;
+}
+
+#btnSignUp {
+  background: #ec3c4b;
+  color: white;
+}
+#btnSignUp::shadow #ripple {
+  color: white;
+}
+
+#btnSignIn { }
+#btnSignIn::shadow #ripple {
+  color: #ec3c4b;
+}
+
+#btnForgotPassword {
+  font-size: 12px;
+  text-transform: initial;
+  background: white;
+  width: 180px;
+}
+#btnForgotPassword::shadow #ripple {
+  color: #555;
+}
+
+#btnGoogleSignIn {
+  width: 150px;
+  font-size: 13px;
+  line-height: 2.2em;
+  color: white;
+  background: #4285f4;
+  background: -webkit-linear-gradient(top,#4387fd,#4683ea);
+  background: linear-gradient(top,#4387fd,#4683ea);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4387fd,endColorstr=#4683ea,GradientType=1);
+}

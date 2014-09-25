@@ -1,4 +1,16 @@
 class User < ActiveRecord::Base
+
+  has_secure_password :validations => false
+
+  def should_validate_password?
+    password.present?
+  end
+  validates_length_of :password, :minimum => 5, :if => :should_validate_password?
+
+  validates_uniqueness_of :email, :case_sensitive => false
+  validates_uniqueness_of :confirmation_token, :allow_nil => true
+  validates_uniqueness_of :reset_password_token, :allow_nil => true
+
   has_many :domain_admin_roles
   belongs_to :domain
   belongs_to :org_unit

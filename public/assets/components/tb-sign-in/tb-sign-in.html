@@ -1,0 +1,126 @@
+<link rel="import" href="../font-roboto/roboto.html">
+<link rel="import" href="../core-ajax/core-ajax.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
+
+<link rel="import" href="../tb-flash/tb-flash.html">
+
+<polymer-element name="tb-sign-in" attributes="signInUrl signUpUrl forgotPasswordUrl socialUrlGoogle">
+  <script src="tb-sign-in.js" type="text/javascript" charset="utf-8"></script>
+
+  <template>
+    <link rel="stylesheet" href="tb-sign-in.css" type="text/css" />
+
+    <core-ajax
+      id="xhrSignIn"
+      url="{{signInUrl}}"
+      body="{{registrationData}}"
+      headers='{"Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+      on-core-response="{{handleResponse}}"
+      on-core-error="{{ajaxError}}"
+      method="post">
+    </core-ajax>
+
+    <core-ajax
+      id="xhrSignUp"
+      url="{{signUpUrl}}"
+      body="{{registrationData}}"
+      headers='{"Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+      on-core-response="{{handleResponse}}"
+      on-core-error="{{ajaxError}}"
+      method="post">
+    </core-ajax>
+
+    <core-ajax
+      id="xhrForgotPassword"
+      url="{{forgotPasswordUrl}}"
+      body="{{forgotPasswordData}}"
+      headers='{"Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+      on-core-response="{{passwordEmailSent}}"
+      on-core-error="{{ajaxError}}"
+      method="post">
+    </core-ajax>
+
+    <!-- Visible components begin -->
+    <div vertical layout center>
+      <div id="flash">
+        <tb-flash id="flsActionError" type="error" layout="fixed"></tb-flash>
+        <tb-flash id="flsActionSuccess" type="notice" layout="fixed"></tb-flash>
+      </div>
+
+      <div horizontal layout>
+        <!-- Social sign in -->
+        <div id="social-sign-in" vertical layout center center-justified>
+          <p>Sign in with one of these services</p>
+
+          <paper-button
+            id="btnGoogleSignIn"
+            on-tap="{{googleSignIn}}"
+            label="Sign In with Google">
+          </paper-button>
+        </div>
+
+        <!-- Email and password sign in -->
+        <div id="tb-sign-in" vertical layout center center-justified>
+          <paper-shadow></paper-shadow>
+          <!-- Email address input -->
+          <div class="validated-input">
+            <paper-input
+              id="txtEmail"
+              autofocus
+              required
+              validateImmediately="false"
+              on-change="{{updateFormData}}"
+              on-blur="{{validateEmail}}"
+              error="This doesn't appear to be an email address"
+              label="Email Address"
+              value="{{email}}"
+              type="email">
+            </paper-input>
+          </div>
+
+          <!-- Password input -->
+          <div class="validated-input last">
+            <paper-input
+              id="txtPassword"
+              required
+              pattern="^.{5,}$"
+              validateImmediately="false"
+              on-blur="{{validatePassword}}"
+              on-change="{{updateFormData}}"
+              error="Please enter a password at least 5 characters long"
+              label="Password"
+              value="{{password}}"
+              type="password">
+            </paper-input>
+          </div>
+
+          <div id="primary-form-actions" horizontal layout center-justified>
+            <paper-button
+              id="btnSignUp"
+              on-tap="{{signUp}}"
+              label="Create Account">
+            </paper-button>
+
+            <paper-button
+              id="btnSignIn"
+              on-tap="{{signIn}}"
+              label="Sign In">
+            </paper-button>
+          </div>
+
+          <div id="secondary-form-actions" horizontal layout center-justified>
+            <paper-button
+              id="btnForgotPassword"
+              on-tap="{{forgotPassword}}"
+              label="I&apos;ve forgotten my password">
+            </paper-button>
+          </div>
+                
+        </div>
+      </div>
+    </div>
+
+
+  </template>
+</polymer-element>

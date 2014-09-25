@@ -5450,7 +5450,11 @@ Apply `circle` class to make the rippling effect within a circle.
       position: relative;
     }
 
-    #canvas {
+    :host-context([noink]) {
+      pointer-events: none;
+    }
+
+    #bg, #waves, .wave-container, .wave {
       pointer-events: none;
       position: absolute;
       top: 0;
@@ -5459,11 +5463,32 @@ Apply `circle` class to make the rippling effect within a circle.
       height: 100%;
     }
 
-    :host(.circle) #canvas {
+    #bg, .wave {
+      opacity: 0;
+    }
+
+    #waves, .wave {
+      overflow: hidden;
+    }
+
+    .wave-container, .wave {
       border-radius: 50%;
     }
 
+    :host(.circle) #bg,
+    :host(.circle) #waves {
+      border-radius: 50%;
+    }
+
+    :host(.circle) .wave-container {
+      overflow: hidden;
+    }
+
   </style>
+
+  <div id="bg"></div>
+  <div id="waves">
+  </div>
 
 </template>
 <script>
@@ -5516,34 +5541,39 @@ Apply `circle` class to make the rippling effect within a circle.
     // Determines whether the wave should be completely removed.
     function waveDidFinish(wave, radius, anim) {
       var waveOpacity = waveOpacityFn(wave.tDown, wave.tUp, anim);
+
       // If the wave opacity is 0 and the radius exceeds the bounds
       // of the element, then this is finished.
-      if (waveOpacity < 0.01 && radius >= Math.min(wave.maxRadius, waveMaxRadius)) {
-        return true;
-      }
-      return false;
+      return waveOpacity < 0.01 && radius >= Math.min(wave.maxRadius, waveMaxRadius);
     };
 
     function waveAtMaximum(wave, radius, anim) {
       var waveOpacity = waveOpacityFn(wave.tDown, wave.tUp, anim);
-      if (waveOpacity >= anim.initialOpacity && radius >= Math.min(wave.maxRadius, waveMaxRadius)) {
-        return true;
-      }
-      return false;
+
+      return waveOpacity >= anim.initialOpacity && radius >= Math.min(wave.maxRadius, waveMaxRadius);
     }
 
     //
     // DRAWING
     //
-    function drawRipple(ctx, x, y, radius, innerColor, outerColor) {
-      if (outerColor) {
-        ctx.fillStyle = outerColor;
-        ctx.fillRect(0,0,ctx.canvas.width, ctx.canvas.height);
+    function drawRipple(ctx, x, y, radius, innerAlpha, outerAlpha) {
+      // Only animate opacity and transform
+      if (outerAlpha !== undefined) {
+        ctx.bg.style.opacity = outerAlpha;
       }
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-      ctx.fillStyle = innerColor;
-      ctx.fill();
+      ctx.wave.style.opacity = innerAlpha;
+
+      var s = radius / (ctx.containerSize / 2);
+      var dx = x - (ctx.containerWidth / 2);
+      var dy = y - (ctx.containerHeight / 2);
+
+      ctx.wc.style.webkitTransform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
+      ctx.wc.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
+
+      // 2d transform for safari because of border-radius and overflow:hidden clipping bug.
+      // https://bugs.webkit.org/show_bug.cgi?id=98538
+      ctx.wave.style.webkitTransform = 'scale(' + s + ',' + s + ')';
+      ctx.wave.style.transform = 'scale3d(' + s + ',' + s + ',1)';
     }
 
     //
@@ -5553,7 +5583,23 @@ Apply `circle` class to make the rippling effect within a circle.
       var elementStyle = window.getComputedStyle(elem);
       var fgColor = elementStyle.color;
 
+      var inner = document.createElement('div');
+      inner.style.backgroundColor = fgColor;
+      inner.classList.add('wave');
+
+      var outer = document.createElement('div');
+      outer.classList.add('wave-container');
+      outer.appendChild(inner);
+
+      var container = elem.$.waves;
+      container.appendChild(outer);
+
+      elem.$.bg.style.backgroundColor = fgColor;
+
       var wave = {
+        bg: elem.$.bg,
+        wc: outer,
+        wave: inner,
         waveColor: fgColor,
         maxRadius: 0,
         isMouseDown: false,
@@ -5569,6 +5615,8 @@ Apply `circle` class to make the rippling effect within a circle.
       if (scope.waves) {
         var pos = scope.waves.indexOf(wave);
         scope.waves.splice(pos, 1);
+        // FIXME cache nodes
+        wave.wc.remove();
       }
     };
 
@@ -5630,37 +5678,12 @@ Apply `circle` class to make the rippling effect within a circle.
         up: 'upAction'
       },
 
-      attached: function() {
-        // create the canvas element manually becase ios
-        // does not render the canvas element if it is not created in the
-        // main document (component templates are created in a
-        // different document). See:
-        // https://bugs.webkit.org/show_bug.cgi?id=109073.
-        if (!this.$.canvas) {
-          var canvas = document.createElement('canvas');
-          canvas.id = 'canvas';
-          this.shadowRoot.appendChild(canvas);
-          this.$.canvas = canvas;
-        }
-      },
-
       ready: function() {
         this.waves = [];
       },
 
-      setupCanvas: function() {
-        this.$.canvas.setAttribute('width', this.$.canvas.clientWidth * this.pixelDensity + "px");
-        this.$.canvas.setAttribute('height', this.$.canvas.clientHeight * this.pixelDensity + "px");
-        var ctx = this.$.canvas.getContext('2d');
-        ctx.scale(this.pixelDensity, this.pixelDensity);
-        if (!this._loop) {
-          this._loop = this.animate.bind(this, ctx);
-        }
-      },
-
       downAction: function(e) {
-        this.setupCanvas();
-        var wave = createWave(this.$.canvas);
+        var wave = createWave(this);
 
         this.cancelled = false;
         wave.isMouseDown = true;
@@ -5669,9 +5692,9 @@ Apply `circle` class to make the rippling effect within a circle.
         wave.mouseUpStart = 0.0;
         wave.mouseDownStart = now();
 
-        var width = this.$.canvas.width / 2; // Retina canvas
-        var height = this.$.canvas.height / 2;
         var rect = this.getBoundingClientRect();
+        var width = rect.width;
+        var height = rect.height;
         var touchX = e.x - rect.left;
         var touchY = e.y - rect.top;
 
@@ -5682,9 +5705,26 @@ Apply `circle` class to make the rippling effect within a circle.
           wave.slideDistance = dist(wave.startPosition, wave.endPosition);
         }
         wave.containerSize = Math.max(width, height);
+        wave.containerWidth = width;
+        wave.containerHeight = height;
         wave.maxRadius = distanceFromPointToFurthestCorner(wave.startPosition, {w: width, h: height});
+
+        // The wave is circular so constrain its container to 1:1
+        wave.wc.style.top = (wave.containerHeight - wave.containerSize) / 2 + 'px';
+        wave.wc.style.left = (wave.containerWidth - wave.containerSize) / 2 + 'px';
+        wave.wc.style.width = wave.containerSize + 'px';
+        wave.wc.style.height = wave.containerSize + 'px';
+
         this.waves.push(wave);
-        requestAnimationFrame(this._loop);
+
+        if (!this._loop) {
+          this._loop = this.animate.bind(this, {
+            width: width,
+            height: height
+          });
+          requestAnimationFrame(this._loop);
+        }
+        // else there is already a rAF
       },
 
       upAction: function() {
@@ -5709,9 +5749,6 @@ Apply `circle` class to make the rippling effect within a circle.
       animate: function(ctx) {
         var shouldRenderNextFrame = false;
 
-        // Clear the canvas
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
         var deleteTheseWaves = [];
         // The oldest wave's touch down duration
         var longestTouchDownDuration = 0;
@@ -5722,8 +5759,8 @@ Apply `circle` class to make the rippling effect within a circle.
         var anim = {
           initialOpacity: this.initialOpacity,
           opacityDecayVelocity: this.opacityDecayVelocity,
-          height: ctx.canvas.height,
-          width: ctx.canvas.width
+          height: ctx.height,
+          width: ctx.width
         }
 
         for (var i = 0; i < this.waves.length; i++) {
@@ -5770,7 +5807,7 @@ Apply `circle` class to make the rippling effect within a circle.
           }
 
           // Draw the ripple.
-          drawRipple(ctx, x, y, radius, waveColor, bgFillColor);
+          drawRipple(wave, x, y, radius, waveAlpha, bgFillAlpha);
 
           // Determine whether there is any more rendering to be done.
           var maximumWave = waveAtMaximum(wave, radius, anim);
@@ -5792,11 +5829,11 @@ Apply `circle` class to make the rippling effect within a circle.
           removeWaveFromScope(this, wave);
         }
 
-        if (!this.waves.length) {
-          // If there is nothing to draw, clear any drawn waves now because
-          // we're not going to get another requestAnimationFrame any more.
-          ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        if (!this.waves.length && this._loop) {
+          // clear the background color
+          this.$.bg.style.backgroundColor = null;
           this._loop = null;
+          this.fire('core-transitionend');
         }
       }
 
@@ -6486,7 +6523,7 @@ Example:
         <paper-item label="Sign Out"></paper-item>
     </core-menu>
 
-To use as a link, put an `&lt;a&gt;` element in the item.
+To use as a link, put an `<a>` element in the item.
 
 Example:
 
@@ -7660,6 +7697,22 @@ textarea[fit] {
 
   <template>
 
+    <!--
+    Input tests:
+
+    - set value to integer 0
+    - various html5 input types
+    - sizing:
+      - single-line: size with CSS
+      - single-line: can fit to container
+      - multi-line: size with CSS
+      - multi-line: size with rows
+      - multi-line: can fit to container
+      - multi-line: grows with typing
+      - multi-line: max rows
+      - multi-line: max rows, scrolls after
+    -->
+
     <style>/*
  * @license
  * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
@@ -7682,25 +7735,14 @@ textarea[fit] {
 :host /deep/ textarea {
   font: inherit;
   color: #000;
-  /* fit to the container for auto-resizing */
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   padding: 0;
-  /* Important to use margin here so the margin remains visible
-   * when textarea scrolls internally. */
-  margin: 0.5em 0 0.25em;
+  margin: 0;
   background-color: transparent;
   border: none;
   outline: none;
+  /* see comments in template */
   width: 100%;
-}
-
-:host /deep/ input::hover,
-:host /deep/ textarea::hover {
-  cursor: text;
+  height: 100%;
 }
 
 input:invalid,
@@ -7710,7 +7752,6 @@ textarea:invalid {
 
 textarea {
   resize: none;
-  overflow: hidden;
 }
 
 [invisible] {
@@ -7777,6 +7818,15 @@ textarea {
   transform: translate3d(3em,0,0) scale3d(50,1,1);
 }
 
+.input-container {
+  position: absolute;
+  /* simulate padding so the input/textarea can use 100% width/height */
+  top: 0.5em;
+  right: 0;
+  bottom: 0.25em;
+  left: 0;
+}
+
 .underline {
   height: 0px;
   overflow: visible;
@@ -7820,8 +7870,10 @@ textarea {
       <span id="floatedLabelText" class="label-text">{{label}}</span>
     </div>
 
-    <div flex="" auto="" relative="" on-down="{{downAction}}" on-up="{{upAction}}">
+    <!-- <div class="input-body" flex auto relative on-down="{{downAction}}" on-up="{{upAction}}"> -->
+    <div class="input-body" flex="" auto="" relative="">
 
+      <!-- the mirror sizes the input/textarea so it grows with typing -->
       <div id="mirror" class="mirror-text" invisible="" aria-hidden="true"></div>
 
       <div class="label" fit="" aria-hidden="true">
@@ -7831,7 +7883,10 @@ textarea {
 
       <div class="cursor" invisible?="{{!cursorAnimated}}" animated?="{{cursorAnimated}}"></div>
 
-      <shadow></shadow>
+      <!-- size the input/textarea with a div, because the textarea has intrinsic size in ff -->
+      <div class="input-container" on-down="{{downAction}}" on-up="{{upAction}}">
+        <shadow></shadow>
+      </div>
 
     </div>
 
@@ -9060,7 +9115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 :host(.core-transition) {
   outline: none;
-  overflow: hidden;
+  overflow: auto;
   opacity: 0;
   transition: transform 0.2s ease-in-out, opacity 0.2s ease-in;
   -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in;
@@ -9069,8 +9124,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 :host(.core-transition.core-opened) {
   opacity: 1;
-  transform: none;
-  -webkit-transform: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 :host(.core-transition-center) {
@@ -9298,7 +9353,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 </style>
 
-  <core-overlay opened="{{opened}}" target="{{}}" sizingtarget="{{$.container}}" transition="core-transition-bottom"></core-overlay>
+  <core-overlay autofocusdisabled="" opened="{{opened}}" target="{{}}" sizingtarget="{{$.container}}" transition="core-transition-bottom"></core-overlay>
 
   <div class="toast-container" horizontal="" layout="">
 
@@ -10629,6 +10684,386 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-shadow z="1"></paper-shadow>
       </div>
     </div>
+  </template>
+</polymer-element>
+</div>
+<div hidden>
+
+
+
+
+
+
+<polymer-element name="tb-flash" attributes="type layout" assetpath="assets/components/tb-flash/">
+  <script>Polymer('tb-flash', {
+  type: 'notice',
+  visible: false,
+
+  show: function(message) {
+    this.message = message;
+    this.visible = true;
+  },
+
+  dismiss: function() {
+    this.message = '';
+    this.visible = false;
+  }
+});
+</script>
+
+  <template>
+    <style>:host, #flash {
+  display: inline-block;
+}
+
+#flash {
+  display: none;
+  position: relative;
+  padding: 0.5em 0.7em;
+  border-radius: 3px;
+}
+
+#flash p {
+  margin: 0;
+  height: 1.2em;
+  padding-right: 1.5em;
+}
+
+#dismiss {
+  position: absolute;
+  right: 0em;
+  top: 0em;
+  margin: 0.5em 0.7em;
+  cursor: pointer;
+}
+
+#flash.visible { display: block; }
+
+#flash.fluid { width: auto; }
+#flash.fixed { width: 640px; }
+#flash.fixed p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#flash.notice {
+  background: #259b24;
+  color: white;
+}
+
+#flash.error {
+  background: #e51c23;
+  color: white;
+}
+</style>
+
+    <div id="flash" class="{{ {visible: visible, fixed: layout == &apos;fixed&apos;, fluid: layout == &apos;fluid&apos;} | tokenList }} {{type}}">
+      <p>{{message}} <a id="dismiss" on-tap="{{dismiss}}">&#x2715;</a></p>
+      <paper-shadow></paper-shadow>
+    </div>
+  </template>
+</polymer-element>
+
+
+<polymer-element name="tb-sign-in" attributes="signInUrl signUpUrl forgotPasswordUrl socialUrlGoogle" assetpath="assets/components/tb-sign-in/">
+  <script>Polymer('tb-sign-in', {
+  /**
+   * Obtain the CSRF token from the rendered view so we can make non-GET
+   * requests to the server
+   */
+  ready: function() {
+    this.csrfToken = document.querySelector('[name=csrf-token').content;
+  },
+
+  /**
+   * Updates the form data properties that are used by various core-ajax
+   * elements to send information to the server.
+   */
+  updateFormData: function() {
+    // Generate a JSON string of all registration data
+    this.registrationData = JSON.stringify({
+      user: {
+        email: this.email,
+        password: this.password
+      }
+    });
+
+    // Generate a JSON string of just the email address for a password reset
+    this.forgotPasswordData = JSON.stringify({
+      user: {
+        email: this.email
+      }
+    });
+  },
+
+  /**
+   * Validates email input
+   * @returns boolean True if the input is valid, false otherwise.
+   */
+  validateEmail: function() {
+    return this.$.txtEmail.checkValidity();
+  },
+
+  /**
+   * Validates password input
+   * @returns boolean True if the input is valid, false otherwise.
+   */
+  validatePassword: function() {
+    return this.$.txtPassword.checkValidity();
+  },
+
+  /**
+   * Validates Email and Password
+   * @returns boolean True if all inputs are valid, false otherwise.
+   */
+  validateForm: function() {
+    return this.validateEmail() && this.validatePassword();
+  },
+
+  /**
+   * Dismiss all visible flashes on the form
+   */
+  dismissFlash: function() {
+    this.$.flsActionSuccess.dismiss();
+    this.$.flsActionError.dismiss();
+  },
+
+  /**
+   * Handle responses
+   */
+  handleResponse: function(evt) {
+    console.log(evt);
+    try {
+      var response = JSON.parse(evt.detail.response);
+      if (response.location) window.location.href = response.location;
+    } catch (e) { }
+  },
+
+  /**
+   * Handle any ajax errors and display a flash with a (sometimes) useful error
+   * message
+   */
+  ajaxError: function(evt) {
+    this.dismissFlash();
+
+    try {
+      var response = JSON.parse(evt.detail.xhr.response);
+
+      if (response.error) {
+        switch (response.error) {
+          case 'unknown_account':
+            this.$.flsActionError.show("We can't seem to find an account for you. If you're new here, create an account!");
+            break;
+
+          case 'incorrect_details':
+            this.$.flsActionError.show("Those details don't seem to be right. Tap the button if you've forgotten your password.");
+            break;
+
+          case 'email_taken':
+            this.$.flsActionError.show("That email appears to be taken. Tap the button if you've forgotten your password.");
+            break;
+        }
+      } else {
+        this.$.flsActionError.show("An error occurred");
+      };
+    } catch (e) {
+      this.$.flsActionError.show("An error occurred");
+    }
+  },
+
+  /**
+   * Let the user know we've sent them an email with their password reset
+   * instructions.
+   */
+  passwordEmailSent: function() {
+    console.log("Sent!");
+    this.dismissFlash();
+    this.$.flsActionSuccess.show("Check your inbox - we've sent you an email!");
+  },
+
+  /**
+   * Invokes the signIn <core-ajax> call with the bound form data
+   */
+  signIn: function(evt) {
+    if (this.validateForm()) {
+      this.$.xhrSignIn.go();
+      this.dismissFlash();
+    }
+  },
+
+  /**
+   * Invokes the signUp <core-ajax> call with the bound form data
+   */
+  signUp: function(evt) {
+    if (this.validateForm()) {
+      this.$.xhrSignUp.go();
+      this.dismissFlash();
+    }
+  },
+
+  /**
+   * Invokes the forgotPassword <core-ajax> call with the email address in form
+   * data
+   */
+  forgotPassword: function(evt) {
+    if (this.validateEmail()) {
+      this.$.xhrForgotPassword.go();
+      this.dismissFlash();
+    }
+  },
+
+  /**
+   * Navigates to the Google sign in URL
+   */
+  googleSignIn: function(evt) {
+    window.location.href = this.socialUrlGoogle;
+  }
+});
+</script>
+
+  <template>
+    <style type="text/css">:host {
+  padding: 10px 50px 50px 50px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+}
+
+#tb-sign-in,
+#social-sign-in {
+  width: 360px;
+  height: 260px;
+}
+
+#tb-sign-in {
+  background: white;
+}
+
+/*
+ * Validated input fields change height depending on their state - wrap them in
+ * a fixed height div
+ */
+div.validated-input {
+  height: 60px;
+}
+div.validated-input.last {
+  margin-bottom: 1em;
+}
+
+#flash {
+  height: 40px;
+  margin-bottom: 0.5em;
+}
+
+#primary-form-actions { }
+#secondary-form-actions {
+  margin-top: 1em;
+  margin: 0.5em;
+}
+
+#btnSignIn,
+#btnSignUp {
+  width: 150px;
+  font-size: 13px;
+  line-height: 2.2em;
+  margin: 0 0.5em;
+  background: white;
+  border: 1px solid #ec3c4b;
+}
+
+#btnSignUp {
+  background: #ec3c4b;
+  color: white;
+}
+#btnSignUp::shadow #ripple {
+  color: white;
+}
+
+#btnSignIn { }
+#btnSignIn::shadow #ripple {
+  color: #ec3c4b;
+}
+
+#btnForgotPassword {
+  font-size: 12px;
+  text-transform: initial;
+  background: white;
+  width: 180px;
+}
+#btnForgotPassword::shadow #ripple {
+  color: #555;
+}
+
+#btnGoogleSignIn {
+  width: 150px;
+  font-size: 13px;
+  line-height: 2.2em;
+  color: white;
+  background: #4285f4;
+  background: -webkit-linear-gradient(top,#4387fd,#4683ea);
+  background: linear-gradient(top,#4387fd,#4683ea);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4387fd,endColorstr=#4683ea,GradientType=1);
+}
+</style>
+
+    <core-ajax id="xhrSignIn" url="{{signInUrl}}" body="{{registrationData}}" headers="{&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{handleResponse}}" on-core-error="{{ajaxError}}" method="post">
+    </core-ajax>
+
+    <core-ajax id="xhrSignUp" url="{{signUpUrl}}" body="{{registrationData}}" headers="{&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{handleResponse}}" on-core-error="{{ajaxError}}" method="post">
+    </core-ajax>
+
+    <core-ajax id="xhrForgotPassword" url="{{forgotPasswordUrl}}" body="{{forgotPasswordData}}" headers="{&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{passwordEmailSent}}" on-core-error="{{ajaxError}}" method="post">
+    </core-ajax>
+
+    <!-- Visible components begin -->
+    <div vertical="" layout="" center="">
+      <div id="flash">
+        <tb-flash id="flsActionError" type="error" layout="fixed"></tb-flash>
+        <tb-flash id="flsActionSuccess" type="notice" layout="fixed"></tb-flash>
+      </div>
+
+      <div horizontal="" layout="">
+        <!-- Social sign in -->
+        <div id="social-sign-in" vertical="" layout="" center="" center-justified="">
+          <p>Sign in with one of these services</p>
+
+          <paper-button id="btnGoogleSignIn" on-tap="{{googleSignIn}}" label="Sign In with Google">
+          </paper-button>
+        </div>
+
+        <!-- Email and password sign in -->
+        <div id="tb-sign-in" vertical="" layout="" center="" center-justified="">
+          <paper-shadow></paper-shadow>
+          <!-- Email address input -->
+          <div class="validated-input">
+            <paper-input id="txtEmail" autofocus required validateimmediately="false" on-change="{{updateFormData}}" on-blur="{{validateEmail}}" error="This doesn&apos;t appear to be an email address" label="Email Address" value="{{email}}" type="email">
+            </paper-input>
+          </div>
+
+          <!-- Password input -->
+          <div class="validated-input last">
+            <paper-input id="txtPassword" required pattern="^.{5,}$" validateimmediately="false" on-blur="{{validatePassword}}" on-change="{{updateFormData}}" error="Please enter a password at least 5 characters long" label="Password" value="{{password}}" type="password">
+            </paper-input>
+          </div>
+
+          <div id="primary-form-actions" horizontal="" layout="" center-justified="">
+            <paper-button id="btnSignUp" on-tap="{{signUp}}" label="Create Account">
+            </paper-button>
+
+            <paper-button id="btnSignIn" on-tap="{{signIn}}" label="Sign In">
+            </paper-button>
+          </div>
+
+          <div id="secondary-form-actions" horizontal="" layout="" center-justified="">
+            <paper-button id="btnForgotPassword" on-tap="{{forgotPassword}}" label="I&apos;ve forgotten my password">
+            </paper-button>
+          </div>
+                
+        </div>
+      </div>
+    </div>
+
+
   </template>
 </polymer-element>
 </div>
