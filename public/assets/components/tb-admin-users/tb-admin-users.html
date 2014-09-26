@@ -1,0 +1,62 @@
+<link rel="import" href="../core-input/core-input.html">
+<link rel="import" href="../core-icons/core-icons.html">
+<link rel="import" href="../core-icon/core-icon.html">
+<link rel="import" href="../core-animated-pages/core-animated-pages.html">
+
+<polymer-element name="tb-admin-users" attributes="searchUrl">
+
+  <script src="tb-admin-users.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../underscore/underscore.js" type="text/javascript" charset="utf-8"></script>
+
+  <template>
+    <link rel="stylesheet" href="tb-admin-users.css" type="text/css" />  
+
+    <core-ajax
+      id="xhrSearch"
+      url="{{searchUrl}}"
+      params="{{searchData}}"
+      on-core-response="{{searchResponse}}"
+      on-core-error="{{ajaxError}}">
+    </core-ajax>
+
+
+    <!-- Search input -->
+    <core-card layout vertical>
+      <section id="section" horizontal layout center center-justified>
+        <core-input
+          flex
+          placeholder="Search Users by Email"
+          inputValue="{{searchTerm}}"
+          on-input="{{runSearch}}"
+          id="txtSearch">
+        </core-input>
+        <core-icon icon="search" id="icoSearch"></core-icon>
+      </section>
+    </core-card>
+
+    <!-- Results -->
+    <core-animated-pages
+      id="animPages"
+      selected="{{selected}}"
+      transitions="hero-transition cross-fade">
+
+      <section>
+        <template repeat="{{results}}">
+          <core-card cross-fade hero hero-id="{{id}}" class="result">
+            <span class="email">{{email}}</span>
+          </core-card>
+        </template>
+      </section>
+
+      <section>
+        <template repeat="{{results2}}">
+          <core-card cross-fade hero hero-id="{{id}}" class="result">
+            <span class="email">{{email}}</span>
+          </core-card>
+        </template>
+      </section>
+
+    </core-animated-pages>
+  </template>
+
+</polymer-element>

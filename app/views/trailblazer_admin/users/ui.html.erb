@@ -1,0 +1,30 @@
+<style type="text/css" media="all">
+body {
+  background: url("<%= asset_url('sign_in_bg.jpg') %>");
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+tb-admin-users { 
+  width: 780px;
+}
+</style>
+
+<div class="container">
+
+  <div class="spacer"></div>
+
+  <%= image_tag "logo.png", alt: "Trailblazer" %>
+
+  <div class="spacer"></div>
+
+  <div vertical center layout>
+    <tb-admin-users
+      searchUrl="<%= trailblazer_admin_users_search_url %>">
+    </tb-admin-users>
+  </div>
+
+  <a class="photo-credit" href="http://www.publicdomainpictures.net/view-image.php?image=26281&picture=road-in-a-field&large=1" target="_blank">Larisa Koshkina</a>
+
+</div>

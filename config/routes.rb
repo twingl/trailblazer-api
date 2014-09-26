@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :trailblazer_admin do
+    match '/users', :to => 'users#ui', :via => [:get]
+    match '/users/search', :to => 'users#search', :via => [:get], :as => :users_search
+  end
+
   use_doorkeeper do
     controllers :authorizations => 'authorizations'
   end
