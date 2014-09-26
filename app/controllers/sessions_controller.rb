@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   before_action :authenticate_user!, :except => [:new, :create, :create_google]
 
   # Callback endpoint for authenticating using OmniAuth::GoogleOauth2
-  # Calls GetOauthUser to retrieve a user, redirecting to +landing_url+ if none
+  # Calls GetOauthUser to retrieve a user, redirecting to +sign_in_url+ if none
   # was returned.
   #
   # GET/POST /auth/google_apps/callback
@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
       establish_session user
       redirect_to return_location
     else
-      redirect_to landing_url, :notice => "Error signing in"
+      redirect_to sign_in_url, :notice => "Error signing in"
     end
   end
 
@@ -44,12 +44,12 @@ class SessionsController < ApplicationController
     end
   end
 
-  # Signs out the current user and redirects to +landing_url+
+  # Signs out the current user and redirects to +sign_in_url+
   #
   # GET/DELETE /sign_out
   def destroy
     destroy_session
-    redirect_to landing_url
+    redirect_to sign_in_url
   end
 
   # Sign out and redirect to the sign in path

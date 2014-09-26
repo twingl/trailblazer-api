@@ -52,7 +52,7 @@ protected
     user_signed_in? and current_user.admin?
   end
 
-  # Check if there is a valid session and redirect to +landing_url+ if not.
+  # Check if there is a valid session and redirect to +sign_in_url+ if not.
   def authenticate_user!(location = request.url)
     unless user_signed_in?
       store_location(location)
@@ -86,7 +86,7 @@ protected
   # Returns the location that was stored by +store_location+ and clears it from
   # the session.
   def return_location
-    return_url = session["user_return_to"] || app_url
+    return_url = session["user_return_to"] || profile_url
     session.delete("user_return_to")
     return_url
   end

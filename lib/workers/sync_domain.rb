@@ -58,6 +58,7 @@ module Workers
             user.last_name      = u.fetch("name", {}).fetch("familyName",  nil)
 
             user.email          = u.fetch("primaryEmail",      "").downcase
+            user.confirmed_at   = DateTime.now
             user.image          = u.fetch("thumbnailPhotoUrl", nil)
 
             user.org_unit_path  = u.fetch("orgUnitPath", nil)
@@ -127,9 +128,10 @@ module Workers
                 # Bug in Google's API docs or API - should just be "MEMBER" according to docs
                 if m.fetch("type") == "MEMBER" or m.fetch("type") == "USER"
                   user = User.find_or_create_by(:uid => m.fetch("id")) do |r|
-                    r.active = false
-                    r.domain = domain
-                    r.email  = m.fetch("email").downcase
+                    r.active       = false
+                    r.domain       = domain
+                    r.email        = m.fetch("email").downcase
+                    r.confirmed_at = DateTime.now
                   end
 
                   group.users << user unless group.users.include? user

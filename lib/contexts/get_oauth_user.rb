@@ -20,6 +20,8 @@ class GetOauthUser < Playhouse::Context
       u.image          = service_hash.fetch("info", {}).fetch("image",      nil)
       u.google_profile = service_hash.fetch("info", {}).fetch("urls", {}).fetch("Google", nil)
 
+      u.confirmed_at   = DateTime.now
+
       u.gender = service_hash.fetch("extra", {}).fetch("raw_info", {}).fetch("sex", nil)
     end
   end
