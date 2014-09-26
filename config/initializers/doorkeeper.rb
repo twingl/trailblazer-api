@@ -9,7 +9,7 @@ Doorkeeper.configure do
       user
     else
       session["user_return_to"] = request.url
-      redirect_to("/auth/google_apps")
+      redirect_to("/sign_in")
     end
   end
 
@@ -19,7 +19,7 @@ Doorkeeper.configure do
       admin.user
     else
       session["user_return_to"] = request.url
-      redirect_to("/auth/google_apps_chooser")
+      redirect_to("/sign_in")
     end
   end
 
