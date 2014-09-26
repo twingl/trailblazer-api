@@ -11067,6 +11067,298 @@ div.validated-input.last {
   </template>
 </polymer-element>
 </div>
+<div hidden>
+
+
+
+
+
+<polymer-element name="tb-profile" attributes="profileUrl updateProfileUrl resendConfirmationUrl" assetpath="assets/components/tb-profile/">
+  <script>Polymer('tb-profile', {
+  email: "",
+  currentPassword: "",
+  newPassword: "",
+
+  /**
+   * Obtain the CSRF token from the rendered view so we can make non-GET
+   * requests to the server
+   */
+  ready: function() {
+    this.csrfToken = document.querySelector('[name=csrf-token').content;
+  },
+
+  /**
+   * Fired when the user profile is read from the server
+   */
+  profileLoaded: function(evt) {
+    try {
+      this.profile = JSON.parse(evt.detail.response);
+      this.email = this.profile.email;
+    } catch (e) { console.log(e, evt); }
+  },
+
+  /**
+   * Fired when the user's email is updated
+   */
+  emailUpdated: function(evt) {
+    this.$.flsActionSuccess.show("Email address updated! Check your inbox to confirm the change.");
+    try {
+      this.profile = JSON.parse(evt.detail.response).user;
+      this.email = this.profile.email;
+    } catch (e) { console.log(e, evt); }
+  },
+
+  /**
+   * Fired when the user's password is updated
+   */
+  passwordUpdated: function(evt) {
+    this.$.flsActionSuccess.show("Password updated!");
+    try {
+      this.newPassword = '';
+      //this.currentPassword = '';
+    } catch (e) { console.log(e, evt); }
+  },
+
+  /**
+   * Executes the POST to resend the confirmation email
+   */
+  resendConfirmation: function() {
+    this.dismissFlash();
+    this.$.xhrResendConfirmation.go();
+  },
+
+  confirmationResent: function() {
+    this.dismissFlash();
+    this.$.flsActionSuccess.show("Sent! Check your inbox for the confirmation email.");
+  },
+
+  /**
+   * Executes the POST to update the user's email address
+   */
+  updateEmail: function() {
+    this.dismissFlash();
+    if (this.validateEmail()) this.$.xhrUpdateEmail.go();
+  },
+
+  /** Updates the data to send when updating the email address */
+  updateEmailData: function() {
+    this.emailData = JSON.stringify({
+      user: {
+        email: this.email
+      }
+    });
+  },
+
+  /**
+   * Executes the POST to update the user's password
+   */
+  updatePassword: function() {
+    this.dismissFlash();
+    if (this.validatePasswords()) this.$.xhrUpdatePassword.go();
+  },
+
+  /** Updates the data to send when updating the email address */
+  updatePasswordData: function() {
+    this.passwordData = JSON.stringify({
+      user: {
+        //current_password: this.currentPassword,
+        password:     this.newPassword
+      }
+    });
+  },
+
+  /**
+   * Handle any ajax errors and display a flash with a (sometimes) useful error
+   * message
+   */
+  ajaxError: function(evt) {
+    this.dismissFlash();
+
+    try {
+      var response = JSON.parse(evt.detail.xhr.response);
+
+      if (response.messages) {
+        this.$.flsActionError.show(response.messages[0]);
+      } else {
+        this.$.flsActionError.show("An error occurred");
+      };
+    } catch (e) {
+      this.$.flsActionError.show("An error occurred");
+    }
+  },
+
+  /**
+   * Validates email input
+   * @returns boolean True if the input is valid, false otherwise.
+   */
+  validateEmail: function() {
+    return this.$.txtEmail.checkValidity();
+  },
+
+  /**
+   * Validates password input
+   * @returns boolean True if the input is valid, false otherwise.
+   */
+  validatePasswords: function() {
+    return this.validateNewPassword(); //this.validateCurrentPassword() && this.validateNewPassword();
+  },
+  validateNewPassword: function() {
+    return this.$.txtNewPassword.checkValidity();
+  },
+  //validateCurrentPassword: function() {
+  //  return this.$.txtCurrentPassword.checkValidity();
+  //},
+
+  /**
+   * Dismiss all visible flashes on the form
+   */
+  dismissFlash: function() {
+    this.$.flsActionSuccess.dismiss();
+    this.$.flsActionError.dismiss();
+  }
+});
+</script>
+
+  <template>
+    <style type="text/css">:host {
+  padding: 10px 50px 50px 50px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  width: 660px;
+}
+
+#confirmation-status             { font-size: 12px; }
+#confirmation-status.confirmed   { color: #616161; }
+#confirmation-status.unconfirmed { color: #c41411; }
+
+.card {
+  margin: 1em;
+  background: white;
+  width: 540px;
+}
+
+.actions {
+  box-sizing: border-box;
+  padding: 1em;
+  width: 100%;
+}
+
+paper-button {
+  min-width: 150px;
+  font-size: 13px;
+  line-height: 2.2em;
+  margin: 0 0.5em;
+  background: white;
+  border: 1px solid #ec3c4b;
+}
+
+paper-button.primary {
+  background: #ec3c4b;
+  color: white;
+}
+paper-button.primary::shadow #ripple {
+  color: white;
+}
+
+paper-button { }
+paper-button::shadow #ripple {
+  color: #ec3c4b;
+}
+
+/*
+ * Validated input fields change height depending on their state - wrap them in
+ * a fixed height div
+ */
+div.validated-input {
+  height: 60px;
+}
+div.validated-input.last {
+  margin-bottom: 1em;
+}
+</style>
+
+    <core-ajax id="xhrGetProfile" url="{{profileUrl}}" auto="" on-core-response="{{profileLoaded}}" on-core-error="{{ajaxError}}" method="get">
+    </core-ajax>
+
+    <core-ajax id="xhrUpdateEmail" url="{{updateProfileUrl}}" body="{{emailData}}" headers="{&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{emailUpdated}}" on-core-error="{{ajaxError}}" method="post">
+    </core-ajax>
+
+    <core-ajax id="xhrResendConfirmation" url="{{resendConfirmationUrl}}" headers="{&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{confirmationResent}}" on-core-error="{{ajaxError}}" method="post">
+    </core-ajax>
+
+    <core-ajax id="xhrUpdatePassword" url="{{updateProfileUrl}}" body="{{passwordData}}" headers="{&quot;Content-Type&quot;:&quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" on-core-response="{{passwordUpdated}}" on-core-error="{{ajaxError}}" method="post">
+    </core-ajax>
+
+    <h1>Profile</h1>
+
+    <div vertical="" layout="" center="">
+      <div id="flash">
+        <tb-flash id="flsActionError" type="error" layout="fixed"></tb-flash>
+        <tb-flash id="flsActionSuccess" type="notice" layout="fixed"></tb-flash>
+      </div>
+
+      <div id="update-email" class="card" vertical="" layout="" center="" center-justified="">
+        <paper-shadow></paper-shadow>
+
+        <h2>Email Address</h2>
+
+        <p id="confirmation-status" class="{{ {confirmed: profile.confirmed_at, unconfirmed: !profile.confirmed_at} | tokenList}}">
+          {{profile.email}}{{ !profile.confirmed_at ? &quot; not yet&quot; : &apos;&apos; }} confirmed.
+        </p>
+
+        <div class="validated-input">
+          <paper-input id="txtEmail" required validateimmediately="false" on-change="{{updateEmailData}}" on-blur="{{validateEmail}}" error="This doesn&apos;t appear to be an email address" label="Email Address" value="{{email}}" type="email">
+          </paper-input>
+        </div>
+
+        <div class="actions" horizontal="" end-justified="" layout="">
+          <template if="{{!profile.confirmed_at}}">
+            <paper-button id="btnResendConfirmation" label="Resend confirmation" on-tap="{{resendConfirmation}}">
+            </paper-button>
+          </template>
+
+          <paper-button id="btnUpdateEmail" class="primary" label="Save" on-tap="{{updateEmail}}">
+          </paper-button>
+        </div>
+      </div>
+
+      <div id="update-password" class="card" vertical="" layout="" center="" center-justified="">
+        <paper-shadow></paper-shadow>
+
+        <h2>Password</h2>
+
+        <div class="validated-input">
+          <paper-input id="txtNewPassword" required validateimmediately="false" pattern="^.{5,}$" on-blur="{{validateNewPassword}}" on-change="{{updatePasswordData}}" error="Please enter a new password at least 5 characters long" label="New Password" value="{{newPassword}}" type="password">
+          </paper-input>
+        </div>
+
+        <!--
+        <div class="validated-input">
+          <paper-input
+            id="txtCurrentPassword"
+            required
+            validateImmediately="false"
+            on-blur="{{validateCurrentPassword}}"
+            on-change="{{updatePasswordData}}"
+            error="Please enter your current password"
+            label="Current Password"
+            value="{{currentPassword}}"
+            type="password">
+          </paper-input>
+        </div>
+        -->
+
+        <div class="actions" horizontal="" end-justified="" layout="">
+          <paper-button id="btnUpdatePassword" class="primary" label="Change Pasword" on-tap="{{updatePassword}}">
+          </paper-button>
+        </div>
+      </div>
+    </div>
+
+
+  </template>
+</polymer-element>
+</div>
 
 <polymer-element name="tb-app" assetpath="assets/components/tb-app/">
   <script>Polymer('tb-app', {

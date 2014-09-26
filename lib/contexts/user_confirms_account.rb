@@ -9,7 +9,9 @@ class UserConfirmsAccount < Playhouse::Context
 
     if user
       user.update_attributes :confirmed_at => DateTime.now.utc,
-                             :confirmation_token => nil
+                             :confirmation_token => nil,
+                             :last_confirmed_at => nil,
+                             :last_email => nil
       user
     else
       false

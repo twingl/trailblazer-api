@@ -13,8 +13,16 @@ Rails.application.routes.draw do
   match '/sign_in', :to => 'sessions#create', :via => [:post]
   match '/sign_up', :to => 'registrations#create', :via => [:post], :as => :sign_up
   match '/forgot_password', :to => 'registrations#forgot_password', :via => [:post], :as => :forgot_password
+  match '/forgot_password/:token', :to => 'registrations#reset_password', :via => [:get], :as => :edit_password
 
-  match '/me', :to => "users#me", :via => [:get]
+  match '/profile', :to => 'registrations#show', :via => [:get], :as => :profile
+  match '/profile', :to => 'registrations#update', :via => [:post]
+
+  match '/resend_confirmation', :to => 'registrations#resend_confirmation', :via => [:post], :as => :resend_confirmation
+  match '/confirm/:token', :to => 'registrations#confirm', :via => [:get], :as => :confirm_email
+  match '/revert/:token', :to => 'registrations#revert', :via => [:get], :as => :revert_email
+
+  match '/me', :to => "users#me", :via => [:get], :as => :current_user_profile
 
   # Org management
   resources :domains, :param => :domain_name, :only => [], :constraints => { :domain_name => /[0-9A-Za-z\-\.]+/ } do

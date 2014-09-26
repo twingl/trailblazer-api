@@ -49,6 +49,7 @@ gem 'cancancan', '~> 1.8.4'
 
 # External APIs
 gem 'google-api-client', '~> 0.7.1', :require => 'google/api_client'
+gem 'sendgrid'
 
 # Browser API provider
 gem 'doorkeeper', '~> 1.3.1'

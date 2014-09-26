@@ -14,6 +14,10 @@ GOOGLE_SERVICE_ACCOUNT_EMAIL: "service account email"
 
 GOOGLE_BROWSER_API_KEY: "browser API key"
 
+# Sendgrid email service credentials
+SENDGRID_USERNAME: ""
+SENDGRID_PASSWORD: ""
+
 # Staging authentication
 #STAGING_USERNAME: "user"
 #STAGING_PASSWORD: "pass"

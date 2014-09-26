@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <h1>Welcome to Trailblazer</h1>
+    <p>Thanks for signing up</p>
+
+    <p>
+      Please take a few seconds to confirm your email address by clicking the
+      link below or copying it into your web browser. 
+    </p>
+
+    <p><strong><%= link_to confirm_email_url(@token), confirm_email_url(@token) %></strong></p>
+
+    <p>
+      Alternatively, if you did not sign up to Trailblazer, you can deactivate
+      the account by following the link below:
+    </p>
+
+    <p><strong><%= link_to revert_email_url(@token), revert_email_url(@token) %></strong></p>
+  </body>
+</html>

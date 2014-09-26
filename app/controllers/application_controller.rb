@@ -56,7 +56,7 @@ protected
   def authenticate_user!(location = request.url)
     unless user_signed_in?
       store_location(location)
-      redirect_to landing_url
+      redirect_to sign_in_url
     end
   end
 

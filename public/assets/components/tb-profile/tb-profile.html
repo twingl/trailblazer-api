@@ -1,0 +1,149 @@
+<link rel="import" href="../font-roboto/roboto.html">
+<link rel="import" href="../core-ajax/core-ajax.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<link rel="import" href="../tb-flash/tb-flash.html">
+
+<polymer-element name="tb-profile" attributes="profileUrl updateProfileUrl resendConfirmationUrl">
+  <script src="tb-profile.js" type="text/javascript" charset="utf-8"></script>
+
+  <template>
+    <link rel="stylesheet" href="tb-profile.css" type="text/css" />
+
+    <core-ajax
+      id="xhrGetProfile"
+      url="{{profileUrl}}"
+      auto
+      on-core-response="{{profileLoaded}}"
+      on-core-error="{{ajaxError}}"
+      method="get">
+    </core-ajax>
+
+    <core-ajax
+      id="xhrUpdateEmail"
+      url="{{updateProfileUrl}}"
+      body="{{emailData}}"
+      headers='{"Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+      on-core-response="{{emailUpdated}}"
+      on-core-error="{{ajaxError}}"
+      method="post">
+    </core-ajax>
+
+    <core-ajax
+      id="xhrResendConfirmation"
+      url="{{resendConfirmationUrl}}"
+      headers='{"Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+      on-core-response="{{confirmationResent}}"
+      on-core-error="{{ajaxError}}"
+      method="post">
+    </core-ajax>
+
+    <core-ajax
+      id="xhrUpdatePassword"
+      url="{{updateProfileUrl}}"
+      body="{{passwordData}}"
+      headers='{"Content-Type":"application/json","X-CSRF-Token":"{{csrfToken}}"}'
+      on-core-response="{{passwordUpdated}}"
+      on-core-error="{{ajaxError}}"
+      method="post">
+    </core-ajax>
+
+    <h1>Profile</h1>
+
+    <div vertical layout center>
+      <div id="flash">
+        <tb-flash id="flsActionError" type="error" layout="fixed"></tb-flash>
+        <tb-flash id="flsActionSuccess" type="notice" layout="fixed"></tb-flash>
+      </div>
+
+      <div id="update-email" class="card" vertical layout center center-justified>
+        <paper-shadow></paper-shadow>
+
+        <h2>Email Address</h2>
+
+        <p id="confirmation-status" class="{{ {confirmed: profile.confirmed_at, unconfirmed: !profile.confirmed_at} | tokenList}}">
+          {{profile.email}}{{ !profile.confirmed_at ? " not yet" : '' }} confirmed.
+        </p>
+
+        <div class="validated-input">
+          <paper-input
+            id="txtEmail"
+            required
+            validateImmediately="false"
+            on-change="{{updateEmailData}}"
+            on-blur="{{validateEmail}}"
+            error="This doesn't appear to be an email address"
+            label="Email Address"
+            value="{{email}}"
+            type="email">
+          </paper-input>
+        </div>
+
+        <div class="actions" horizontal end-justified layout>
+          <template if="{{!profile.confirmed_at}}">
+            <paper-button
+              id="btnResendConfirmation"
+              label="Resend confirmation"
+              on-tap="{{resendConfirmation}}">
+            </paper-button>
+          </template>
+
+          <paper-button
+            id="btnUpdateEmail"
+            class="primary"
+            label="Save"
+            on-tap="{{updateEmail}}">
+          </paper-button>
+        </div>
+      </div>
+
+      <div id="update-password" class="card" vertical layout center center-justified>
+        <paper-shadow></paper-shadow>
+
+        <h2>Password</h2>
+
+        <div class="validated-input">
+          <paper-input
+            id="txtNewPassword"
+            required
+            validateImmediately="false"
+            pattern="^.{5,}$"
+            on-blur="{{validateNewPassword}}"
+            on-change="{{updatePasswordData}}"
+            error="Please enter a new password at least 5 characters long"
+            label="New Password"
+            value="{{newPassword}}"
+            type="password">
+          </paper-input>
+        </div>
+
+        <!--
+        <div class="validated-input">
+          <paper-input
+            id="txtCurrentPassword"
+            required
+            validateImmediately="false"
+            on-blur="{{validateCurrentPassword}}"
+            on-change="{{updatePasswordData}}"
+            error="Please enter your current password"
+            label="Current Password"
+            value="{{currentPassword}}"
+            type="password">
+          </paper-input>
+        </div>
+        -->
+
+        <div class="actions" horizontal end-justified layout>
+          <paper-button
+            id="btnUpdatePassword"
+            class="primary"
+            label="Change Pasword"
+            on-tap="{{updatePassword}}">
+          </paper-button>
+        </div>
+      </div>
+    </div>
+
+
+  </template>
+</polymer-element>
