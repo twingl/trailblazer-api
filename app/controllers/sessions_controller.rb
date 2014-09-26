@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
   def change_user
     store_location(params[:return_to]) if params[:return_to]
     destroy_session
-    redirect_to "/auth/google_apps_chooser"
+    redirect_to "/sign_in"
   end
 
 private
