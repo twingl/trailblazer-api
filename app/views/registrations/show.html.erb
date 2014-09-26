@@ -1,11 +1,20 @@
-<div class="container" layout vertical center center-justified>
+<!-- I see you've discovered my horrible markup (who even uses spacers any
+more, wtf). Go you! This message was brought to you by many litres of coffee
+and not nearly enough sleep or time. -->
+
+<div class="container">
+  <div class="spacer"></div>
   <%= image_tag "logo.png", alt: "Trailblazer" %>
 
-  <tb-profile
-    profileUrl="<%= current_user_profile_url %>"
-    updateProfileUrl="<%= profile_url %>"
-    resendConfirmationUrl="<%= resend_confirmation_url %>">
-  </tb-profile>
+  <div layout center vertical center-justified>
+    <tb-profile
+     profileUrl="<%= current_user_profile_url %>"
+     updateProfileUrl="<%= profile_url %>"
+     resendConfirmationUrl="<%= resend_confirmation_url %>">
+    </tb-profile>
+
+    <%= link_to "Sign Out", sign_out_url, :class => "btn", :id => "sign-out" %>
+  </div>
 
   <a class="photo-credit" href="https://www.flickr.com/photos/96773764@N03/8907191054/in/pool-freeuse/" target="_blank">Photo credit - Marie Ann Anderson (flickr)</a>
 </div>
