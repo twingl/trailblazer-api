@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140925113359) do
+ActiveRecord::Schema.define(version: 20140926094746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140925113359) do
     t.datetime "started_at"
     t.integer  "current_node_id"
     t.text     "description"
+    t.string   "temp_id"
   end
 
   add_index "assignments", ["current_node_id"], name: "index_assignments_on_current_node_id", using: :btree
@@ -81,6 +82,7 @@ ActiveRecord::Schema.define(version: 20140925113359) do
     t.float    "x"
     t.float    "y"
     t.integer  "rank",          default: 0
+    t.string   "temp_id"
   end
 
   add_index "nodes", ["assignment_id"], name: "index_nodes_on_assignment_id", using: :btree

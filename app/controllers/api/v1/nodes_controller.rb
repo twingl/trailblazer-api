@@ -57,7 +57,7 @@ module Api::V1
     end
 
     def node_params
-      params.require(:node).permit(:url, :title, :arrived_at, :departed_at, :idle, :parent_id, :rank)
+      params.require(:node).permit(:url, :title, :arrived_at, :departed_at, :idle, :parent_id, :rank, :temp_id)
     end
 
     def coord_params

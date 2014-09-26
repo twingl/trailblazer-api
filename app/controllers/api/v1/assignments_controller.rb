@@ -41,7 +41,7 @@ module Api::V1
     end
 
     def assignment_params
-      params.require(:assignment).permit(:current_node_id, :title, :description, :started_at, :completed_at)
+      params.require(:assignment).permit(:current_node_id, :title, :description, :started_at, :completed_at, :temp_id)
     end
 
     def project_params
