@@ -13,6 +13,7 @@ module Api::V1
     def create #TODO
       project = Project.create(project_params)
       @assignment = project.assign_to(current_resource_owner)
+      @assignment.update_attributes(assignment_params)
 
       if @assignment.errors.empty?
         render :json => @assignment
