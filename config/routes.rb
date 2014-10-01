@@ -68,6 +68,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       match '/me', :to => "users#me", :via => [:get]
+      match '/backup', :to => "users#backup", :via => [:post]
 
       resources :assignments, :only => [:index, :create, :update, :destroy] do
         resources :nodes, :on => :member, :only => [:index, :create] do

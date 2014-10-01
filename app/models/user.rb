@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   has_many :projects, :through => :assignments
   has_many :nodes, :dependent => :destroy
 
+  has_many :assignment_backups
+
   before_save :update_email, :on => :update, :if => Proc.new {|u| u.valid? and u.email_changed? and u.persisted? }
 
   scope :admin,    -> { where(:admin    => true ) }
