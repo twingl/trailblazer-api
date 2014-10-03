@@ -11,20 +11,20 @@ class Assignment < ActiveRecord::Base
 
   def as_json(options={})
     json = {
-      :id => id,
-      :user_id => user_id,
-      :project_id => project_id,
-      :title => title,
-      :completed_at => completed_at,
-      :current_node_id => current_node_id,
-      :description => description,
-      :visible => visible
+      :id               => self.id,
+      :user_id          => self.user_id,
+      :project_id       => self.project_id,
+      :title            => self.title,
+      :completed_at     => self.completed_at,
+      :current_node_id  => self.current_node_id,
+      :description      => self.description,
+      :visible          => self.visible
     }
 
-    if public_url_token.present? && visible
+    if self.public_url_token.present? && visible
       json[:url] = Rails.application.routes.url_helpers.public_map_url(
-        :token => public_url_token,
-        :host => options.fetch(:host, "app.trailblazer.io"))
+        :token  => self.public_url_token,
+        :host   => options.fetch(:host, "app.trailblazer.io"))
     end
 
     json
