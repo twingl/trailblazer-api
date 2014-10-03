@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001053018) do
+ActiveRecord::Schema.define(version: 20141003004515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20141001053018) do
     t.integer  "current_node_id"
     t.text     "description"
     t.string   "temp_id"
+    t.text     "public_url_token"
+    t.boolean  "visible",          default: false
   end
 
   add_index "assignments", ["current_node_id"], name: "index_assignments_on_current_node_id", using: :btree
