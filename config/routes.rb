@@ -81,6 +81,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :public do
+    match '/map/:token', :to => "maps#show", :via => [:get], :as => :map
+  end
+
   # Misc pages
   match '/app', :to => "pages#app", :as => "app", :via => [:get]
   match '/coming_soon', :to => "pages#coming_soon", :as => "coming_soon", :via => [:get]
