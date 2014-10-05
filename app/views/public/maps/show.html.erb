@@ -1,2 +1,4 @@
-<h1>Public::Maps#show</h1>
-<p>Find me in app/views/public/maps/show.html.erb</p>
+<script type="text/javascript" charset="utf-8">
+ window.renderMap(<%= @map.to_json.html_safe %>,
+                  <%= @map.nodes.to_json.html_safe %>);
+</script>

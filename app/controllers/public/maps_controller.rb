@@ -2,12 +2,6 @@ class Public::MapsController < ApplicationController
   before_action :set_map
 
   def show
-    # temporary
-    render :json => {
-      :title       => @map.title,
-      :description => @map.description,
-      :nodes       => @map.nodes
-    }
   end
 
 private
