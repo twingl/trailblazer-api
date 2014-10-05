@@ -5,7 +5,7 @@ class UserRequestsPasswordReset < Playhouse::Context
   actor :email
 
   def perform
-    user = User.find_by(:email => email)
+    user = User.where{|u| u.email =~ email}.first
 
     if user
       token = loop do

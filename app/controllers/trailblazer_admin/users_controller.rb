@@ -4,7 +4,7 @@ class TrailblazerAdmin::UsersController < TrailblazerAdmin::ApplicationControlle
 
   def search
     puts params[:q]
-    results = User.where("email LIKE ?", "%#{params[:q]}%").limit(8)
+    results = User.where{|u| u.email =~ "%#{params[:q]}%"}.limit(8)
     render :json => { :users => results }
   end
 end

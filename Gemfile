@@ -7,6 +7,9 @@ gem 'pg'
 gem 'foreman'
 gem 'puma'
 
+# Query helpers
+gem 'squeel'
+
 # Config, Utility
 gem 'figaro'
 gem 'guard'

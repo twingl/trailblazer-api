@@ -6,7 +6,7 @@ class UserSignsIn < Playhouse::Context
   actor :ip
 
   def perform
-    user = User.where(:email => email.downcase).first
+    user = User.where{|u| u.email =~ email}.first
 
     if user && user.password_digest.present? && user.authenticate(password)
       attrs = {
