@@ -4,6 +4,9 @@ Rails.application.configure do
     :host => "app.trailblazer.io"
   }
 
+  # Set Skylight's logger to STDOUT
+  config.skylight.logger = Logger.new(STDOUT)
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

@@ -6,6 +6,7 @@ gem 'rails', '~> 4.1.1'
 gem 'pg'
 gem 'foreman'
 gem 'puma'
+gem 'skylight'
 
 # Query helpers
 gem 'squeel'
