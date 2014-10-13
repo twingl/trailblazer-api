@@ -21,6 +21,10 @@ SENDGRID_PASSWORD: ""
 # Embedly
 EMBEDLY_API_KEY: "embedly key"
 
+# Skylight
+# SKYLIGHT_APPLICATION: ""
+# SKYLIGHT_AUTHENTICATION: ""
+
 # Staging authentication
 #STAGING_USERNAME: "user"
 #STAGING_PASSWORD: "pass"
