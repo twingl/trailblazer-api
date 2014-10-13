@@ -5,7 +5,7 @@ class Node < ActiveRecord::Base
 
   belongs_to :context
 
-  before_create :schedule_work
+  after_create :schedule_work
 
   validates :rank, :numericality => {
     :less_than_or_equal_to    => 1,
