@@ -18,6 +18,9 @@ GOOGLE_BROWSER_API_KEY: "browser API key"
 SENDGRID_USERNAME: ""
 SENDGRID_PASSWORD: ""
 
+# Embedly
+EMBEDLY_API_KEY: "embedly key"
+
 # Staging authentication
 #STAGING_USERNAME: "user"
 #STAGING_PASSWORD: "pass"
