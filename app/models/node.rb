@@ -5,6 +5,8 @@ class Node < ActiveRecord::Base
 
   before_create :get_title
 
+  belongs_to :context
+
   validates :rank, :numericality => {
     :less_than_or_equal_to    => 1,
     :greater_than_or_equal_to => -1
