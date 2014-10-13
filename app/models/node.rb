@@ -3,9 +3,9 @@ class Node < ActiveRecord::Base
   belongs_to :user
   belongs_to :parent, :class_name => "Node"
 
-  before_create :get_title
-
   belongs_to :context
+
+  before_create :schedule_work
 
   validates :rank, :numericality => {
     :less_than_or_equal_to    => 1,
@@ -14,10 +14,8 @@ class Node < ActiveRecord::Base
 
 private
 
-  def get_title # Grab the title from another node if present
-    node = Node.where("title IS NOT NULL").find_by(:url => url)
-    if node
-      self.title = node.title
-    end
+  def schedule_work
+    # Enqueue a worker to extract information about this Node
+    Resque.enqueue(Workers::ExtractContextData, self.id)
   end
 end

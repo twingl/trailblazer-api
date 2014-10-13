@@ -1,5 +1,5 @@
 # Worker queue names
-QUEUE: first_run,directory_import
+QUEUE: first_run,sync_domain,extract_context_data
 
 # Google API env vars
 GOOGLE_APPLICATION_NAME: "Trailblazer"
