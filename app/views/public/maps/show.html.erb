@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'map' %>
+
 <script type="text/javascript" charset="utf-8">
  window.renderMap(<%= @map.to_json.html_safe %>,
                   <%= @map.nodes.to_json.html_safe %>);
