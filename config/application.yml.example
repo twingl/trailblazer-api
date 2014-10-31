@@ -1,3 +1,8 @@
+# Web server configuration
+PUMA_WORKERS: 3
+PUMA_MIN_THREADS: 6
+PUMA_MAX_THREADS: 6
+
 # Worker queue names
 QUEUE: first_run,sync_domain,extract_context_data
 
