@@ -46,7 +46,7 @@ gem 'omniauth',               '~> 1.2.1'
 gem 'omniauth-google-oauth2', '~> 0.2.4'
 
 # has_secure_password
-gem 'bcrypt-ruby', '~> 3.1.5'
+gem 'bcrypt', '~> 3.1.5'
 
 # Internal Authorization
 gem 'cancancan', '~> 1.8.4'
