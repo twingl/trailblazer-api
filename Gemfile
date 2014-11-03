@@ -7,7 +7,6 @@ gem 'pg'
 gem 'foreman'
 gem 'puma'
 gem 'skylight'
-gem 'newrelic_rpm', :group => :production
 
 # Query helpers
 gem 'squeel'
