@@ -4,7 +4,7 @@ module Api::V1
     before_action :set_assignment, :except => [:index, :create]
 
     def index
-      render :json => { :assignments => current_resource_owner.assignments }.to_json(:host => request.host)
+      render :json => { :assignments => current_resource_owner.assignments }
     end
 
     def show #TODO
@@ -16,7 +16,7 @@ module Api::V1
       @assignment.update_attributes(assignment_params)
 
       if @assignment.errors.empty?
-        render :json => @assignment.to_json(:host => request.host)
+        render :json => @assignment
       else
         render :json => { :errors => @assignment.errors.full_messages }, :status => 422
       end
@@ -24,7 +24,7 @@ module Api::V1
 
     def update #TODO
       if @assignment.update_attributes(assignment_params)
-        render :json => @assignment.to_json(:host => request.host)
+        render :json => @assignment
       else
         render :json => { :errors => @assignment.errors.full_messages }, :status => 422
       end
