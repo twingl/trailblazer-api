@@ -69,7 +69,7 @@ GEM
       oauth
       querystring
     erubis (2.7.0)
-    eventmachine (1.0.3)
+    eventmachine (1.0.4)
     execjs (2.2.2)
     extlib (0.9.16)
     factory_girl (4.4.0)
