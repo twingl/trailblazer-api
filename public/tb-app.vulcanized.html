@@ -10628,9 +10628,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 </style>
 
-    <core-ajax id="approve" url="{{formTarget}}" body="{{formData}}" headers="{&quot;Content-Type&quot;: &quot;application/json&quot;}" method="post"></core-ajax>
+    <core-ajax id="approve" url="{{formTarget}}" body="{{formData}}" headers="{&quot;Content-Type&quot;: &quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" method="post"></core-ajax>
 
-    <core-ajax id="deny" url="{{formTarget}}" body="{{formData}}" headers="{&quot;Content-Type&quot;: &quot;application/json&quot;}" method="delete"></core-ajax>
+    <core-ajax id="deny" url="{{formTarget}}" body="{{formData}}" headers="{&quot;Content-Type&quot;: &quot;application/json&quot;,&quot;X-CSRF-Token&quot;:&quot;{{csrfToken}}&quot;}" method="delete"></core-ajax>
 
     <core-ajax auto="" url="https://www.googleapis.com/plus/v1/people/{{userUid}}?fields=image,cover&amp;key={{googleApiKey}}" on-core-response="{{userImageLoaded}}"></core-ajax>
 
