@@ -57,7 +57,7 @@ gem 'sendgrid'
 gem 'embedly'
 
 # Browser API provider
-gem 'doorkeeper', '~> 1.3.1'
+gem 'doorkeeper', '~> 1.4.1'
 gem 'rack-cors',  '~> 0.2.9' # Allow cross origin requests
 
 # Worker model
