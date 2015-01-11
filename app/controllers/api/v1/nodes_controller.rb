@@ -49,7 +49,9 @@ module Api::V1
   private
 
     def set_assignment
-      @assignment = current_resource_owner.assignments.find(params[:assignment_id])
+      if params[:assignment_id].present?
+        @assignment = current_resource_owner.assignments.find(params[:assignment_id])
+      end
     end
 
     def set_node
