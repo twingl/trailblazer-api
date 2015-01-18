@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150118045743) do
+ActiveRecord::Schema.define(version: 20150118050533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,20 +90,20 @@ ActiveRecord::Schema.define(version: 20150118045743) do
     t.integer  "assignment_id"
     t.integer  "user_id"
     t.integer  "parent_id"
-    t.text     "url",                           null: false
+    t.text     "url",                             null: false
     t.text     "title"
     t.datetime "arrived_at"
     t.datetime "departed_at"
-    t.boolean  "idle",          default: false
+    t.boolean  "idle",            default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "x"
     t.float    "y"
-    t.integer  "rank",          default: 0
+    t.integer  "rank",            default: 0
     t.string   "temp_id"
     t.integer  "context_id"
     t.boolean  "redirect"
-    t.text     "redirected_to"
+    t.text     "redirected_from"
   end
 
   add_index "nodes", ["assignment_id"], name: "index_nodes_on_assignment_id", using: :btree
