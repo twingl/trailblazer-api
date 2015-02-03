@@ -1,6 +1,6 @@
 <%= javascript_include_tag 'map' %>
 
 <script type="text/javascript" charset="utf-8">
- window.renderMap(<%= @map.to_json.html_safe %>,
-                  <%= @map.nodes.to_json.html_safe %>);
+ window.renderMap(<%= @assignment.to_json.html_safe %>,
+      <%= @nodes.to_json(:methods => %w(favicon_url) ).html_safe %>);
 </script>

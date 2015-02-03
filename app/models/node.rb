@@ -12,6 +12,8 @@ class Node < ActiveRecord::Base
     :greater_than_or_equal_to => -1
   }
 
+  delegate :favicon_url, :to => :context, :allow_nil => true
+
 private
 
   def schedule_work
