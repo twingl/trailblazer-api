@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150118050533) do
+ActiveRecord::Schema.define(version: 20150203045818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150118050533) do
     t.json     "embedly_object"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "favicon_url"
   end
 
   create_table "domain_admin_roles", force: true do |t|

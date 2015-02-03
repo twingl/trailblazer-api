@@ -15,6 +15,7 @@ module Workers
       context.update_attributes(
         :title          => response.title,
         :url            => response.url,
+        :favicon_url    => response.favicon_url,
         :provider       => response.provider,
         :embedly_object => response.to_json
       )
