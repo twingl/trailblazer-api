@@ -1,4 +1,8 @@
+<div id="wrap" class="wrap assignment-show"></div>
+
 <%= javascript_include_tag 'map' %>
+
+<link rel="stylesheet" href="/content.css" type="text/css" media="all" />
 
 <script type="text/javascript" charset="utf-8">
  window.renderMap(<%= @assignment.to_json.html_safe %>,

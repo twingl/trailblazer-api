@@ -2,6 +2,7 @@ class Public::MapsController < ApplicationController
   before_action :set_map
 
   def show
+    render :layout => "public-map"
   end
 
 private
