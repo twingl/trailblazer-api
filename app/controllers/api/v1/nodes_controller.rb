@@ -32,12 +32,7 @@ module Api::V1
     end
 
     def update_coords
-      ActiveRecord::Base.transaction do
-        coords = coord_params
-        @assignment.nodes.find(coords.keys).each do |n|
-          n.update_attributes(coords[n.id.to_s].slice(:x, :y))
-        end
-      end
+      Resque.enqueue(Workers::UpdateCoords, current_resource_owner.id, @assignment.id, coord_params)
       head 204
     end
 
