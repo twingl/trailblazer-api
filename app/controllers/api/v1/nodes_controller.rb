@@ -9,11 +9,11 @@ module Api::V1
       render :json => { :nodes => @assignment.nodes }
     end
 
-    def show #TODO
+    def show
       render :json => { :nodes => @node }
     end
 
-    def create #TODO ? - scope of the API
+    def create
       @node = @assignment.nodes.build(node_params.merge(:user => current_resource_owner))
 
       if @node.save
@@ -23,7 +23,7 @@ module Api::V1
       end
     end
 
-    def update #TODO ? - scope of the API
+    def update
       if @node.update_attributes(node_params)
         render :json => @node
       else
@@ -31,7 +31,7 @@ module Api::V1
       end
     end
 
-    def update_coords #TODO
+    def update_coords
       ActiveRecord::Base.transaction do
         coords = coord_params
         @assignment.nodes.find(coords.keys).each do |n|
@@ -41,7 +41,7 @@ module Api::V1
       head 204
     end
 
-    def destroy #TODO ? - scope of the API
+    def destroy
       @node.destroy
       head 204
     end
