@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title><%= yield :error_header %> - Trailblazer</title>
+
+    <link rel="stylesheet" href="http://static.twin.gl/trailblazer/css/error_page.css" type="text/css" media="all" />
+  </head>
+  <body>
+    <div id="wrap">
+      <img id="logo" src="http://static.twin.gl/trailblazer/img/logo.png" alt="" />
+
+      <h1><%= yield :error_header %></h1>
+
+      <p><%= yield :error_byline %></p>
+
+      <p>
+        As a small token of our appreciation for you, dear visitor, we offer
+        this limerick in place of what you were really looking for, with the
+        hope that you find solace in its literary wonder.
+      </p>
+
+      <hr />
+
+      <div id="limerick">
+        <p class="poem">
+          There was an Old Lady of Chertsey,<br />
+          Who made a remarkable curtsey;<br />
+          She twirled round and round,<br />
+          Till she sunk underground,<br />
+          Which distressed all the people of Chertsey.
+        </p>
+        <p class="author">
+          &mdash;Edward Lear, 1846
+        </p>
+      </div>
+
+      <hr />
+
+      <p class="footer">
+        If you would like to talk, or have a limerick of your own, please feel
+        welcome to <a href="mailto:hello@twin.gl">email us</a>.
+      </p>
+    </div>
+  </body>
+</html>
