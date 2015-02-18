@@ -1,11 +1,24 @@
 <% content_for(:title) { "#{@assignment.title} - Trailblazer" } %>
 <div id="wrap" class="wrap assignment-show"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/0.4.3/mobile-detect.min.js" type="text/javascript" charset="utf-8"></script>
 <%= javascript_include_tag 'map' %>
 
 <link rel="stylesheet" href="/content.css" type="text/css" media="all" />
 
 <script type="text/javascript" charset="utf-8">
+
+var md = new MobileDetect(window.navigator.userAgent);
+
+if (md.tablet() || md.phone() || md.mobile()) {
+  var go = window.confirm("Just a heads up, the map doesn't officially support mobile yet. Feel free to continue, but if it breaks, that's why! :)");
+
+  if (go) {
+    window.renderMap(<%= @assignment.to_json.html_safe %>,
+          <%= @nodes.to_json(:methods => %w(favicon_url) ).html_safe %>);
+  }
+} else {
  window.renderMap(<%= @assignment.to_json.html_safe %>,
       <%= @nodes.to_json(:methods => %w(favicon_url) ).html_safe %>);
+}
 </script>
