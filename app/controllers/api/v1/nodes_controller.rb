@@ -58,7 +58,7 @@ module Api::V1
     end
 
     def coord_params
-      params.require(:nodes).permit!
+      params.require(:nodes).permit! # FIXME NOPE NOPE NOPE NOOOOOOOOOOPPPPPPPEEEEEEE
     end
   end
 end
