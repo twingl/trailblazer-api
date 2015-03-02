@@ -1,6 +1,6 @@
 module Api::V1
   class UsersController < ApiController
-    doorkeeper_for :all
+    before_action :doorkeeper_authorize!
 
     def me
       render :json => current_resource_owner.to_json(:expand => [:classrooms, :assignments])

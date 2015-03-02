@@ -1,6 +1,6 @@
 module Api::V1
   class NodesController < ApiController
-    doorkeeper_for :all
+    before_action :doorkeeper_authorize!
 
     before_action :set_assignment, :only => [:index, :create, :update_coords]
     before_action :set_node, :except => [:index, :create, :update_coords]

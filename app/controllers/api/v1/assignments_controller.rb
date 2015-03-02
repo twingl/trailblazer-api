@@ -1,6 +1,7 @@
 module Api::V1
   class AssignmentsController < ApiController
-    doorkeeper_for :all
+    before_action :doorkeeper_authorize!
+
     before_action :set_assignment, :except => [:index, :create]
 
     def index

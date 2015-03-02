@@ -1,6 +1,6 @@
 module Api::V1
   class ProjectsController < ApiController
-    doorkeeper_for :all
+    before_action :doorkeeper_authorize!
 
     def index
       render :json => { :projects => current_resource_owner.projects }
