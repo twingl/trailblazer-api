@@ -19,4 +19,8 @@
 /config/application.yml
 /config/database.yml
 
+# Ignore Node modules
 /node_modules
+
+# Ignore defacto-standard ruby env config
+.ruby-gemset
