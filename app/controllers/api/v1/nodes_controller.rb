@@ -32,7 +32,7 @@ module Api::V1
     end
 
     def update_coords
-      Resque.enqueue(Workers::UpdateCoords, current_resource_owner.id, @assignment.id, coord_params)
+      UpdateCoordinatesJob.perform_later current_resource_owner.id, @assignment.id, coord_params
       head 204
     end
 

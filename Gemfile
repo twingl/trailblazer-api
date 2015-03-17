@@ -19,6 +19,7 @@ gem 'squeel', '~>1.2.3'
 
 # Worker model
 gem 'resque', '~> 1.25.2'
+gem 'sucker_punch', '~> 1.4.0'
 
 # DCI
 gem 'playhouse', '~> 0.1.1', :github => 'enspiral/playhouse'

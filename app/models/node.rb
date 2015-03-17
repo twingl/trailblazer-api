@@ -18,6 +18,6 @@ private
 
   def schedule_work
     # Enqueue a worker to extract information about this Node
-    Resque.enqueue(Workers::ExtractContextData, self.id)
+    ExtractWebsiteInformationJob.perform_later self
   end
 end

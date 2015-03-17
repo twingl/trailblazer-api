@@ -41,6 +41,9 @@ module Trailblazer
       end
     end
 
+    # Use the in-memory Sucker Punch as our queue adapter
+    config.active_job.queue_adapter = :sucker_punch
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
