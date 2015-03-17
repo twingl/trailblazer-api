@@ -8,14 +8,7 @@ port        ENV['PORT']     || 3000
 environment ENV['RACK_ENV'] || 'development'
 
 on_worker_boot do
-
-  ActiveSupport.on_load(:active_record) do
-    config = ActiveRecord::Base.configurations[Rails.env] ||
-      Rails.application.config.database_configuration[Rails.env]
-
-    config['pool'] = ENV['PUMA_MAX_THREADS'] || 12
-
-    ActiveRecord::Base.establish_connection(config)
-  end
-
+  # Valid on Rails 4.1+ using the `config/database.yml` method of setting `pool` size
+  # https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#on-worker-boot
+  ActiveRecord::Base.establish_connection
 end
