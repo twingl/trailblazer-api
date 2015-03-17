@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.1'
 
-gem 'rails', '~> 4.1.1'
+gem 'rails', '~> 4.2.1.pre.rc4'
 gem 'puma'
 gem 'rails_12factor', :group => :production
 
@@ -15,7 +15,7 @@ gem 'newrelic_rpm', :group => :production
 
 # DB, Query helpers
 gem 'pg'
-gem 'squeel'
+gem 'squeel', '~>1.2.3'
 
 # Worker model
 gem 'resque', '~> 1.25.2'
@@ -36,7 +36,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-livereload'
 
-  gem 'rspec-rails', '~> 3.0.1'
+  gem 'rspec-rails', '~> 3.1.0'
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'shoulda-matchers', '~> 2.6.1'
   gem 'pry',     '~> 0.9.12'
