@@ -10,7 +10,7 @@ gem 'rails_12factor', :group => :production
 gem 'foreman', :group => :development
 
 # Stats, measurements
-gem 'skylight'
+gem 'skylight', :group => :production
 
 # DB, Query helpers
 gem 'pg'
