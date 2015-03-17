@@ -13,7 +13,7 @@ module Workers
 
     # Thin wrapper around job creation so we can set the queue dynamically
     def self.enqueue(domain_name, admin_id, queue = :sync_domain)
-      Resque::Job.create(queue, self, domain_name, admin_id)
+      #Resque::Job.create(queue, self, domain_name, admin_id)
     end
 
     def self.perform(domain_name, admin_id)
