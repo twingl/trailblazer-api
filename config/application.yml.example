@@ -11,9 +11,6 @@ PUMA_MAX_THREADS: "6"
 # Hostname used in public trail view
 PUBLIC_URL_HOSTNAME: "localhost:3000"
 
-# Worker queue names
-QUEUE: first_run,sync_domain,extract_context_data
-
 # Google API env vars
 GOOGLE_APPLICATION_NAME: "Trailblazer"
 GOOGLE_APPLICATION_VERSION: "0.0.0"
