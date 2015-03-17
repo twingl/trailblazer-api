@@ -11,6 +11,7 @@ gem 'foreman', :group => :development
 
 # Stats, measurements
 gem 'skylight', :group => :production
+gem 'newrelic_rpm', :group => :production
 
 # DB, Query helpers
 gem 'pg'
