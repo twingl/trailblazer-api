@@ -17,7 +17,6 @@
 
 # Ignore application configuration
 /config/application.yml
-/config/database.yml
 
 # Ignore Node modules
 /node_modules

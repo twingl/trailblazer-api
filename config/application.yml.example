@@ -1,3 +1,8 @@
+# Database configuration
+DATABASE_URL: "postgres://user:password@localhost:5432/database_name"
+#DATABASE_URL: "postgres://user@localhost:5432/database_name"
+#DATABASE_URL: "postgres://localhost:5432/database_name"
+
 # Web server configuration
 PUMA_WORKERS: "3"
 PUMA_MIN_THREADS: "6"
