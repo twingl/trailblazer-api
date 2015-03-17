@@ -26,10 +26,10 @@ deployed to [production](https://app.trailblazer.io/).
 
 RVM users:
 
-Update RVM to the latest stable version and install Ruby 2.1.2
+Update RVM to the latest stable version and install Ruby 2.2.1
 
     $ rvm get stable
-    $ rvm install 2.1.2
+    $ rvm install 2.2.1
 
 You will also need PostgreSQL and Redis set up and running on your local
 machine, as well as access to a Google Apps domain with
