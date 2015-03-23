@@ -4,9 +4,9 @@ DATABASE_URL: "postgres://user:password@localhost:5432/database_name"
 #DATABASE_URL: "postgres://localhost:5432/database_name"
 
 # Web server configuration
-PUMA_WORKERS: "3"
-PUMA_MIN_THREADS: "6"
-PUMA_MAX_THREADS: "6"
+WEB_CONCURRENCY: "3"
+MIN_THREADS: "6"
+MAX_THREADS: "6"
 
 # Hostname used in public trail view
 PUBLIC_URL_HOSTNAME: "localhost:3000"

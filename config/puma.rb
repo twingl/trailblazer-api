@@ -1,5 +1,5 @@
-workers Integer(ENV['PUMA_WORKERS'] || 3)
-threads Integer(ENV['PUMA_MIN_THREADS'] || 8), Integer(ENV['PUMA_MAX_THREADS'] || 12)
+workers Integer(ENV['WEB_CONCURRENCY'] || 3)
+threads Integer(ENV['MIN_THREADS'] || 8), Integer(ENV['MAX_THREADS'] || 12)
 
 preload_app!
 
