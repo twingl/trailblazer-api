@@ -35,6 +35,9 @@ EMBEDLY_API_KEY: "embedly key"
 # SKYLIGHT_APPLICATION: ""
 # SKYLIGHT_AUTHENTICATION: ""
 
+# Sentry Credentials
+# SENTRY_DSN: ""
+
 # Staging authentication
 #STAGING_USERNAME: "user"
 #STAGING_PASSWORD: "pass"

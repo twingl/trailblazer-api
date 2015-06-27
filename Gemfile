@@ -9,9 +9,10 @@ gem 'rails_12factor', :group => :production
 # Run locally using Procfile
 gem 'foreman', :group => :development
 
-# Stats, measurements
+# Stats, measurements, reporting
 gem 'skylight', :group => :production
 gem 'newrelic_rpm', :group => :production
+gem 'sentry-raven', :group => :production
 
 # DB, Query helpers
 gem 'pg'
