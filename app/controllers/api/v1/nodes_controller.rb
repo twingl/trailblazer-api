@@ -3,7 +3,7 @@ module Api::V1
     before_action :doorkeeper_authorize!
 
     before_action :set_assignment, :only => [:index, :create, :update_coords]
-    before_action :set_node, :except => [:index, :create, :update_coords]
+    before_action :set_node, :except => [:index, :create, :bulk_destroy, :update_coords]
 
     def index
       render :json => { :nodes => @assignment.nodes }
@@ -38,6 +38,11 @@ module Api::V1
 
     def destroy
       @node.destroy
+      head 204
+    end
+
+    def bulk_destroy
+      current_resource_owner.nodes.where("id IN (?)", params[:ids].split(',')).destroy_all
       head 204
     end
 

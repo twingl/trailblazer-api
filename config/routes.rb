@@ -75,7 +75,9 @@ Rails.application.routes.draw do
           match :coords, :on => :collection, :to => "nodes#update_coords", :via => [:put, :patch]
         end
       end
-      resources :nodes, :only => [:show, :update, :destroy]
+      resources :nodes, :only => [:show, :update, :destroy] do
+        match :bulk_delete, :on => :collection, :to => "nodes#bulk_destroy", :via => [:delete]
+      end
 
       resources :projects, :only => [:index]
     end
