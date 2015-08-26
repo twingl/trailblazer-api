@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.1'
 
-gem 'rails', '~> 4.2.1'
+gem 'rails', '~> 4.2.4'
 gem 'puma'
 gem 'rails_12factor', :group => :production
 
@@ -25,11 +25,12 @@ gem 'sucker_punch', '~> 1.4.0'
 gem 'playhouse', '~> 0.1.1', :github => 'enspiral/playhouse'
 
 # Assets
-gem 'sass-rails',   '~> 4.0.3'
+gem 'sass-rails',   '~> 5.0.0'
 gem 'uglifier',     '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'gaffe',        '~>1.0.2' # custom error pages
+gem 'materialize-sass', '~>0.97'
 
 # Testing, Config, Utility
 group :development, :test do
