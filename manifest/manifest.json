@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "Trailblazer Teacher Dashboard",
+  "description": "Trailblazer is a web browser that turns the research process for a student into a browsable map.",
+  "version": "0.0.1",
+  "icons": {
+    "16": "icons/16.png",
+    "128": "icons/128.png"
+  },
+  "container": ["DOMAIN_INSTALLABLE"],
+  "api_console_project_id": "193395164005"
+}
