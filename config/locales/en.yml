@@ -21,3 +21,9 @@
 
 en:
   hello: "Hello world"
+
+  session:
+    sign_in_method:
+      oauth: "oauth message"
+      password: "password message"
+      sign_up: "sign up message"
