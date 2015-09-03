@@ -56,13 +56,13 @@ window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS || {}, {
 
 $(document).ready(function() {
 
-  let getSignInMethod = function(email, callback) {
-    $.get('/sign_in_method', { email }, function(response) {
+  var getSignInMethod = function(email, callback) {
+    $.get('/sign_in_method', { email: email }, function(response) {
       callback(response.method);
     });
   };
 
-  let resetForm = function() {
+  var resetForm = function() {
     $('.actions.actions-sign-up').hide();
     $('.actions.actions-sign-in').hide();
     $('.actions.actions-oauth').hide();
@@ -75,7 +75,7 @@ $(document).ready(function() {
     $('form').attr('target', '/sign_in');
   };
 
-  let showForm = function(method) {
+  var showForm = function(method) {
     $('.has-loader.active').removeClass('active');
 
     switch(method) {
@@ -122,8 +122,8 @@ $(document).ready(function() {
   };
 
   
-  let nextStage = function() {
-    let target = $('.btn.next');
+  var nextStage = function() {
+    var target = $('.btn.next');
 
     if ($('input#email').hasClass('invalid') || $('input#email').val() == "") {
       $('input#email').focus();
@@ -150,24 +150,24 @@ $(document).ready(function() {
   });
 
   $('.forgot-password').click(function(evt) {
-    let authenticity_token = $('meta[name=csrf-token]').attr('content');
-    let email = $('input#email').val();
+    var authenticity_token = $('meta[name=csrf-token]').attr('content');
+    var email = $('input#email').val();
 
-    $.post('/forgot_password', { user: { email }, authenticity_token }, function(response) {
+    $.post('/forgot_password', { user: { email: email }, authenticity_token: authenticity_token }, function(response) {
       $('.forgot-password').text("We've sent you an email with instructions");
     });
   });
 
-  let submitPasswordForm = function() {
-    let authenticity_token = $('meta[name=csrf-token]').attr('content');
-    let email = $('input#email').val();
-    let password = $('input#password').val();
+  var submitPasswordForm = function() {
+    var authenticity_token = $('meta[name=csrf-token]').attr('content');
+    var email = $('input#email').val();
+    var password = $('input#password').val();
 
     $('.btn.sign-in').addClass('active');
     $('.btn.sign-up').addClass('active');
     $.ajax($('form').attr('target'), {
       method: 'POST',
-      data: { user: { email, password }, authenticity_token },
+      data: { user: { email: email, password: password }, authenticity_token: authenticity_token },
       success: function(response) {
         window.location = response.location;
       },
