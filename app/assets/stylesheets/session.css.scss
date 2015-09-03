@@ -1,0 +1,242 @@
+/*
+ * This is a manifest file that'll be compiled into session.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ */
+@import 'materialize/components/prefixer';
+@import 'materialize/components/mixins';
+@import 'materialize/components/color';
+
+@import 'materialize/components/variables';
+
+@import 'materialize/components/normalize';
+
+@import 'materialize/components/global';
+@import "materialize/components/roboto";
+@import "materialize/components/typography";
+@import 'materialize/components/cards';
+@import 'materialize/components/buttons';
+@import 'materialize/components/waves';
+@import 'materialize/components/form';
+
+@import './animation';
+
+$light-grey: rgb(245, 245, 245);
+$mid-grey: rgb(158, 158, 158);
+$dark-grey: rgb(88, 88, 88);
+$orange: rgb(246, 100, 63);
+$red: rgb(220, 108, 108);
+
+@include keyframes($name: shake) {
+  25% {
+    @include translate(-5px, 0);
+  }
+  75% {
+    @include translate(5px, 0);
+  }
+}
+
+html, body {
+  @include gradient(vertical, rgba(236,234,223,1), rgba(222,216,201,1));
+  width: 100%;
+  height: 100%;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: $mid-grey;
+}
+
+a {
+  color: $dark-grey;
+}
+
+.logo {
+  text-align: left;
+  position: absolute;
+  top:  2rem;
+  left: 2rem;
+  font-size: 22px;
+  line-height: 38px;
+  color: $dark-grey;
+  font-weight: 300;
+
+  &, &>img { vertical-align: top; }
+
+  img { margin-right: 0.5rem; }
+}
+
+.preloader-wrapper {
+  vertical-align: text-top;
+
+  &.tiny {
+    width: 16px;
+    height: 16px;
+  }
+
+  .spinner-layer.spinner-blue-only {
+    border-color: $mid-grey;
+  }
+
+  .circle {
+    border-width: 2px;
+  }
+}
+
+.form-container {
+  $width: 300px;
+  $height: 360px;
+
+  width: $width;
+  min-height: $height;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: - $width / 2;
+  margin-top: - $height / 2;
+
+  form {
+    @extend .card;
+
+    background: $light-grey;
+    padding: 1rem;
+  }
+
+  h1 {
+    color: $dark-grey;
+    font-size: 1.4rem;
+    text-align: left;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 0.5rem 0 0.7rem 0;
+  }
+
+  .input-field {
+    label {
+      left: 0;
+
+      &.active {
+        @include translate(0, -110%);
+      }
+    }
+
+    input[type=email],
+    input[type=password],
+    input[type=text] {
+
+      color: $dark-grey;
+      height: 2rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.2rem;
+
+      &.valid {
+        $color: $mid-grey;
+
+        color: $color;
+        border-bottom: 1px solid $color;
+        box-shadow: 0 1px 0 0 $color;
+      }
+
+      &.invalid {
+        $color: $red;
+
+        color: $color;
+        border-bottom: 1px solid $color;
+        box-shadow: 0 1px 0 0 $color;
+      }
+
+      &:focus,
+      &:focus + label {
+        color: $dark-grey !important;
+      }
+
+      &:focus {
+        border-bottom: 1px solid $dark-grey !important;
+        box-shadow: 0 1px 0 0 $dark-grey !important;
+      }
+    }
+
+    .forgot-password {
+      font-size: 12px;
+    }
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .btn {
+    @extend .btn-flat;
+
+    &.shake {
+      @include animation('shake 0.3s 2 ease-out');
+    }
+
+    background: $dark-grey;
+    color: $light-grey;
+
+    min-width: 100px;
+
+    .loader {
+      margin-top: -2px;
+      vertical-align: middle;
+      display: none;
+      width: 24px;
+      height: 100%;
+    }
+
+    &.disabled {
+      opacity: 0.3;
+    }
+
+    &.active {
+      .loader { display: inline-block; }
+      .text { display: none; }
+    }
+  }
+
+  .actions-sign-in,
+  .actions-sign-up,
+  .actions-oauth,
+  .input-field.password {
+    display: none;
+  }
+
+  .actions-oauth {
+    &, & p { text-align: center; }
+    p {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      color: $dark-grey;
+
+      &:before, &:after {
+        content: ' — ';
+      }
+    }
+
+    .oauth-google {
+      @extend .btn-flat;
+      color: $light-grey;
+      background: #1e88e5;
+    }
+  }
+}
+
+.feedback {
+  text-align: center;
+
+  a {
+    margin: auto 1rem;
+  }
+}
