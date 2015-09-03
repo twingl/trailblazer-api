@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # Authentication
   match '/auth/google_apps_chooser/callback', :to => 'sessions#create_google', :via => [:get, :post]
   match '/auth/google_apps/callback', :to => 'sessions#create_google', :via => [:get, :post]
+  match '/sign_in_method', :to => 'sessions#sign_in_method', :via => [:get], :as => :sign_in_method
   match '/sign_in', :to => 'sessions#new', :via => [:get], :as => :sign_in
   match '/sign_out', :to => 'sessions#destroy', :via => [:get, :delete], :as => :sign_out
   match '/change_user', :to => 'sessions#change_user', :via => [:get, :delete], :as => :change_user
@@ -92,6 +93,8 @@ Rails.application.routes.draw do
   match '/coming_soon', :to => "pages#coming_soon", :as => "coming_soon", :via => [:get]
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
   match '/inactive', :to => "pages#inactive", :as => "inactive", :via => [:get]
+  match '/bug', :to => "pages#bug", :as => "bug", :via => [:get]
+  match '/feedback', :to => "pages#feedback", :as => "feedback", :via => [:get]
 
   root :to => "pages#landing"
 end

@@ -1,29 +1,69 @@
-<!-- I see you've discovered my horrible markup (who even uses spacers any
-more, wtf). Go you! This message was brought to you by many litres of coffee
-and not nearly enough sleep or time. -->
+<div class="logo">
+  <%= image_tag 'logo-grey-58', id: 'logo' %> 
+  Trailblazer
+</div>
 
-<style type="text/css" media="all">
-body {
-  background: url("<%= asset_url('sign_in_bg.jpg') %>") no-repeat center center fixed;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-}
-</style>
+<div class="form-container">
 
-<div class="container">
-  <div class="spacer"></div>
-  <%= image_tag "logo.png", alt: "Trailblazer" %>
+  <form>
 
-  <div layout vertical center center-justified >
-    <tb-sign-in
-      signInUrl="<%= sign_in_url %>"
-      signUpUrl="<%= sign_up_url %>"
-      forgotPasswordUrl="<%= forgot_password_url %>"
-      socialUrlGoogle="/auth/google_apps_chooser">
-    </tb-sign-in>
+    <h1>Sign In</h1>
+
+    <div class="input-field">
+      <input id="email" type="email" class="validate">
+      <label for="email">Email</label>
+    </div>
+
+    <div class="input-field password">
+      <input id="password" type="password" class="validate">
+      <label for="password">Password</label>
+      <a class="forgot-password" href="#">Forgot password?</a>
+    </div>
+
+    <div class="actions actions-default visible">
+      <a class="next waves-effect waves-light btn has-loader">
+        <span class="text">
+          Next
+        </span>
+        <%= image_tag 'loader', class: 'loader' %>
+      </a>
+    </div>
+
+    <div class="actions actions-sign-up">
+      <a class="sign-up waves-effect waves-light btn has-loader">
+        <span class="text">
+          Sign Up
+        </span>
+        <%= image_tag 'loader', class: 'loader' %>
+      </a>
+    </div>
+
+    <div class="actions actions-sign-in">
+      <a class="sign-in waves-effect waves-light btn has-loader">
+        <span class="text">
+          Sign In
+        </span>
+        <%= image_tag 'loader', class: 'loader' %>
+      </a>
+    </div>
+
+    <div class="actions actions-oauth">
+      <p>or</p>
+
+      <a class="oauth-google waves-effect waves-light btn has-loader"
+        href="/auth/google_apps_chooser">
+        <span class="text">
+          Sign in with Google
+        </span>
+        <%= image_tag 'loader', class: 'loader' %>
+      </a>
+
+    </div>
+  </form>
+
+  <div class="feedback">
+    <a href="#" id="feedback">Send feedback</a>
+    <a href="#" id="bug">Report a bug</a>
   </div>
-
-  <a class="photo-credit" href="http://www.publicdomainpictures.net/view-image.php?image=26281&picture=road-in-a-field&large=1" target="_blank">Larisa Koshkina</a>
 
 </div>

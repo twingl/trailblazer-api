@@ -20,4 +20,14 @@ class PagesController < ApplicationController
   # GET /coming_soon
   def coming_soon
   end
+
+  # Shows the feedback form
+  # GET /feedback
+  def feedback
+  end
+
+  # Shows the bug report form
+  # GET /bug
+  def bug
+  end
 end

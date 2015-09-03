@@ -1,10 +1,22 @@
+require 'contexts/get_sign_in_method'
 require 'contexts/get_oauth_user'
 require 'contexts/user_signs_in'
 
 class SessionsController < ApplicationController
+
+  layout "session"
+
   skip_before_action :authenticate_staging
 
-  before_action :authenticate_user!, :except => [:new, :create, :create_google]
+  before_action :authenticate_user!, :except => [:sign_in_method, :new, :create, :create_google]
+
+  # GET /sign_in_method
+  # Checks an email address, returning the sign in route to be taken.
+  # Options to return are: sign_up, password, oauth
+  def sign_in_method
+    @method = GetSignInMethod.new(email: params[:email]).call
+    render json: { method: @method, message: I18n.t(@method, scope: [:session, :sign_in_method]) }
+  end
 
   # Callback endpoint for authenticating using OmniAuth::GoogleOauth2
   # Calls GetOauthUser to retrieve a user, redirecting to +sign_in_url+ if none
@@ -13,8 +25,10 @@ class SessionsController < ApplicationController
   # GET/POST /auth/google_apps/callback
   # GET/POST /auth/google_apps_chooser/callback
   def create_google
-    if user = GetOauthUser.new(:service_hash => omniauth_hash).call
-      establish_session user
+    @user = GetOauthUser.new(:service_hash => omniauth_hash).call
+
+    if @user
+      establish_session @user
       redirect_to return_location
     else
       redirect_to sign_in_url, :notice => "Error signing in"
