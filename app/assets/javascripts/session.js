@@ -188,6 +188,7 @@ $(document).ready(function() {
     });
   };
 
+  $('.btn.sign-up').click(submitPasswordForm);
   $('.btn.sign-in').click(submitPasswordForm);
   $('input#password').keypress(function(e) {
     if (e.which === 13) submitPasswordForm();
