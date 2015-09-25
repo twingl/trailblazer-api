@@ -67,7 +67,7 @@ class RegistrationsController < ApplicationController
     if current_user == user
       redirect_to profile_url
     else
-      # render a 404
+      redirect_to profile_url, :notice => "There was a problem reverting the email change - try again?"
     end
   end
 
