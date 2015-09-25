@@ -55,7 +55,7 @@ class RegistrationsController < ApplicationController
       self.establish_session @user
       redirect_to profile_url, :notice => "Thanks for confirming #{@user.email}"
     else
-      # render a 404
+      redirect_to profile_url, :notice => "There was a problem confirming - try re-sending the email?"
     end
   end
 
