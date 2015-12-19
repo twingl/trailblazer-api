@@ -1,0 +1,17 @@
+<h1><%= @application.name %></h1>
+
+<%= link_to "Back to Applications", oauth_applications_path %>
+<%= link_to "Edit", edit_oauth_application_path(@application) %>
+<%= link_to "Destroy", oauth_application_path(@application), :method => :delete, :confirm => "This is irreversible, are you sure?" %>
+
+<h2>Application ID</h2>
+<%= @application.uid %><br />
+
+<h2>Secret</h2>
+<%= @application.secret %><br />
+
+<h2>Callback URL</h2>
+<%= @application.redirect_uri %><br />
+
+<h4>Link to authorization code:</h4>
+<p><%= link_to 'Authorize', oauth_authorization_path(:client_id => @application.uid, :redirect_uri => @application.redirect_uri, :response_type => 'code' ) %></p>

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
 
   use_doorkeeper do
-    controllers :authorizations => 'authorizations'
+    controllers :authorizations => 'oauth/authorizations', :applications => 'oauth/applications'
   end
 
   # Authentication

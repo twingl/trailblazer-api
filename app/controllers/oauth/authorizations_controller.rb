@@ -1,5 +1,7 @@
-class AuthorizationsController < ::Doorkeeper::AuthorizationsController
+class Oauth::AuthorizationsController < ::Doorkeeper::AuthorizationsController
   helper_method :current_user
+
+  layout 'session'
 
   skip_before_action :authenticate_staging
 

@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :confirmation_token, :allow_nil => true
   validates_uniqueness_of :reset_password_token, :allow_nil => true
 
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
+
   has_many :domain_admin_roles
   belongs_to :domain
   belongs_to :org_unit

@@ -1,0 +1,12 @@
+<h1>New</h1>
+
+<%= form_for @application, url: doorkeeper_submit_path(@application) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %><br />
+
+  <%= f.label :redirect_uri, "Callback URL" %>
+  <%= f.url_field :redirect_uri %><br />
+
+  <%= link_to "Cancel", :back %>
+  <%= f.submit "Create Application" %>
+<% end %>

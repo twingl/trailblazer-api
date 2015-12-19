@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911050919) do
+ActiveRecord::Schema.define(version: 20151219044830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,8 +149,11 @@ ActiveRecord::Schema.define(version: 20150911050919) do
     t.datetime "updated_at"
     t.string   "scopes",       limit: 255, default: "",    null: false
     t.boolean  "trusted",                  default: false
+    t.integer  "owner_id"
+    t.string   "owner_type"
   end
 
+  add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "org_units", force: :cascade do |t|
