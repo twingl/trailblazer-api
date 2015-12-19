@@ -1,19 +1,5 @@
 <h1>Developer Console</h1>
 
-<h2>API Documentation</h2>
-
-<p>
-  The API is still in its very early stages of life, and as such may change
-  frequently. Due to this fact, there is no public-facing documentation at this
-  time, however we can provide you with a snapshot if requested!
-</p>
-<p>
-  If you're interested in developing a Twingl platform application, please get
-  in touch! We'd love to hear about what you're building and feedback on the
-  platform.
-  <%= link_to "Email us", "mailto:hello@twin.gl?subject=API Access", :target => "_blank" %>
-</p>
-
 <h2>Your Applications</h2>
 
 <table>
@@ -28,9 +14,9 @@
     <td><%= link_to app.name, oauth_application_path(app) %></td>
     <td><pre><%= app.redirect_uri %></pre></td>
     <td><%= app.updated_at %></td>
-    <td><%= link_to "Edit", edit_oauth_application_path(app.to_param) %></td>
+    <td><%= link_to "Edit", edit_oauth_application_path(app.to_param), :class => 'btn waves-effect waves-light grey' %></td>
   </tr>
   <% end %>
 
 </table>
-<%= link_to "Create a new application", new_oauth_application_path %>
+<%= link_to "Create a new application", new_oauth_application_path, :class => 'btn waves-effect waves-light' %>

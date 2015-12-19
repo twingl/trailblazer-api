@@ -7,6 +7,6 @@
   <%= f.label :redirect_uri, "Callback URL" %>
   <%= f.url_field :redirect_uri %><br />
 
-  <%= link_to "Cancel", :back %>
-  <%= f.submit "Update Application" %>
+  <%= link_to "Cancel", :back, :class => 'btn waves-effect waves-light grey' %>
+  <%= f.submit "Update Application", :class => 'btn waves-effect waves-light' %>
 <% end %>
