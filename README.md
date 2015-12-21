@@ -24,6 +24,26 @@ deployed to [production](https://app.trailblazer.io/).
 
 ## Setup
 
+### Docker (Compose)
+
+[Set up your system so you can use docker-compose](https://docs.docker.com/compose/install/)
+
+Then bootstrap the application (this will create a container each for the API
+and for the postgresql database)
+
+    $ docker-compose build
+    # Go make a coffee or something...
+    $ docker-compose run web bundle exec rake db:schema:load
+    $ docker-compose up
+
+Now, all going well, you should have a copy of the API running locally.
+
+You can run regular rake/rails commands inside the container using
+
+    $ docker-compose run web bundle exec <command>
+
+### Not Docker
+
 RVM users:
 
 Update RVM to the latest stable version and install Ruby 2.2.1

@@ -1,7 +1,10 @@
-# Database configuration
-DATABASE_URL: "postgres://user:password@localhost:5432/database_name"
-#DATABASE_URL: "postgres://user@localhost:5432/database_name"
-#DATABASE_URL: "postgres://localhost:5432/database_name"
+# Database configuration (if you're not using the docker config)
+# DATABASE_URL: "postgres://user:password@localhost:5432/database_name"
+# DATABASE_URL: "postgres://user@localhost:5432/database_name"
+# DATABASE_URL: "postgres://localhost:5432/database_name"
+
+# URL for Docker Compose configuration
+DATABASE_URL: "postgres://postgres@db:5432/postgres"
 
 # Web server configuration
 WEB_CONCURRENCY: "3"
