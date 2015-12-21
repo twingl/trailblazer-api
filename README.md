@@ -38,9 +38,11 @@ and for the postgresql database)
 
 Now, all going well, you should have a copy of the API running locally.
 
-You can run regular rake/rails commands inside the container using
+You need to run regular bundle/rake/rails commands inside the container, e.g.
 
+    $ docker-compose run web bundle install
     $ docker-compose run web bundle exec <command>
+
 
 ### Not Docker
 
