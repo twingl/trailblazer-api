@@ -43,15 +43,18 @@ You need to run regular bundle/rake/rails commands inside the container, e.g.
     $ docker-compose run web bundle install
     $ docker-compose run web bundle exec <command>
 
+**Note: This docker configuration is new and suggestions/improvements are
+welcomed**
+
 
 ### Not Docker
 
 RVM users:
 
-Update RVM to the latest stable version and install Ruby 2.2.1
+Update RVM to the latest stable version and install Ruby 2.3.0
 
     $ rvm get stable
-    $ rvm install 2.2.1
+    $ rvm install 2.3.0
 
 You will also need PostgreSQL and Redis set up and running on your local
 machine, as well as access to a Google Apps domain with
