@@ -93,8 +93,6 @@ Rails.application.routes.draw do
   match '/coming_soon', :to => "pages#coming_soon", :as => "coming_soon", :via => [:get]
   match '/landing', :to => "pages#landing", :as => "landing", :via => [:get]
   match '/inactive', :to => "pages#inactive", :as => "inactive", :via => [:get]
-  match '/bug', :to => "pages#bug", :as => "bug", :via => [:get]
-  match '/feedback', :to => "pages#feedback", :as => "feedback", :via => [:get]
 
   root :to => "pages#landing"
 end

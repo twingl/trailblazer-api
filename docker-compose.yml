@@ -2,7 +2,7 @@ db:
   image: postgres
 web:
   build: .
-  command: bundle exec foreman start
+  command: foreman start zeus,web,worker
   volumes:
     - .:/app
   ports:

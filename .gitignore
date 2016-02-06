@@ -16,7 +16,7 @@
 /tmp
 
 # Ignore application configuration
-/config/application.yml
+.env
 
 # Ignore Node modules
 /node_modules

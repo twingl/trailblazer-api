@@ -2,64 +2,68 @@ source 'https://rubygems.org'
 
 ruby '2.3.0'
 
-gem 'rails', '~> 4.2.4'
-gem 'puma'
-gem 'rails_12factor', :group => :production
+gem 'rails',                  '~> 4.2.5.1'
+gem 'puma',                   '~> 2.16.0'
+gem 'rails_12factor',         '~> 0.0.3',   group: :production
 
 # Run locally using Procfile
-gem 'foreman', :group => :development
+gem 'foreman',                '~> 0.78.0',  group: :development
 
 # Stats, measurements, reporting
-gem 'skylight', :group => :production
-gem 'newrelic_rpm', :group => :production
-gem 'sentry-raven', :group => :production
+gem 'skylight',               '~> 0.10.3',  group: :production
+gem 'newrelic_rpm',           '~> 3.14.2',  group: :production
+gem 'sentry-raven',           '~> 0.15.4',  group: :production
 
 # DB, Query helpers
-gem 'pg'
-gem 'squeel', '~>1.2.3'
+gem 'pg',                     '~> 0.18.4'
+gem 'squeel',                 '~> 1.2.3'
 
-# Worker model
-gem 'sucker_punch', '~> 1.4.0'
+# Worker model within a single process
+gem 'sucker_punch',           '~> 2.0.0'
 
 # DCI
-gem 'playhouse', '~> 0.1.1', :github => 'enspiral/playhouse'
+gem 'playhouse',              '~> 0.1.1',   github: 'enspiral/playhouse'
 
 # Assets
-gem 'sass-rails',   '~> 5.0.0'
-gem 'uglifier',     '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
-gem 'gaffe',        '~>1.0.2' # custom error pages
-gem 'materialize-sass', '~>0.97'
+gem 'coffee-rails',           '~> 4.1.1'
+gem 'jquery-rails',           '~> 4.1.0'
+gem 'uglifier',               '~> 2.7.2'
+
+gem 'sass-rails',             '~> 5.0.4'
+gem 'autoprefixer-rails',     '~> 6.3.1'
+gem 'materialize-sass',       '~> 0.97.5'
+
+# Custom error pages
+gem 'gaffe',                  '~> 1.0.2'
 
 # Testing, Config, Utility
 group :development, :test do
-  gem 'figaro'
-  gem 'guard'
-  gem 'guard-livereload'
+  gem 'dotenv-rails',         '~> 2.1.0'
+  gem 'guard',                '~> 2.13.0'
+  gem 'guard-livereload',     '~> 2.5.2'
 
-  gem 'rspec-rails', '~> 3.1.0'
-  gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'shoulda-matchers', '~> 2.6.1'
-  gem 'pry',     '~> 0.9.12'
-  gem 'pry-nav', '~> 0.2.3'
+  gem 'rspec-rails',          '~> 3.4.2'
+  gem 'factory_girl_rails',   '~> 4.6.0'
+  gem 'shoulda-matchers',     '~> 3.1.1'
+  gem 'pry',                  '~> 0.10.3'
+  gem 'pry-nav',              '~> 0.2.4'
 end
 
-# External Auth
-gem 'omniauth',               '~> 1.2.1'
-gem 'omniauth-google-oauth2', '~> 0.2.4'
+# Auth against external parties
+gem 'omniauth',               '~> 1.3.1'
+gem 'omniauth-google-oauth2', '~> 0.3.1'
 
 # has_secure_password
-gem 'bcrypt', '~> 3.1.5'
+gem 'bcrypt',                 '~> 3.1.10'
 
 # Internal Authorization
-gem 'cancancan', '~> 1.8.4'
+gem 'cancancan',              '~> 1.13.1'
 
-# External APIs
-gem 'google-api-client', '~> 0.7.1', :require => 'google/api_client'
-gem 'sendgrid'
-gem 'embedly'
+# Consuming external APIs
+gem 'google-api-client',      '~> 0.9.1'
+gem 'sendgrid',               '~> 1.2.4'
+gem 'embedly',                '~> 1.9.1'
 
-# Browser API provider
-gem 'doorkeeper', '~> 2.1.3'
-gem 'rack-cors',  '~> 0.2.9' # Allow cross origin requests
+# Providing our API
+gem 'doorkeeper',             '~> 3.1.0'
+gem 'rack-cors',              '~> 0.4.0' # Allow cross origin requests
