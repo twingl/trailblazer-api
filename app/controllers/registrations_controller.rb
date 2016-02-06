@@ -3,7 +3,6 @@ require 'contexts/user_confirms_account'
 require 'contexts/user_reverts_email_confirmation'
 
 class RegistrationsController < ApplicationController
-  skip_before_action :authenticate_staging
   before_action :authenticate_user!, :only => [:show, :update, :resend_confirmation]
 
   # POST /sign_up
@@ -25,22 +24,11 @@ class RegistrationsController < ApplicationController
 
   # POST /profile
   def update
-    user = current_user
-
-    #if password_params[:password].present? || password_params[:current_password].present?
-    #  if user.authenticate(password_params[:current_password]) &&
-    #    user.update_attributes(registration_params)
-    #    render :json => { :user => user }
-    #  else
-    #    render :status => :bad_request, :json => { :messages => user.errors.full_messages }
-    #  end
-    #else
-      if user.update_attributes(registration_params)
-        render :json => { :user => user }
-      else
-        render :status => :bad_request, :json => { :messages => user.errors.full_messages }
-      end
-    #end
+    if current_user.update_attributes(registration_params)
+      render :json => { :user => user }
+    else
+      render :status => :bad_request, :json => { :messages => user.errors.full_messages }
+    end
   end
 
   # POST /resend_confirmation

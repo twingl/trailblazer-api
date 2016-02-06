@@ -6,8 +6,6 @@ class SessionsController < ApplicationController
 
   layout "session"
 
-  skip_before_action :authenticate_staging
-
   before_action :authenticate_user!, :except => [:sign_in_method, :new, :create, :create_google]
 
   # GET /sign_in_method

@@ -1,6 +1,3 @@
-require 'contexts/get_oauth_user'
-require 'contexts/get_google_apps_domain'
-
 class PagesController < ApplicationController
 
   # GET /landing
