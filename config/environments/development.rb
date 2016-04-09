@@ -1,4 +1,7 @@
 Rails.application.configure do
+  # Set logging to standard out
+  config.logger = Logger.new STDOUT
+
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_mailer.default_url_options = {
     :host => "localhost"
