@@ -3,8 +3,6 @@ class Oauth::AuthorizationsController < ::Doorkeeper::AuthorizationsController
 
   layout 'session'
 
-  skip_before_action :authenticate_staging
-
   def new
     if pre_auth.authorizable?
       if skip_authorization?

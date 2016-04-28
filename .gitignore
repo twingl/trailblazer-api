@@ -16,10 +16,15 @@
 /tmp
 
 # Ignore application configuration
-/config/application.yml
+.env
 
 # Ignore Node modules
 /node_modules
 
 # Ignore defacto-standard ruby env config
 .ruby-gemset
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

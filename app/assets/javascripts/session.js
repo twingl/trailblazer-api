@@ -22,38 +22,6 @@
 
 'use strict';
 
-jQuery.ajax({
-  url: "https://trailblazer-by-twingl.atlassian.net/s/b54e5d2f8dc4abbaa73e599d6914669a-T/en_US-isb2pu/70102/b6b48b2829824b869586ac216d119363/2.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=0704d02a",
-  type: "get",
-  cache: true,
-  dataType: "script"
-});
-
-jQuery.ajax({
-  url: "https://trailblazer-by-twingl.atlassian.net/s/b54e5d2f8dc4abbaa73e599d6914669a-T/en_US-isb2pu/70102/b6b48b2829824b869586ac216d119363/2.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=eca668be",
-  type: "get", cache: true,
-  dataType: "script"
-});
-
-window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS || {}, {
-  "eca668be": {
-    triggerFunction: function(showCollectorDialog) { //bugs
-      jQuery("#bug").click(function(e) {
-        e.preventDefault();
-        showCollectorDialog();
-      });
-    }
-  },
-  "0704d02a": {
-    triggerFunction: function(showCollectorDialog) { //feedback
-      jQuery("#feedback").click(function(e) {
-        e.preventDefault();
-        showCollectorDialog();
-      });
-    }
-  }
-});
-
 $(document).ready(function() {
 
   var getSignInMethod = function(email, callback) {
