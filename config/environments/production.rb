@@ -1,7 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_mailer.default_url_options = {
-    :host => "app.trailblazer.io"
+    protocol: 'https',
+    host: 'app.trailblazer.io'
   }
 
   # Set Skylight's logger to STDOUT
