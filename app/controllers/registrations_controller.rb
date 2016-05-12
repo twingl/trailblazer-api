@@ -5,16 +5,22 @@ require 'contexts/user_reverts_email_confirmation'
 class RegistrationsController < ApplicationController
   before_action :authenticate_user!, :only => [:show, :update, :resend_confirmation]
 
+  # GET /sign_up
+  def new
+    render 'sessions/new'
+  end
+
   # POST /sign_up
   def create
-    user = User.new(registration_params)
+    @user = User.new(registration_params)
 
-    if user.save
-      establish_session user
-      user.send_confirmation
-      render :json => { :location => return_location }
+    if @user.save
+      establish_session @user
+      @user.send_confirmation
+      redirect_to return_location
     else
-      render :status => :unauthorized, :json => { :error => :email_taken, :message => "Looks like that email address is taken. Have you forgotten your password?" }
+      flash.now[:sign_up] = "Looks like that email address is taken. Have you forgotten your password?"
+      render 'sessions/new', status: :unauthorized
     end
   end
 

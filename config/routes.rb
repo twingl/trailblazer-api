@@ -7,12 +7,15 @@ Rails.application.routes.draw do
   match '/auth/google_apps_chooser/callback', :to => 'sessions#create_google', :via => [:get, :post]
   match '/auth/google_apps/callback', :to => 'sessions#create_google', :via => [:get, :post]
   match '/sign_in_method', :to => 'sessions#sign_in_method', :via => [:get], :as => :sign_in_method
-  match '/sign_in', :to => 'sessions#new', :via => [:get], :as => :sign_in
   match '/sign_out', :to => 'sessions#destroy', :via => [:get, :delete], :as => :sign_out
   match '/change_user', :to => 'sessions#change_user', :via => [:get, :delete], :as => :change_user
 
+  match '/sign_up', :to => 'sessions#new', :via => [:get], :as => :sign_up
+  match '/sign_up', :to => 'registrations#create', :via => [:post]
+
+  match '/sign_in', :to => 'sessions#new', :via => [:get], :as => :sign_in
   match '/sign_in', :to => 'sessions#create', :via => [:post]
-  match '/sign_up', :to => 'registrations#create', :via => [:post], :as => :sign_up
+
   match '/forgot_password', :to => 'registrations#forgot_password', :via => [:post], :as => :forgot_password
   match '/forgot_password/:token', :to => 'registrations#reset_password', :via => [:get], :as => :edit_password
 

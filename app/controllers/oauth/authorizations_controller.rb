@@ -1,7 +1,7 @@
 class Oauth::AuthorizationsController < ::Doorkeeper::AuthorizationsController
   helper_method :current_user
 
-  layout 'session'
+  layout 'application'
 
   def new
     if pre_auth.authorizable?

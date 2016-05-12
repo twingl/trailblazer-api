@@ -1,44 +1,50 @@
-<header class="page-header" role="banner">
-  <h1>Sign In</h1>
-</header>
+<div class="container authorizations-new">
+  <div class="row">
+    <div class="card-panel col s12 m10 l8 push-m1 push-l2">
+      <h1>Sign In</h1>
 
-<main role="main">
-  <p class="h4">
-    Sign in to <em><%= @pre_auth.client.name %></em> as <em><%= current_user.email %></em> and allow it to access your Trailblazer profile and data?
-  </p>
+      <p class="section">
+        Sign in to <em class="blue-text text-darken-2"><%= @pre_auth.client.name %></em> as <em class="blue-text text-darken-2"><%= current_user.email %></em> and allow it to access your Trailblazer profile and data?
+      </p>
 
-  <p>
-    <%= link_to 'Use a different account', change_user_url(return_to: request.url) %>
-  </p>
+      <p class="section">
+        <%= link_to 'Use a different account', change_user_url(return_to: request.url), class: 'grey-text text-darken-1' %>
+      </p>
 
-  <% if @pre_auth.scopes.count > 0 %>
-    <div id="oauth-permissions">
-      <p><%= t('.able_to') %>:</p>
+      <% if @pre_auth.scopes.count > 0 %>
+        <div id="oauth-permissions">
+          <p><%= t('.able_to') %>:</p>
 
-      <ul class="text-info">
-        <% @pre_auth.scopes.each do |scope| %>
-          <li><%= t scope, scope: [:doorkeeper, :scopes] %></li>
-        <% end %>
-      </ul>
+          <ul class="text-info">
+            <% @pre_auth.scopes.each do |scope| %>
+              <li><%= t scope, scope: [:doorkeeper, :scopes] %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="actions right row">
+        <div class="col s12">
+          <%= form_tag oauth_authorization_path, method: :delete, style: "display: inline-block" do %>
+            <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+            <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+            <%= hidden_field_tag :state, @pre_auth.state %>
+            <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+            <%= hidden_field_tag :scope, @pre_auth.scope %>
+            <%= submit_tag 'Cancel', class: "btn-large btn-light btn-flat white waves-effect" %>
+          <% end %>
+
+          <%= form_tag oauth_authorization_path, method: :post, style: "display: inline-block" do %>
+            <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+            <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+            <%= hidden_field_tag :state, @pre_auth.state %>
+            <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+            <%= hidden_field_tag :scope, @pre_auth.scope %>
+            <%= submit_tag 'Sign In', class: "btn-large btn-flat white-text green waves-effect waves-light" %>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form_tag oauth_authorization_path, method: :post do %>
-      <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-      <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-      <%= hidden_field_tag :state, @pre_auth.state %>
-      <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-      <%= hidden_field_tag :scope, @pre_auth.scope %>
-      <%= submit_tag t('doorkeeper.authorizations.buttons.authorize'), class: "btn btn-success btn-lg btn-block" %>
-    <% end %>
-    <%= form_tag oauth_authorization_path, method: :delete do %>
-      <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
-      <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
-      <%= hidden_field_tag :state, @pre_auth.state %>
-      <%= hidden_field_tag :response_type, @pre_auth.response_type %>
-      <%= hidden_field_tag :scope, @pre_auth.scope %>
-      <%= submit_tag t('doorkeeper.authorizations.buttons.deny'), class: "btn btn-danger btn-lg btn-block" %>
-    <% end %>
   </div>
-</main>
+</div>

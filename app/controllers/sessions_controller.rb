@@ -4,8 +4,6 @@ require 'contexts/user_signs_in'
 
 class SessionsController < ApplicationController
 
-  layout "session"
-
   before_action :authenticate_user!, :except => [:sign_in_method, :new, :create, :create_google]
 
   # GET /sign_in_method
@@ -48,11 +46,11 @@ class SessionsController < ApplicationController
 
     if @user.is_a? User
       establish_session @user
-      render :json => { :location => return_location }
-    elsif @user == :unknown_account
-      render :status => :unauthorized, :json => { :error => :unknown_account, :message => "We can't seem to find that email address. If you're new here, click 'Create Account' to get started with these details" }
+      redirect_to return_location
     else
-      render :status => :unauthorized, :json => { :error => :incorrect_details, :message => "Those sign in details don't seem to be right. If you've forgotten your password, hit the button and we'll send you an email." }
+      @user = User.new session_params
+      flash.now[:sign_in] = "We couldn't sign you in. If you're new here, click 'Create Account' to get started"
+      render 'sessions/new', status: :unauthorized
     end
   end
 
