@@ -29,7 +29,7 @@ gem 'uglifier',               '~> 2.7.2'
 
 gem 'sass-rails',             '~> 5.0.4'
 gem 'autoprefixer-rails',     '~> 6.3.1'
-gem 'materialize-sass',       '~> 0.97.5'
+gem 'materialize-sass',       '~> 0.97.6'
 
 # Custom error pages
 gem 'gaffe',                  '~> 1.0.2'
