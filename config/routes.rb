@@ -47,8 +47,8 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :public do
-    match '/map/:token', :to => "maps#show", :via => [:get], :as => :map
+  scope '/p', module: :public do
+    match '/map/:token', :to => "maps#show", :via => [:get], :as => :public_map
   end
 
   # Misc pages
