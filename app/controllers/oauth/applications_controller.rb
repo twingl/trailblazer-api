@@ -2,8 +2,6 @@ class Oauth::ApplicationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_application, :only => [:show, :edit, :update, :destroy]
 
-  layout 'session'
-
   def index
     @applications = current_user.oauth_applications
   end

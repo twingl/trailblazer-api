@@ -1,22 +1,48 @@
-<h1>Developer Console</h1>
+<div class="container">
+  <h1>Developer Console</h1>
 
-<h2>Your Applications</h2>
+  <div class="section">
+    <h2>Trailblazer Extension</h2>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Callback URL</th>
-    <th>Last Updated</th>
-    <th></th>
-  </tr>
-  <% @applications.each do |app| %>
-  <tr>
-    <td><%= link_to app.name, oauth_application_path(app) %></td>
-    <td><pre><%= app.redirect_uri %></pre></td>
-    <td><%= app.updated_at %></td>
-    <td><%= link_to "Edit", edit_oauth_application_path(app.to_param), :class => 'btn waves-effect waves-light grey' %></td>
-  </tr>
-  <% end %>
+    <p>
+      Quickly set up the Trailblazer extension on your own machine.
+    </p>
 
-</table>
-<%= link_to "Create a new application", new_oauth_application_path, :class => 'btn waves-effect waves-light' %>
+    <p>
+      This will guide you through creating a fork of the source code, creating
+      a new API application, generating the environment configuration needed
+      for the extension, and building for the first time.
+    </p>
+
+    <p>
+      <%= link_to "Coming Soon", '#', :class => 'btn waves-effect grey darken-2 waves-light' %>
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Your Applications</h2>
+    <table class="highlight">
+      <thead>
+        <tr class="row">
+          <th width="45%">Name</th>
+          <th width="45%">Last Edited</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @applications.each do |app| %>
+          <tr>
+            <td><strong><%= app.name %></strong></td>
+            <td><%= app.updated_at.strftime('%B %d, %Y') %></td>
+            <td><%= link_to "Details", oauth_application_path(app.to_param), :class => 'btn btn-flat grey lighten-2 grey-text text-darken-2 waves-effect waves-light' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <%= link_to "Create a new application", new_oauth_application_path, :class => 'btn waves-effect grey darken-2 waves-light' %>
+  </div>
+</div>

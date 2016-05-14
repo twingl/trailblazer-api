@@ -2,6 +2,7 @@
   <div class="nav-wrapper">
     <ul id="nav-mobile" class="right">
       <% if user_signed_in? %>
+        <li><%= link_to "Developer Console", oauth_applications_path %></li>
         <li><%= link_to "Preferences", profile_path %></li>
         <li><%= link_to "Sign Out", sign_out_path %></li>
       <% else %>
