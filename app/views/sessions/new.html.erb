@@ -1,12 +1,12 @@
-<div class="container">
+<div iclass="container sign-in">
   <div class="row">
-    <div class="col s12 m10 l8 push-m1 push-l2 center">
+    <div class="col s12 m8 l6 push-m2 push-l3 center">
       <%= image_tag 'logo-grey-58.svg', id: 'logo', width: '60px', style: 'margin-top: 2rem;' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="col s12 m10 l8 push-m1 push-l2">
+    <div class="col s12 m8 l6 push-m2 push-l3">
       <ul class="tabs blue-text">
         <li class="tab col s6"><a href="#sign_in">Sign In</a></li>
         <li class="tab col s6"><a href="#sign_up">Create Account</a></li>
@@ -15,7 +15,7 @@
   </div>
 
   <div id="sign_in" class="row">
-    <div class="col s12 m10 l8 push-m1 push-l2">
+    <div class="col s12 m8 l6 push-m2 push-l3">
       <%= form_tag sign_in_path, method: :post do %>
         <div class="section">
           <%= fields_for @user do |f| %>
@@ -54,7 +54,7 @@
   </div>
 
   <div id="sign_up" class="row">
-    <div class="col s12 m10 l8 push-m1 push-l2">
+    <div class="col s12 m8 l6 push-m2 push-l3">
       <%= form_tag sign_up_path, method: :post do %>
         <div class="section">
           <%= fields_for @user do |f| %>
