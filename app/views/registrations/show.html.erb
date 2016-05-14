@@ -1,30 +1,67 @@
-<!-- I see you've discovered my horrible markup (who even uses spacers any
-more, wtf). Go you! This message was brought to you by many litres of coffee
-and not nearly enough sleep or time. -->
-
-<style type="text/css" media="all">
-body {
-  background: url("<%= asset_url('sign_in_bg.jpg') %>") no-repeat center center fixed;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-}
-</style>
-
 <div class="container">
-  <div class="spacer"></div>
-  <%= image_tag "logo.png", alt: "Trailblazer" %>
-
-  <div layout center vertical center-justified>
-    <tb-profile
-     profileUrl="<%= current_user_profile_url %>"
-     updateProfileUrl="<%= profile_url %>"
-     resendConfirmationUrl="<%= resend_confirmation_url %>">
-    </tb-profile>
-
-    <%= link_to "Sign Out", sign_out_url, :class => "btn", :id => "sign-out" %>
+  <div class="row">
+    <div class="col s12">
+      <h1>Preferences</h1>
+      <div class="chip">
+        <% if current_user.image.present? %>
+          <%= image_tag current_user.image, alt: current_user.name %>
+        <% end %>
+        <%= current_user.name || current_user.email %>
+      </div>
+    </div>
   </div>
 
-  <a class="photo-credit" href="http://www.publicdomainpictures.net/view-image.php?image=26281&picture=road-in-a-field&large=1" target="_blank">Larisa Koshkina</a>
+  <% if flash[:success] %>
+    <div class="card green lighten-2">
+      <div class="card-content">
+        <%= flash[:success] %>
+      </div>
+    </div>
+  <% end %>
 
+  <% if @user.errors.present? %>
+    <ul class="collection">
+      <% @user.errors.full_messages.map do |e| %>
+        <li class="collection-item red lighten-4"><%= e %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="row">
+    <div class="col s12 m8 l6">
+      <h4>Email</h3>
+      <% unless @user.confirmed? %>
+        <p>
+        You haven't confirmed your new email <%= @user.email %>.<br>
+        Didn't get the email? Resend it
+        </p>
+      <% end %>
+      <%= form_tag profile_path, method: :patch do %>
+        <%= fields_for @user do |f| %>
+          <%= f.label :email, 'Email' %>
+          <%= f.email_field :email %>
+        <% end %>
+
+        <div class="section">
+          <%= button_tag 'Update Email', class: 'btn btn-flat white-text grey darken-2 waves-effect waves-light' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m8 l6">
+      <h4>Password</h3>
+      <%= form_tag profile_path, method: :patch do %>
+        <%= fields_for @user do |f| %>
+          <%= f.label :password, 'Password' %>
+          <%= f.password_field :password %>
+        <% end %>
+
+        <div class="section">
+          <%= button_tag 'Update Password', class: 'btn btn-flat white-text grey darken-2 waves-effect waves-light' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

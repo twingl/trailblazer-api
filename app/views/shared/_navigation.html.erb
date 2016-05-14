@@ -1,17 +1,12 @@
 <nav>
-  <ul>
-    <% if user_signed_in? %>
-      <li><%= link_to "Sign Out", sign_out_path %></li>
-    <% else %>
-      <li><%= link_to "Sign In", '/auth/google_apps' %></li>
-    <% end %>
-
-    <% if can? :configure, Domain %>
-      <li><%= link_to "Configure Domain", configure_domain_path(current_user.domain) %></li>
-    <% end %>
-
-    <% if can? :manage, Classroom %>
-      <li><%= link_to "Manage Classrooms", classrooms_path %></li>
-    <% end %>
-  </ul>
+  <div class="nav-wrapper">
+    <ul id="nav-mobile" class="right">
+      <% if user_signed_in? %>
+        <li><%= link_to "Preferences", profile_path %></li>
+        <li><%= link_to "Sign Out", sign_out_path %></li>
+      <% else %>
+        <li><%= link_to "Sign In", '/auth/google_apps' %></li>
+      <% end %>
+    </ul>
+  </div>
 </nav>

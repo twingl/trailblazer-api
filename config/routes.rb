@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   match '/forgot_password/:token', :to => 'registrations#reset_password', :via => [:get], :as => :edit_password
 
   match '/profile', :to => 'registrations#show', :via => [:get], :as => :profile
-  match '/profile', :to => 'registrations#update', :via => [:post]
+  match '/profile', :to => 'registrations#update', :via => [:patch]
 
   match '/resend_confirmation', :to => 'registrations#resend_confirmation', :via => [:post], :as => :resend_confirmation
   match '/confirm/:token', :to => 'registrations#confirm', :via => [:get], :as => :confirm_email

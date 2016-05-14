@@ -26,14 +26,18 @@ class RegistrationsController < ApplicationController
 
   # GET /profile
   def show
+    @user = current_user
   end
 
   # POST /profile
   def update
-    if current_user.update_attributes(registration_params)
-      render :json => { :user => user }
+    @user = current_user
+
+    if @user.update_attributes(registration_params)
+      flash[:success] = 'Profile updated'
+      redirect_to profile_path
     else
-      render :status => :bad_request, :json => { :messages => user.errors.full_messages }
+      render 'registrations/show', status: :bad_request
     end
   end
 
