@@ -1,5 +1,15 @@
 <nav>
   <div class="nav-wrapper">
+    <% breadcrumbs do |links| %>
+      <span id="breadcrumbs">
+        <% if links.any? %>
+          <% links.each do |link| %>
+            <%= link_to link.text, link.url, class: 'breadcrumb' %>
+          <% end %>
+        <% end %>
+      </span>
+    <% end %>
+
     <ul id="nav-mobile" class="right">
       <% if user_signed_in? %>
         <li><%= link_to "Developer Console", oauth_applications_path %></li>

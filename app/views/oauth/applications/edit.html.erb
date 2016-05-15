@@ -1,12 +1,30 @@
-<h1>Edit</h1>
+<% breadcrumb :edit_oauth_application, @application %>
 
-<%= form_for @application, url: oauth_application_path(@application) do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %><br />
+<div class="container">
+  <h1>Edit</h1>
 
-  <%= f.label :redirect_uri, "Callback URL" %>
-  <%= f.url_field :redirect_uri %><br />
+  <% if @application.errors.present? %>
+    <ul class="collection">
+      <% @application.errors.full_messages.map do |e| %>
+        <li class="collection-item red lighten-4"><%= e %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
-  <%= link_to "Cancel", :back, :class => 'btn waves-effect waves-light grey' %>
-  <%= f.submit "Update Application", :class => 'btn waves-effect waves-light' %>
-<% end %>
+  <%= form_for @application, url: oauth_application_path(@application) do |f| %>
+    <div class="section">
+      <%= f.label :name %>
+      <%= f.text_field :name %><br />
+    </div>
+
+    <div class="section">
+      <%= f.label :redirect_uri, "Callback URLs (put each additional URI on a new line)" %>
+      <%= f.text_area :redirect_uri %><br />
+    </div>
+
+    <div class="section">
+      <%= link_to "Cancel", oauth_application_path(@application), :class => 'btn waves-effect waves-light grey' %>
+      <%= f.submit "Update Application", :class => 'btn waves-effect waves-light' %>
+    </div>
+  <% end %>
+</div>

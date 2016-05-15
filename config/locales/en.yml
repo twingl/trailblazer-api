@@ -22,6 +22,10 @@
 en:
   hello: "Hello world"
 
+  developer:
+    application:
+      confirm_delete: "Delete your application?\n\nClients will not be able to sign in to any applications that use these credentails, and this cannot be undone.\n\nClick OK to confirm you want to delete your application"
+
   session:
     sign_in_method:
       oauth: "oauth message"

@@ -1,17 +1,51 @@
-<h1><%= @application.name %></h1>
+<% breadcrumb :oauth_application, @application %>
 
-<%= link_to "Back to Applications", oauth_applications_path, :class => 'btn waves-effect waves-light grey' %>
-<%= link_to "Edit", edit_oauth_application_path(@application), :class => 'btn waves-effect waves-light grey' %>
-<%= link_to "Destroy", oauth_application_path(@application), :method => :delete, :confirm => "This is irreversible, are you sure?", :class => 'btn waves-effect waves-light red' %>
+<div class="container">
+  <div class="row">
+    <div class="column s12">
+      <h1><%= @application.name %></h1>
+    </div>
+  </div>
 
-<h2>Application ID</h2>
-<%= @application.uid %><br />
+  <div class="row">
+    <p class="column s12"><strong>Client ID</strong></p>
+    <pre class="column s12"><%= @application.uid %></pre>
+  </div>
 
-<h2>Secret</h2>
-<%= @application.secret %><br />
+  <div class="row">
+    <p class="column s12"><strong>Secret</strong></p>
+    <pre class="column s12"><%= @application.secret %></pre>
+  </div>
 
-<h2>Callback URL</h2>
-<%= @application.redirect_uri %><br />
+  <div class="row">
+    <h3>Redirect URIs</h3>
 
-<h4>Link to authorization code:</h4>
-<p><%= link_to 'Authorize', oauth_authorization_path(:client_id => @application.uid, :redirect_uri => @application.redirect_uri, :response_type => 'code' ), :class => 'btn waves-effect waves-light' %></p>
+    <p>
+      The following redirect URIs are white listed for clients using your
+      application credentials.
+    </p>
+
+    <p>
+      You can test each redirect URI individually by tapping "Authorize"
+    </p>
+
+    <ul class="collection">
+      <% @application.redirect_uri.split(' ').map do |uri| %>
+        <li class="collection-item">
+          <p>
+            <code><%= uri %></code>
+            <%= link_to 'Authorize', oauth_authorization_path(client_id: @application.uid, redirect_uri: uri, response_type: 'code' ), class: 'secondary-content' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="column s12">
+      <%= link_to "Edit", edit_oauth_application_path(@application), :class => 'btn waves-effect waves-light grey' %>
+
+      <%= link_to "Destroy", oauth_application_path(@application), 'data-confirm' => t('developer.application.confirm_delete'), :method => :delete, 'data-position' => 'top', 'data-tooltip' => "Deletes the application and its credentials.", :class => 'btn tooltipped waves-effect waves-light red' %>
+    </div>
+  </div>
+
+</div>

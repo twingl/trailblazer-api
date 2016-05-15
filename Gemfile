@@ -31,6 +31,9 @@ gem 'sass-rails',             '~> 5.0.4'
 gem 'autoprefixer-rails',     '~> 6.3.1'
 gem 'materialize-sass',       '~> 0.97.6'
 
+# Breadcrumbs for the web UI
+gem 'gretel',                 '~> 3.0.8'
+
 # Custom error pages
 gem 'gaffe',                  '~> 1.0.2'
 

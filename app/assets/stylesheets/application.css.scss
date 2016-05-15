@@ -17,3 +17,7 @@
 $primary-color: color("grey", "darken-2") !default;
 $secondary-color: color("deep-orange", "lighten-2") !default;
 @import 'materialize';
+
+#breadcrumbs {
+  margin-left: 1rem;
+}
