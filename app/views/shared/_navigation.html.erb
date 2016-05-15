@@ -1,6 +1,6 @@
 <nav>
   <div class="nav-wrapper">
-    <% breadcrumbs do |links| %>
+    <% breadcrumbs.tap do |links| %>
       <span id="breadcrumbs">
         <% if links.any? %>
           <% links.each do |link| %>
