@@ -22,5 +22,5 @@ crumb :new_oauth_application do
 end
 
 crumb :profile do
-  link "Profile", profile_path
+  link "Preferences", profile_path
 end
