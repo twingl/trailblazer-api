@@ -2,6 +2,8 @@ class Oauth::AuthorizationsController < ::Doorkeeper::AuthorizationsController
   helper_method :current_user
   helper_method :user_signed_in?
 
+  before_action :hide_nav!
+
   def new
     if pre_auth.authorizable?
       if skip_authorization?
@@ -16,6 +18,11 @@ class Oauth::AuthorizationsController < ::Doorkeeper::AuthorizationsController
   end
 
 protected
+
+  # Hide the application nav bar
+  def hide_nav!
+    @hide_nav = true
+  end
 
   # Returns the currently authenticated user
   def current_user
