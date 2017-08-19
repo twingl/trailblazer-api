@@ -8,11 +8,9 @@ class Public::MapsController < ApplicationController
 private
 
   def set_map
-    @assignment = Assignment.where(:visible => true)
-                     .find_by(:public_url_token => map_params[:token])
+    @assignment = Assignment.find_by!(:visible => true, :public_url_token => map_params[:token])
 
     @nodes = @assignment.nodes.includes(:context) || []
-    raise ActiveRecord::RecordNotFound unless @assignment
   end
 
   def map_params
