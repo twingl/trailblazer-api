@@ -24,10 +24,10 @@ RSpec.describe SessionsController, :type => :controller do
     context "without a valid user" do
       before(:each) { expect_any_instance_of(GetOauthUser).to receive(:call).and_return(false) }
 
-      it "redirects to the landing page" do
+      it "redirects to the sign_in page" do
         expect(controller).to_not receive(:establish_session)
         get 'create_google'
-        expect(response).to redirect_to landing_url
+        expect(response).to redirect_to sign_in_url
       end
     end
   end
@@ -39,9 +39,9 @@ RSpec.describe SessionsController, :type => :controller do
       expect(controller.send(:current_user)).to be_nil
     end
 
-    it "redirects to the landing page" do
+    it "redirects to the sign_in page" do
       get 'destroy'
-      expect(response).to redirect_to landing_url
+      expect(response).to redirect_to sign_in_url
     end
   end
 

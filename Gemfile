@@ -1,35 +1,35 @@
 source 'https://rubygems.org'
 
-gem 'rails',                  '~> 4.2.5.1'
-gem 'puma',                   '~> 2.16.0'
-gem 'rails_12factor',         '~> 0.0.3',   group: :production
+gem 'rails',                  '~> 4.2'
+gem 'puma'
+gem 'rails_12factor',                       group: :production
 
 # Run locally using Procfile
-gem 'foreman',                '~> 0.78.0',  group: :development
+gem 'foreman',                              group: :development
 
 # Stats, measurements, reporting
-gem 'skylight',               '~> 0.10.3',  group: :production
-gem 'newrelic_rpm',           '~> 3.14.2',  group: :production
-gem 'sentry-raven',           '~> 0.15.4',  group: :production
+gem 'skylight',                             group: :production
+gem 'newrelic_rpm',                         group: :production
+gem 'sentry-raven',                         group: :production
 
 # DB, Query helpers
-gem 'pg',                     '~> 0.18.4'
-gem 'squeel',                 '~> 1.2.3'
+gem 'pg'
+gem 'squeel'
 
 # Worker model within a single process
-gem 'sucker_punch',           '~> 2.0.0'
+gem 'sucker_punch'
 
 # DCI
 gem 'playhouse',              '~> 0.1.1',   github: 'enspiral/playhouse'
 
 # Assets
-gem 'coffee-rails',           '~> 4.1.1'
-gem 'jquery-rails',           '~> 4.1.0'
-gem 'uglifier',               '~> 2.7.2'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'uglifier'
 
-gem 'sass-rails',             '~> 5.0.4'
-gem 'autoprefixer-rails',     '~> 6.3.1'
-gem 'materialize-sass',       '~> 0.97.6'
+gem 'sass-rails'
+gem 'autoprefixer-rails'
+gem 'materialize-sass'
 
 # Breadcrumbs for the web UI
 gem 'gretel',                 '~> 3.0.8'
@@ -49,6 +49,8 @@ group :development, :test do
   gem 'pry',                  '~> 0.10.3'
   gem 'pry-nav',              '~> 0.2.4'
 end
+
+gem 'database_cleaner', group: :test
 
 # Auth against external parties
 gem 'omniauth',               '~> 1.3.1'

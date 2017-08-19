@@ -1,6 +1,0 @@
-{
-  "name":"trailblazer-components",
-  "dependencies": {
-    "vulcanize": "~0.4.2"
-  }
-}

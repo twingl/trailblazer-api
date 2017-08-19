@@ -92,7 +92,7 @@ RSpec.describe ApplicationController, :type => :controller do
 
     it "redirects to the sign in path if no user is signed in" do
       get 'index'
-      expect(response).to redirect_to landing_url
+      expect(response).to redirect_to sign_in_url
     end
 
     it "stores the return location" do
