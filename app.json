@@ -1,0 +1,46 @@
+{
+  "name": "Trailblazer API",
+  "description": "Backs the Trailblazer extension",
+  "website": "http://twingl.github.io/trailblazer-website",
+  "repository": "https://github.com/twingl/trailblazer-api",
+  "logo": "http://twingl.github.io/trailblazer-website/images/logo@2x.png",
+  "success_url": "/sign_up",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:schema:load"
+  },
+  "env": {
+    "SECRET_TOKEN": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "WEB_CONCURRENCY": {
+      "description": "The number of processes to run.",
+      "value": "3"
+    },
+    "MAX_THREADS": {
+      "description": "The maximum number of threads to run.",
+      "value": "6"
+    },
+    "MIN_THREADS": {
+      "description": "The minimum number of threads to run.",
+      "value": "1"
+    },
+    "APP_HOSTNAME": {
+      "description": "The hostname this application will be accessible from",
+      "value": "example.com"
+    },
+    "GOOGLE_OAUTH2_CLIENT_ID": {
+      "description": "Credentials used for the 'Sign in with Google' feature",
+      "value": ""
+    },
+    "GOOGLE_OAUTH2_CLIENT_SECRET": {
+      "description": "Credentials used for the 'Sign in with Google' feature",
+      "value": ""
+    }
+  },
+  "addons": [
+    "sentry",
+    "sendgrid",
+    "heroku-postgresql"
+  ]
+}
