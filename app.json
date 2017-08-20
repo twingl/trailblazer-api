@@ -9,6 +9,18 @@
     "postdeploy": "bundle exec rake db:schema:load"
   },
   "env": {
+    "APP_HOSTNAME": {
+      "description": "The hostname this application will be accessible from (e.g. app.trailblazer.io)",
+      "value": ""
+    },
+    "GOOGLE_OAUTH2_CLIENT_ID": {
+      "description": "Credentials used for the 'Sign in with Google' feature",
+      "value": ""
+    },
+    "GOOGLE_OAUTH2_CLIENT_SECRET": {
+      "description": "Credentials used for the 'Sign in with Google' feature",
+      "value": ""
+    },
     "SECRET_TOKEN": {
       "description": "A secret key for verifying the integrity of signed cookies.",
       "generator": "secret"
@@ -24,18 +36,6 @@
     "MIN_THREADS": {
       "description": "The minimum number of threads to run.",
       "value": "1"
-    },
-    "APP_HOSTNAME": {
-      "description": "The hostname this application will be accessible from",
-      "value": "example.com"
-    },
-    "GOOGLE_OAUTH2_CLIENT_ID": {
-      "description": "Credentials used for the 'Sign in with Google' feature",
-      "value": ""
-    },
-    "GOOGLE_OAUTH2_CLIENT_SECRET": {
-      "description": "Credentials used for the 'Sign in with Google' feature",
-      "value": ""
     }
   },
   "addons": [
