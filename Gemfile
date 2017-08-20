@@ -8,8 +8,6 @@ gem 'rails_12factor',                       group: :production
 gem 'foreman',                              group: :development
 
 # Stats, measurements, reporting
-gem 'skylight',                             group: :production
-gem 'newrelic_rpm',                         group: :production
 gem 'sentry-raven',                         group: :production
 
 # DB, Query helpers
@@ -63,7 +61,6 @@ gem 'bcrypt',                 '~> 3.1.10'
 gem 'cancancan',              '~> 1.13.1'
 
 # Consuming external APIs
-gem 'google-api-client',      '~> 0.9.1'
 gem 'sendgrid',               '~> 1.2.4'
 gem 'embedly',                '~> 1.9.1'
 

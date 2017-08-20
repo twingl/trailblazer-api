@@ -2,11 +2,8 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_mailer.default_url_options = {
     protocol: 'https',
-    host: 'app.trailblazer.io'
+    host: ENV.fetch('APP_HOSTNAME', 'example.com')
   }
-
-  # Set Skylight's logger to STDOUT
-  config.skylight.logger = Logger.new(STDOUT)
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -47,7 +44,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true unless ENV["STAGING_SSL"] == "false"
+  config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :info

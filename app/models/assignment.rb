@@ -24,7 +24,7 @@ class Assignment < ActiveRecord::Base
     if self.public_url_token.present? && visible
       json[:url] = Rails.application.routes.url_helpers.public_map_url(
         :token  => self.public_url_token,
-        :host   => ENV["PUBLIC_URL_HOSTNAME"] || "app.trailblazer.io",
+        :host   => ENV.fetch("APP_HOSTNAME"),
         :protocol => (Rails.env.production?) ? :https : :http)
     end
 
