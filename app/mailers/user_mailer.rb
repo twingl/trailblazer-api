@@ -4,7 +4,7 @@ class UserMailer < ActionMailer::Base
   sendgrid_enable :ganalytics
   sendgrid_ganalytics_options :utm_source => "account_management"
 
-  default from: "accounts@trailblazer.io", reply_to: "hello@trailblazer.io"
+  default from: "accounts@#{ENV.fetch("APP_HOSTNAME")}", reply_to: "hello@#{ENV.fetch("APP_HOSTNAME")}"
 
   def confirm_email(user)
     @user  = user

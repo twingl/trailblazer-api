@@ -87,7 +87,7 @@
 
   <div class="row">
     <div class="center col s12">
-      <a href="mailto:hello@trailblazer.io" id="feedback">Send feedback</a>
+      <a href="mailto:hello@<%= ENV.fetch("APP_HOSTNAME") %>" id="feedback">Send feedback</a>
     </div>
   </div>
 </div>
